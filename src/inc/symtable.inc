@@ -1,19 +1,17 @@
 org 0x7e00
-mov WORD [SYM_SECT],$$
-ret
-SYM_SECT:
+SYM_SECT:                               ;7e00
 dw 0x00
-SYM_LBA48_ASM_WORD_PER_SECTOR:
+SYM_LBA48_ASM_WORD_PER_SECTOR:          ;7e02
 dw 32
 SYM_DISK_ASM_DAP_CACHE:
     SYM_DISK_ASM_DAP_CACHE_SIZE:
-db 0x10
+db 0x10                                 ;7e04
     SYM_DISK_ASM_DAP_CACHE_REV:
-db 0x00
+db 0x00                                 ;7e05
     SYM_DISK_ASM_DAP_CACHE_COUNT:
-dw 0x00
+dw 0x00                                 ;7e06
     SYM_DISK_ASM_DAP_CACHE_TARGET:
-dd 0x00
+dd 0x00                                 ;7e08
     SYM_DISK_ASM_DAP_CACHE_STARTS:
-dq 0x00
+dq 0x00                                 ;7e0c
 times 1024-($$-$) db 0x00
