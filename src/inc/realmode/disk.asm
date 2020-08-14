@@ -6,3 +6,5 @@ LBAReadSector:
     mov ah,0x42
     mov dl,0x80
     mov si,0x7e04
+    int 0x13
+    ret
