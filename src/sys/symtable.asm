@@ -14,4 +14,4 @@ dw 0x00                                 ;7e06
 dd 0x00                                 ;7e08
     SYM_DISK_ASM_DAP_CACHE_STARTS:
 dq 0x00                                 ;7e0c
-times 1024-($$-$) db 0x00
+times 984-($$-$) db 0x00
