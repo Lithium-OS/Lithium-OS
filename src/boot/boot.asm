@@ -58,7 +58,8 @@ Fail:
     hlt
     jmp Fail
 
-%include "inc/realmode/disk.asm"
+%include "../inc/bootstage/realmode/disk.asm"
+
 times 0 db 0x00
 
 dw 0xaa55

@@ -92,7 +92,7 @@ LBA48ReadSector:
     push edx
     push eax
     mov dx,0x1f6
-    mov al,0100000b ;MasterDsk
+    mov al,01000000b ;MasterDsk
     out dx,al
     pop eax
     pop edx
