@@ -3,6 +3,8 @@ all:
 	make cmp6sec
 	make cmp35sec
 	make cmpfats
+	make cmplo
+	make dsk
 cmp2sec: ./mbr.bin ./fat32fsinfo.bin
 	cat ./mbr.bin ./fat32fsinfo.bin > ./tmp2sec.bin
 cmp6sec: ./tmp2sec.bin ./symbol.bin
@@ -16,9 +18,17 @@ cmpfats:./fat.bin ./tmp35sec.bin ./rootdir.bin
 	dd if=/dev/zero of=./fat2full.bin bs=512 count=2042
 	dd if=./fat.bin of=./fat1full.bin conv=notrunc
 	dd if=./fat.bin of=./fat2full.bin conv=notrunc
-	cat ./tmp35sec.bin ./fat1full.bin ./fat2full.bin ./rootdir.bin > ./dsk.img
+cmplo:
+	dd if=/dev/zero of=./rootdirfull.bin bs=512 count=8
+	dd if=./rootdir.bin of=./rootdirfull.bin conv=notrunc
+linkk:
+	ld -A i386 -b i386 ./port.o ./disk.o ./fat32.o -o ./kernel.o
+dsk:
+	cat ./tmp35sec.bin ./fat1full.bin ./fat2full.bin ./rootdirfull.bin loader.sys > ./dsk.img
 clean:
 	rm -f ./*.bin
 	rm -f ./*.img
 	rm -f ./*.sys
+	rm -f ./*.o
+	rm -f ./*.s
 

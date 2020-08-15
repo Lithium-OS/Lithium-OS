@@ -1,5 +1,4 @@
-/*此处如出现问题,由Alex负责(笑*/
-#include "../../inc/type.h"
+#include "fat32.h"
 uint32_t fat1_location = 0;
 uint32_t fat_length = 0;
 uint32_t root_dir_location = 0;
@@ -14,17 +13,11 @@ uint32_t fat32_init_func(uint32_t fat1_loca,uint32_t fat_len,uint32_t root_dir_l
     data_location = dataf3;
     return 0;
 }
-struct file_packet
-{
-    uint32_t cluster;
-    uint32_t sector;
-    uint16_t sec_length;
-    uint32_t byte_length;
-};
+struct fat32_file_packet fat32_rootfind_file(uint8_t f_name[8])
 
-struct file_packet fat32_rootfind_file(uint8_t f_name[8])
+
 {
-    struct file_packet opt;
+    struct fat32_file_packet opt;
     uint8_t sec_temp[512] = {1};
     uint16_t i = 0;
     while(i < (root_dir_len + 1))
@@ -55,7 +48,7 @@ struct file_packet fat32_rootfind_file(uint8_t f_name[8])
             clu_ptr = sec_temp[(item_ptr * 32)+ 27];
 
             opt.cluster = clu_ptr;
-            opt.sector = ((clu_ptr - 3 ) + data_location);
+            opt.sector = ((clu_ptr - 3 )*8 + data_location);
 
             uint32_t clu_size = 0;
 
@@ -102,3 +95,16 @@ finp:
     opt.sec_length = 0;
     return opt;
 }
+uint32_t fat32_load_file(struct fat32_file_packet f32fpack,uint32_t* tptr)
+{
+        return read_disk_sector(0x0000,f32fpack.sector,f32fpack.sec_length,tptr);  
+    
+}
+uint32_t fat32_get_rootfile(uint8_t name[8],uint32_t* file_ptr)
+{
+        return fat32_load_file(fat32_rootfind_file(name),file_ptr);
+}
+/*uint32_t fat32_create_rootfile(uint8_t f_name[8],uint8_t f_exname[3])
+{
+        read_disk_sector(0x0000,fat1_location);
+}*/

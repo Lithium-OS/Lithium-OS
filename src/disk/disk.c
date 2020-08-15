@@ -1,6 +1,6 @@
-#include "../type.h"
-extern out_port8(uint16_t porn_name,uint8_t valve);
-extern in_port16(uint16_t porn_name);
+#include "inc/type.h"
+extern void out_port8(uint16_t porn_name,uint8_t valve);
+extern uint16_t in_port16(uint16_t porn_name);
 uint32_t read_disk_sector(uint16_t high_sec,uint32_t low_sec,uint16_t sec_num,uint32_t* target_ptr)
 {
     out_port8(0x01f1,0x0000);
@@ -15,10 +15,12 @@ uint32_t read_disk_sector(uint16_t high_sec,uint32_t low_sec,uint16_t sec_num,ui
     out_port8(0x01f5,(((low_sec >> 16) << 24) >> 24)); //b16-23
     out_port8(0x01f6,0b01000000); //MasterDsk
     out_port8(0x01f7,0x24); //Read
-    while(sec_num * 256)
+
+    for (uint32_t i = 0; i < sec_num * 256; i++)
     {
         *target_ptr = in_port16(0x01f0);
         target_ptr + 2;
     }
+    
     return 0;
 }

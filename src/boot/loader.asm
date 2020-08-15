@@ -23,21 +23,31 @@ StartLoader:
     mov es, ax
     mov ax, 0x00
     mov ss, ax
-
+    
     ; open A20 address
     mov ax,0x2401
+    mov ax,0x180
     int 0x15
     jc OpenA20Fail
 
+    mov ax,0x4f02
+    int 13
     cli
 
     db 0x66
     lgdt [GDT_PTR]
 
+    mov ax,0000000000001000b
+    mov cs,ax
+    mov ax,0000000000010000b
+    mov ds,ax
+
     ; open protection mode
     mov eax, cr0
     or eax, 0x01
     mov cr0, eax
+
+    sti
 
 OpenA20Fail:
     mov bx, MsgOpenA20Fail
