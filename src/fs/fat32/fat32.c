@@ -5,7 +5,7 @@ uint32_t root_dir_location = 0;
 uint32_t root_dir_len = 0;
 uint32_t data_location = 0;
 extern uint32_t read_disk_sector(uint16_t high_sec,uint32_t low_sec,uint16_t sec_num,uint32_t* target_ptr);
-uint32_t fat32_init_func(uint32_t fat1_loca,uint32_t fat_len,uint32_t root_dir_loca,uint32_t dataf3)
+uint32_t fat32_init_func(uint32_t fat1_loca,uint32_t fat_len,uint32_t root_dir_loca,uint32_t dataf3)        //初始化信息
 {
     fat1_location = fat1_loca;
     fat_length = fat_len;
@@ -13,7 +13,7 @@ uint32_t fat32_init_func(uint32_t fat1_loca,uint32_t fat_len,uint32_t root_dir_l
     data_location = dataf3;
     return 0;
 }
-struct fat32_file_packet fat32_rootfind_file(uint8_t f_name[8])
+struct fat32_file_packet fat32_rootfind_file(uint8_t f_name[8])                                             //获得根目录下某文件信息包
 
 
 {
@@ -95,12 +95,12 @@ finp:
     opt.sec_length = 0;
     return opt;
 }
-uint32_t fat32_load_file(struct fat32_file_packet f32fpack,uint32_t* tptr)
+uint32_t fat32_load_file(struct fat32_file_packet f32fpack,uint32_t* tptr)                                  //通过信息包加载文件至指定地址
 {
         return read_disk_sector(0x0000,f32fpack.sector,f32fpack.sec_length,tptr);  
     
 }
-uint32_t fat32_get_rootfile(uint8_t name[8],uint32_t* file_ptr)
+uint32_t fat32_get_rootfile(uint8_t name[8],uint32_t* file_ptr)                                             //获得根目录下某文件,加载文件至指定地址
 {
         return fat32_load_file(fat32_rootfind_file(name),file_ptr);
 }
