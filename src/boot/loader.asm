@@ -25,7 +25,7 @@ StartLoader:
     mov ss, ax
 
     ; open A20 address
-    mov ax 0x2401
+    mov ax,0x2401
     int 0x15
     jc OpenA20Fail
 
@@ -60,4 +60,4 @@ ShowMessage:
     int 0x10
     ret
 
-times (0x10200 - $) db 0
+times 0x7f7f db 0

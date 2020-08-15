@@ -20,3 +20,5 @@ cmpfats:./fat.bin ./tmp35sec.bin ./rootdir.bin
 clean:
 	rm -f ./*.bin
 	rm -f ./*.img
+	rm -f ./*.sys
+

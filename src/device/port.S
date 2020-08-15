@@ -5,13 +5,13 @@ _out_port16: #out_port16(u16 portname,u16 valve)
         movl %eax,.eax_d(,1)
         movl %edx,.edx_d(,1)
 
-        .eax_d(,1):
+        .eax_d:
             .long 0x00
-        .edx_d(,1):
+        .edx_d:
             .long 0x00
-        .eax_sto(,1):
+        .eax_sto:
             .long 0x00
-        .edx_sto(,1):
+        .edx_sto:
             .long 0x00
 
     movl 8(%ebp),%eax
@@ -39,15 +39,6 @@ _out_port8: #out_port8(u16 portname,u8 valve)
 
         movl %eax,.eax_d(,1)
         movl %edx,.edx_d(,1)
-
-        .eax_d(,1):
-            .long 0x00
-        .edx_d(,1):
-            .long 0x00
-        .eax_sto(,1):
-            .long 0x00
-        .edx_sto(,1):
-            .long 0x00
             
     movl 8(%ebp),%eax
     movl %eax,.eax_sto(,1)
@@ -72,11 +63,11 @@ _in_port16: #u16 in_port16(u16 portname)
 
         movl %edx,.edx_d(,1)
 
-        .eax_d(,1):
+        .eax_d:
             .long 0x00
-        .edx_d(,1):
+        .edx_d:
             .long 0x00
-        .edx_sto(,1):
+        .edx_sto:
             .long 0x00
             
     movl 8(%ebp),%eax

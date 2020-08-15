@@ -5,7 +5,7 @@ uint32_t fat_length = 0;
 uint32_t root_dir_location = 0;
 uint32_t root_dir_len = 0;
 uint32_t data_location = 0;
-extern read_disk_sector(uint16_t high_sec,uint32_t low_sec,uint16_t sec_num,uint32_t* target_ptr);
+extern uint32_t read_disk_sector(uint16_t high_sec,uint32_t low_sec,uint16_t sec_num,uint32_t* target_ptr);
 uint32_t fat32_init_func(uint32_t fat1_loca,uint32_t fat_len,uint32_t root_dir_loca,uint32_t dataf3)
 {
     fat1_location = fat1_loca;
@@ -29,7 +29,7 @@ struct file_packet fat32_rootfind_file(uint8_t f_name[8])
     uint16_t i = 0;
     while(i < (root_dir_len + 1))
     {
-        read_disk_sector(0x00,root_dir_location,i,sec_temp); //加载跟目录项
+        read_disk_sector(0x00,root_dir_location,i,(uint32_t*)sec_temp); //加载跟目录项
 
     uint16_t item_ptr = 0;
     while (item_ptr < 17)
@@ -72,7 +72,7 @@ struct file_packet fat32_rootfind_file(uint8_t f_name[8])
             uint8_t clu_offs = ((clu_ptr % 16) - 1);
             uint32_t clu_sec = (clu_ptr - (clu_ptr % 16)) / 16;
 
-            read_disk_sector(0x00,(clu_sec + fat1_location),1,sec_temp);
+            read_disk_sector(0x00,(clu_sec + fat1_location),1,(uint32_t*)sec_temp);
             uint32_t clu_item = 0;
             uint32_t clu_count = 0;
             while (!(clu_item = 0x0fffffff))                //计算簇长度
