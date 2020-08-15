@@ -1,84 +1,39 @@
 _out_port16: #out_port16(u16 portname,u16 valve)
     pushl %ebp
-    movl %esp,%ebp
-
-        movl %eax,.eax_d(,1)
-        movl %edx,.edx_d(,1)
-
-        .eax_d:
-            .long 0x00
-        .edx_d:
-            .long 0x00
-        .eax_sto:
-            .long 0x00
-        .edx_sto:
-            .long 0x00
-
-    movl 8(%ebp),%eax
-    movl %eax,.eax_sto(,1)
-    movl 12(%ebp),%eax
-    movl %eax,.edx_sto(,1)
-
-    movw .eax_sto(,1),%ax
-    movw .edx_sto(,1),%dx
-
-    outw %ax,%dx
-
-            movl .eax_d(,1),%eax
-            movl .edx_d(,1),%edx
+    movl %esp, %ebp
+    movl 0xc(%ebp), %eax
+    movl 0x8(%ebp), %edx
+    outw %ax, %dx
     nop
     popl %ebp
-
-    ret
-
-
+    ret 
 
 _out_port8: #out_port8(u16 portname,u8 valve)
     pushl %ebp
-    movl %esp,%ebp
-
-        movl %eax,.eax_d(,1)
-        movl %edx,.edx_d(,1)
-            
-    movl 8(%ebp),%eax
-    movl %eax,.eax_sto(,1)
-    movl 12(%ebp),%eax
-    movl %eax,.edx_sto(,1)
-
-    movw .eax_sto(,1),%ax
-    movw .edx_sto(,1),%dx
-
-    outb %al,%dx
-
-            movl .eax_d(,1),%eax
-            movl .edx_d(,1),%edx
+    movl %esp, %ebp
+    movl 0xc(%ebp), %eax
+    movl 0x8(%ebp), %edx
+    outb %al, %dx
     nop
     popl %ebp
-
     ret
 
-_in_port16: #u16 in_port16(u16 portname)
+_in_port16: #u16 in_port16(u16 portname) 
     pushl %ebp
-    movl %esp,%ebp
-
-        movl %edx,.edx_d(,1)
-
-        .eax_d:
-            .long 0x00
-        .edx_d:
-            .long 0x00
-        .edx_sto:
-            .long 0x00
-            
-    movl 8(%ebp),%eax
-    movl %eax,.edx_sto(,1)
-
-    movw .edx_sto(,1),%dx
-
-    outw %ax,%dx
-
-            movl .edx_d(,1),%edx
+    movl %esp, %ebp
+    movl 0x8(%ebp), %edx
+    inw %dx, %ax
+    andl 0xffff, %eax
     nop
     popl %ebp
+    ret 
 
-    ret
+_in_port8: #u8 in_port16(u16 portname) 
+    pushl %ebp
+    movl %esp, %ebp
+    movl 0x8(%ebp), %edx
+    inb %dx, %al
+    andl 0xff, %eax
+    nop
+    popl %ebp
+    ret 
