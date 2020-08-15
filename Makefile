@@ -9,6 +9,6 @@ build:
 clean:
 	make clean -C ./build/
 run:
-	qemu-system-i386 -hda ./build/dsk.img -m 512m
+	qemu-system-i386 -hda ./build/dsk.img -m 512M
 
 	
