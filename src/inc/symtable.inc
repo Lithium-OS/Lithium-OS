@@ -1,4 +1,0 @@
-org 0x7e00
-SYM_LBA48_ASM_WORD_PER_SECTOR:
-dw 32
-times 1024-($$-$) db 0x00
