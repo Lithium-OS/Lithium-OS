@@ -1,10 +1,11 @@
 #ifndef _TYPE_H
 
-#define u32 unsigned int
-#define u16 unsigned short
-#define u8 unsigned char
-#define s32 signed int
-#define s16 signed short
-#define s8 signed char
+typedef unsigned int uint32_t;
+typedef unsigned short uint16_t;
+typedef unsigned char uint8_t;
+typedef signed int sint32_t;
+typedef signed short sint16_t;
+typedef signed char sint8_t;
+
 
 #endif

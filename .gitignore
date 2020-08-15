@@ -2,3 +2,5 @@
 *.iso
 *.bin
 *.sys
+*.s
+*.out
