@@ -60,6 +60,6 @@ Fail:
 
 %include "../inc/bootstage/realmode/disk.asm"
 
-times 0 db 0x00
+times 346 db 0x00
 
 dw 0xaa55

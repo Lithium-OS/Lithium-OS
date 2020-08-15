@@ -70,4 +70,4 @@ ShowMessage:
     int 0x10
     ret
 
-times 0x7f7f db 0
+times (0x7f7f - 19) db 0
