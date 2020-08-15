@@ -14,8 +14,6 @@ GDT_LEN equ GDT_End - GDT_Begin
 GDT_PTR dw GDT_LEN
     dd GDT_Begin
 
-MsgOpenA20Fail db "Open A20 Address Fail"
-
 [BITS 16]
 StartLoader:
     mov ax, cs
@@ -23,6 +21,14 @@ StartLoader:
     mov es, ax
     mov ax, 0x00
     mov ss, ax
+
+    ; print Staring Loader...
+    mov bx, MsgStartLoader
+    mov cx, 26
+    mov dx, 0300h
+    call ShowMessage
+
+    jmp $
     
     ; open A20 address
     mov ax,0x2401
@@ -51,14 +57,14 @@ StartLoader:
 
 OpenA20Fail:
     mov bx, MsgOpenA20Fail
-    mov cx, 0x15
-    mov dx, 0x0100
+    mov cx, 33
+    mov dx, 0x0400
     call ShowMessage
     jmp Fail
 
 Fail:
     hlt
-    jmp Fail
+    jmp $
 
 ; cx: length, dh: row, dl: col, bx: string addr
 ShowMessage:
@@ -70,4 +76,8 @@ ShowMessage:
     int 0x10
     ret
 
-times (0x7f7f - 19) db 0
+MsgStartLoader db "[loader] Staring Loader..."
+MsgOpenA20Fail db "[loader] Open A20 address failed."
+
+;times (0x7f7f - 19) db 0
+times 32568 db 0
