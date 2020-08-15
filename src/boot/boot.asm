@@ -33,6 +33,8 @@ BS_VolLab           db "SystemDisk"
                     db 0x00
 BS_FileSysType      db "FAT32   "
 
+
+
 StartBoot:
 
     mov ah,0x42
@@ -55,11 +57,27 @@ dq 0x02 ;No.3 Sector
     jmp 0x8200
 
 Fail:
-    hlt
-    jmp Fail
+    mov bx, MsgFail
+    mov cx, 19
+    mov dx, 0x0100
+    call ShowMessage
+    jmp $
+
+; cx: length, dh: row, dl: col, bx: string addr
+ShowMessage:
+    mov ax, ds
+    mov es, ax
+    mov bp, bx
+    mov ax, 0x1301
+    mov bx, 0x000f
+    int 0x10
+    ret
 
 %include "../inc/bootstage/realmode/disk.asm"
 
-times 346 db 0x00
+MsgFail db "[boot] Boot failed."
+
+;times 346 db 0x00
+times 301 db 0
 
 dw 0xaa55
