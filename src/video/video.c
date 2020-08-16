@@ -1,6 +1,6 @@
 
 #define _UNIFONT_ONLY_ASCII
-#include "unifont.h"
+#include "unifont.ftl"
 #include "video.h"
 
 uint32_t video_bas_addr = 0x00;
