@@ -194,6 +194,26 @@ uint8_t vdp_draw_unicode(
     return width;
 }
 
+// 绘制整数为 16 进制数字字符串
+uint32_t vdp_write_hex(uint32_t x,uint32_t y,uint32_t num) //0000001
+{
+    uint8_t cache[10];
+    cache[0] = 48;
+    cache[1] = 120;
+    for (uint32_t i = 0; i < 8; i++)
+    {
+        if (((num >> (i * 4)) & 0xf) < 10)
+        {
+            cache[9-i] = (48 + (num >> (i * 4)) & 0xf);
+        }
+        else
+        {
+            cache[9-i] = (65 + ((num >> (i * 4)) & 0xf)-11);
+        } 
+    }
+    vdp_write_string(cache,8,x,y);
+}
+
 // 写字符串到字符地址（不会自动换行）
 uint32_t vdp_draw_string(
     uint8_t *string,
