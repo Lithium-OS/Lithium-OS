@@ -1,8 +1,12 @@
 #include "../lib/type.h"
 extern void out_port8(uint16_t porn_name,uint8_t valve);
 extern uint16_t in_port16(uint16_t porn_name);
+extern uint8_t in_port8(uint16_t porn_name);
 uint32_t read_disk_sector(uint16_t high_sec,uint32_t low_sec,uint16_t sec_num,uint32_t* target_ptr)         //LBA48读磁盘扇区加载到指定地址
 {
+    uint8_t i = 0;
+    while (i=1)
+        i = ((in_port8(0x1f7)<< 4) >> 7);
     out_port8(0x01f1,0x0000);
     out_port8(0x01f1,0x0000);
     out_port8(0x01f2,(sec_num >> 8)); //high 8
@@ -22,5 +26,12 @@ uint32_t read_disk_sector(uint16_t high_sec,uint32_t low_sec,uint16_t sec_num,ui
         target_ptr + 2;
     }
     
-    return 0;
+    return get_err();
+}
+static uint32_t get_err(void)
+{
+    if((in_port8(0x1f7)<< 7) >> 7)
+        return in_port8(0x1f1);
+    else
+        return 0;
 }
