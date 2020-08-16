@@ -1,6 +1,6 @@
 ; loader.asm
 
-org 0x8200
+org 0x7e00
 
 jmp StartLoader
 nop
@@ -80,4 +80,4 @@ MsgStartLoader db "[loader] Staring Loader..."
 MsgOpenA20Fail db "[loader] Open A20 address failed."
 
 ;times (0x7f7f - 19) db 0
-times 32568 db 0
+times 1848 db 0
