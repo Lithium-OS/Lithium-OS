@@ -194,8 +194,8 @@ uint8_t vdp_draw_unicode(
     return width;
 }
 
-// 绘制整数为 16 进制数字字符串
-uint32_t vdp_write_hex(uint32_t x,uint32_t y,uint32_t num) //0000001
+// 绘制整数为 16 进制数字字符串：0x12345678
+uint32_t vdp_draw_hex(uint32_t x, uint32_t y, uint32_t num)
 {
     uint8_t cache[10];
     cache[0] = 48;
