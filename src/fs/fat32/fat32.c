@@ -1,11 +1,11 @@
-/*此处如出现问题,由Alex负责(笑*/
-#include "../../inc/type.h"
+#include "fat32.h"
 uint32_t fat1_location = 0;
 uint32_t fat_length = 0;
 uint32_t root_dir_location = 0;
 uint32_t root_dir_len = 0;
 uint32_t data_location = 0;
-extern read_disk_sector(uint16_t high_sec,uint32_t low_sec,uint16_t sec_num,uint32_t* target_ptr);
+extern uint32_t read_disk_sector(uint16_t high_sec,uint32_t low_sec,uint16_t sec_num,uint32_t* target_ptr);
+//初始化信息
 uint32_t fat32_init_func(uint32_t fat1_loca,uint32_t fat_len,uint32_t root_dir_loca,uint32_t dataf3)
 {
     fat1_location = fat1_loca;
@@ -14,22 +14,20 @@ uint32_t fat32_init_func(uint32_t fat1_loca,uint32_t fat_len,uint32_t root_dir_l
     data_location = dataf3;
     return 0;
 }
-struct file_packet
-{
-    uint32_t cluster;
-    uint32_t sector;
-    uint16_t sec_length;
-    uint32_t byte_length;
-};
+//获得根目录下某文件信息包
+fat32_file_packet fat32_rootfind_file(uint8_t f_name[8])
 
-struct file_packet fat32_rootfind_file(uint8_t f_name[8])
+
 {
-    struct file_packet opt;
+    fat32_file_packet opt;
+    for (uint32_t i = 0; i < 8; i++)
+        opt.name[i] = f_name[i];
+    
     uint8_t sec_temp[512] = {1};
     uint16_t i = 0;
     while(i < (root_dir_len + 1))
     {
-        read_disk_sector(0x00,root_dir_location,i,sec_temp); //加载跟目录项
+        read_disk_sector(0x00,root_dir_location,i,(uint32_t*)sec_temp); //加载跟目录项
 
     uint16_t item_ptr = 0;
     while (item_ptr < 17)
@@ -55,7 +53,7 @@ struct file_packet fat32_rootfind_file(uint8_t f_name[8])
             clu_ptr = sec_temp[(item_ptr * 32)+ 27];
 
             opt.cluster = clu_ptr;
-            opt.sector = ((clu_ptr - 3 ) + data_location);
+            opt.sector = ((clu_ptr - 3 )*8 + data_location);
 
             uint32_t clu_size = 0;
 
@@ -72,7 +70,7 @@ struct file_packet fat32_rootfind_file(uint8_t f_name[8])
             uint8_t clu_offs = ((clu_ptr % 16) - 1);
             uint32_t clu_sec = (clu_ptr - (clu_ptr % 16)) / 16;
 
-            read_disk_sector(0x00,(clu_sec + fat1_location),1,sec_temp);
+            read_disk_sector(0x00,(clu_sec + fat1_location),1,(uint32_t*)sec_temp);
             uint32_t clu_item = 0;
             uint32_t clu_count = 0;
             while (!(clu_item = 0x0fffffff))                //计算簇长度
@@ -102,3 +100,26 @@ finp:
     opt.sec_length = 0;
     return opt;
 }
+//通过信息包加载文件至指定地址
+uint32_t fat32_load_file(fat32_file_packet f32fpack,uint32_t* tptr)
+{
+        return read_disk_sector(0x0000,f32fpack.sector,f32fpack.sec_length,tptr);  
+    
+}
+//获得根目录下某文件,加载文件至指定地址
+uint32_t fat32_get_rootfile(uint8_t name[8],uint32_t* file_ptr)
+{
+        return fat32_load_file(fat32_rootfind_file(name),file_ptr);
+}
+/* Not FIN
+fat32_file_table fat32_get_rootinfo(fat32_file_packet pck)
+{
+    fat32_file_table opt;
+    for (uint32_t i = 0; i < 8; i++)
+        opt.name[i] = pck.name[i];
+    (pck.cluster - (pck.cluster % 144))
+
+    
+}
+uint32_t fat32_create_rootfile(uint8_t name[8],uint8_t exname[3])
+*/
