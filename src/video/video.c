@@ -11,12 +11,7 @@ uint32_t vdp_write_pixel(uint8_t r,uint8_t g,uint8_t b,uint32_t x,uint32_t y)
 
     uint32_t pixel = 0x00;
 
-    pixel = r;
-    pixel = pixel << 24;
-    pixel = g;
-    pixel = pixel << 16;
-    pixel = b;
-    pixel = pixel << 8;
+    pixel = (uint32_t)(r << 24) | (uint32_t)(g << 16) | (uint32_t)(b << 8);
 
     *ptr = pixel;
     return 0;
