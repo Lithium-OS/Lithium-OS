@@ -1,4 +1,4 @@
-#include "../inc/type.h"
+#include "../lib/type.h"
 extern uint32_t fat32_get_rootfile(uint8_t name[8],uint32_t* file_ptr);
 
 void load(){

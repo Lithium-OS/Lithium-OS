@@ -1,4 +1,4 @@
-#include "inc/type.h"
+#include "../lib/type.h"
 extern void out_port8(uint16_t porn_name,uint8_t valve);
 extern uint16_t in_port16(uint16_t porn_name);
 uint32_t read_disk_sector(uint16_t high_sec,uint32_t low_sec,uint16_t sec_num,uint32_t* target_ptr)         //LBA48读磁盘扇区加载到指定地址

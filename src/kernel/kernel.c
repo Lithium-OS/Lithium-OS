@@ -1,5 +1,5 @@
-#include "../inc/type.h"
+#include "../lib/type.h"
 void kernel(void)
 {
-    
+    while (1);
 }
