@@ -1,6 +1,12 @@
 ;===写死的文件长度,注意更改!
 org 0x7c6a
 
+mov ax,0x0600
+mov bx,0x0700
+mov cx,0x00
+mov dx,0x184f
+int 0x10
+
 mov ax,0x00
 mov ds,ax
 mov ax,DskPack
@@ -29,9 +35,9 @@ DskPack:
 db 0x10
 db 0x00
 dw 4
-dw 0x0000
 dw 0x7e00
-dq 1
+dw 0x0000
+dq 4128
 ; cx: length, dh: row, dl: col, bx: string addr
 ShowMessage:
     mov ax, ds
@@ -45,5 +51,5 @@ Failmsg:
     db "[Boot]Cannot Read Loader."
 Succmsg:
     db "[Boot]Found Loader,Jumping."
-times 252 db 0x00
+times 238 db 0x00
 dw 0xaa55
