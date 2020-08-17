@@ -1,12 +1,11 @@
 
-#define _UNIFONT_ONLY_ASCII
+#define _UNIFONT_ONLY_ASCII // 只导入 0-127 范围的字库
 #include "unifont.ftl"
 #include "video.h"
 
 uint32_t video_bas_addr = 0x00;
 uint32_t video_lim_x = 0x00;
 uint32_t video_lim_y = 0x00;
-
 
 // 常用的控制台颜色值
 color_t shell_colors[16] =

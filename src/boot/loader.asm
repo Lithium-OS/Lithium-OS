@@ -35,7 +35,7 @@ ShowMessage:
     int 0x10
     ret
 Getmsg: ;19
-    db "[Loader]Get Signal."
+    db "[Loader]Got Signal."
 Oa20Fmsg: ;21
     db "[Loader]Cannot Open A20."
 Oa20OKmsg:;19
