@@ -5,3 +5,4 @@ void load(){
     char name[8]={'k','e','r','n','e','l',' ',' '};
     fat32_get_rootfile(name,(uint32_t*)0x100000);
 }
+
