@@ -1,6 +1,6 @@
 all:
 	dd if=/dev/zero of=./dsk.img bs=1M count=1024
-	mkfs -t vfat ./dsk.img
+	mkfs -t fat -a ./dsk.img
 	sudo mount ./dsk.img ./mnt/
 	sudo cp ./loader.sys  ./mnt/
 	sudo umount ./mnt/

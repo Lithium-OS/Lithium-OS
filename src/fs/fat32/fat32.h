@@ -1,4 +1,5 @@
 #include "../../lib/type.h"
+
 typedef struct
 {
     uint8_t name[8];
@@ -6,8 +7,9 @@ typedef struct
     uint32_t sector;
     uint16_t sec_length;
     uint32_t byte_length;
-}fat32_file_packet;
-typedef struct 
+} fat32_file_packet;
+
+typedef struct
 {
     uint8_t name[8];
     uint8_t exname[3];
@@ -22,5 +24,4 @@ typedef struct
     uint16_t t_write_date;
     uint16_t clu_l;
     uint32_t size;
-}fat32_file_table;
-
+} fat32_file_table;
