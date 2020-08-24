@@ -1,4 +1,4 @@
-#include "../lib/type.h"
+#include "../lib/stdint.h"
 
 void kernel(void)
 {

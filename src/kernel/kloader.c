@@ -1,4 +1,4 @@
-#include "../lib/type.h"
+#include "../lib/stdint.h"
 
 extern uint32_t fat32_get_rootfile(uint8_t name[8], uint32_t *file_ptr);
 

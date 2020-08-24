@@ -40,7 +40,7 @@ StartLoader:
 
     
     ; open A20 address
-    enable_A20
+    enable_A20:
     mov bx, MagOpenA20OK
     mov cx, 26
     mov dx, 0400h
@@ -84,7 +84,7 @@ ShowMessage:
     int 0x10
     ret
 
-enable_A20:
+esnable_A20:
         cli
  
         call    a20wait

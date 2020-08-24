@@ -2,7 +2,7 @@
 #define _UNIFONT_ONLY_ASCII // 只导入 0-127 范围的字库
 #include "unifont.ftl"
 #include "video.h"
-
+#include "../lib/stdlib.h"
 uint32_t video_bas_addr = 0x00;
 uint32_t video_lim_x = 0x00;
 uint32_t video_lim_y = 0x00;
@@ -73,12 +73,6 @@ vdp_draw_vline(uint32_t start_y, uint32_t end_y, uint32_t x,
         tmpy++;
     }
     return 0;
-}
-
-static uint32_t
-abs(uint32_t a)
-{
-    return a < 0 ? -a : a;
 }
 
 // 绘制线条（可斜可直）

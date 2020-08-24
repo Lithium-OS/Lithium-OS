@@ -1,5 +1,4 @@
-#include "../../lib/type.h"
-
+#include "../../lib/stdint.h"
 typedef struct
 {
     uint8_t name[8];

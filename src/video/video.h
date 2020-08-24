@@ -1,4 +1,4 @@
-#include "../lib/type.h"
+#include "../lib/stdint.h"
 
 // 颜色结构，布局为 RGBA
 typedef struct
