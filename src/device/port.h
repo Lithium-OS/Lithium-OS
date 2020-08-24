@@ -1,4 +1,4 @@
-#include "../lib/type.h"
+#include "../lib/stdint.h"
 int out_port16(uint16_t portname,uint16_t valve)
 {
     __asm__ __volatile__("outw %0,%1"::"r"(portname),"r"(valve));

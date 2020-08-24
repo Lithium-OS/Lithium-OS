@@ -1,4 +1,4 @@
-#include "../lib/type.h"
+#include "../lib/stdint.h"
 #include "../device/port.h"
 
 // LBA48 读磁盘扇区加载到指定地址
