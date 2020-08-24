@@ -1,6 +1,6 @@
 # Lithium OS
 
-It's awesome.
+It's awesome.~~(DONT DRAINK ANY WATER WHEN U R USING THIS OS)~~
 
 # Development
 
