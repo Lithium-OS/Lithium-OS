@@ -1,4 +1,18 @@
-; loader.asm
+ ;   Copyright (C) 2020 LithiumOS-Team
+
+ ;   This program is free software: you can redistribute it and/or modify
+ ;   it under the terms of the GNU Affero General Public License as
+ ;   published by the Free Software Foundation, either version 3 of the
+ ;   License, or (at your option) any later version.
+ ;
+ ;   This program is distributed in the hope that it will be useful,
+ ;   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ ;   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ ;   GNU Affero General Public License for more details.
+
+ ;  You should have received a copy of the GNU Affero General Public License
+ ;  along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
 
 org 0x7e00
 
@@ -38,7 +52,22 @@ StartLoader:
     mov dx, 0300h
     call ShowMessage
 
-    
+    mov eax,DWORD 0x00
+    mov [0x8600],eax
+    mov ax,0x00
+    mov es,ax
+    mov di,0x8604
+    LoopGetME:
+    mov eax,DWORD 0xe820
+    mov ecx,24
+    mov edx,0x534d4150
+    int 0x15
+    add di,24
+    inc DWORD [0x8600]
+    cmp ebx,0
+    jne LoopGetME
+
+
     ; open A20 address
     enable_A20:
     mov bx, MagOpenA20OK

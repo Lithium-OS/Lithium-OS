@@ -1,6 +1,22 @@
-#include "../lib/stdint.h"
-#include "../device/port.h"
+ /* Copyright (C) 2020 LithiumOS-Team
 
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+#include "../lib/stdint.h"
+extern uint16_t out_port8(uint16_t portname,uint16_t valve);
+extern uint16_t in_port16(uint16_t portname);
 // LBA48 读磁盘扇区加载到指定地址
 uint32_t read_disk_sector(uint16_t high_sec, uint32_t low_sec, uint16_t sec_num,
     uint32_t* target_ptr)

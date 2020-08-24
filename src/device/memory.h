@@ -14,16 +14,22 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "../lib/stdint.h"
-
-// 颜色结构，布局为 RGBA
-typedef struct
+typedef struct mem_table
 {
-    // 红色值
-    uint8_t r;
-    // 绿色值
-    uint8_t g;
-    // 蓝色值
-    uint8_t b;
-    // alpha 值（不透明度）
-    uint8_t a;
-} color_t;
+    uint64_t base;
+    uint64_t len;
+    uint32_t attr;
+    uint32_t rev;
+}mem_table;
+typedef struct mem_pagedes
+{
+    uint32_t addr;
+    uint16_t pid;
+    uint8_t attr;
+    /*0000CKBG*/
+    /*G - Global        */
+    /*B - Busy          */
+    /*K - Kernel/User   */
+    /*C - Clean         */
+
+}mem_pagedes; 

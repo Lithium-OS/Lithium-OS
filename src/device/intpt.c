@@ -14,16 +14,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "../lib/stdint.h"
-
-// 颜色结构，布局为 RGBA
-typedef struct
+void sys_cli(void)
 {
-    // 红色值
-    uint8_t r;
-    // 绿色值
-    uint8_t g;
-    // 蓝色值
-    uint8_t b;
-    // alpha 值（不透明度）
-    uint8_t a;
-} color_t;
+    __asm__ __volatile__("cli");
+}
+void sys_sti(void)
+{
+    __asm__ __volatile__("sti");
+}
+void sys_int(uint32_t intname)
+{
+    __asm__ __volatile__("int %0"::"r"(intname));
+}
