@@ -2,7 +2,7 @@
 #define _UNIFONT_ONLY_ASCII // 只导入 0-127 范围的字库
 #include "unifont.ftl"
 #include "video.h"
-
+#include "../lib/stdlib.h"
 uint32_t video_bas_addr = 0x00;
 uint32_t video_lim_x = 0x00;
 uint32_t video_lim_y = 0x00;
@@ -73,12 +73,6 @@ vdp_draw_vline(uint32_t start_y, uint32_t end_y, uint32_t x,
         tmpy++;
     }
     return 0;
-}
-
-static uint32_t
-abs(uint32_t a)
-{
-    return a < 0 ? -a : a;
 }
 
 // 绘制线条（可斜可直）
@@ -178,6 +172,21 @@ vdp_draw_hex(uint32_t value, uint32_t x, uint32_t y, color_t* color)
     vdp_draw_string(cache, 10, x, y, color);
 }
 
+ /* Copyright (C) 2020 LithiumOS-Team
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
 // 绘制字符串到字符地址（不会自动换行）
 uint32_t
 vdp_draw_string(uint8_t *string, uint16_t len, uint32_t x, uint32_t y,
