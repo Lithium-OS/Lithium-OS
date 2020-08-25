@@ -14,24 +14,36 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "../lib/stdint.h"
-typedef struct mem_table
+#ifndef _PROC_H_
+#define _PROC_H_
+typedef struct proc_des
 {
-    uint64_t base;
-    uint64_t len;
-    uint32_t attr;
-    uint32_t rev;
-}mem_table;
-typedef struct mem_pagedes
-{
-    uint32_t addr;
+    volatile uint16_t stat;
+    uint16_t flags;
     uint16_t pid;
-    uint8_t attr;
-    /*0000CKBG*/
-    /*G - Global        */
-    /*B - Busy          */
-    /*K - Kernel/User   */
-    /*C - Clean         */
-    uint32_t len_ptr;
-    /*Head:num*/
-    /*Not Head  0x0fffffff*/
-}mem_pagedes; 
+    uint32_t base_mem;
+    uint32_t len_mem;
+    volatile uint32_t cnt_time;
+    volatile uint32_t sig;
+    volatile uint32_t pri;
+
+    proc_mdes mem;
+    proc_tss tss;
+}proc_des;
+typedef struct proc_mdes
+{
+    uint32_t mem_cstart,mem_cend;
+    uint32_t mem_dstart,mem_dend;
+    uint32_t mem_rodstart,mem_rodend;
+    uint32_t mem_heapstart,mem_heapend;
+    uint32_t mem_stack;
+}proc_mdes;
+typedef struct proc_tss
+{
+    volatile uint32_t eax,ebx,ecx,edx,eip,esi,edi,esp,ebp,eflags;
+    volatile uint16_t cs,ds,ss,es,fs,gs;
+    volatile uint32_t trap,err_code;
+}proc_tss;
+
+
+#endif
