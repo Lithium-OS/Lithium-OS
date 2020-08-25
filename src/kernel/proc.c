@@ -13,9 +13,5 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-StartAddr   EndAddr     Name          Size
-0x7c00      0x7e00      MBR           512
-0x7e00      0x8600      Loader          2048
-0x8600      0x8604      MemTableCNT       4
-0x8604      0x8904      MemTable         768
-0x8904      0x708904    MemTablePage    0x700000          
+#include "proc.h"
+proc_des proc_table[65536];

@@ -15,7 +15,7 @@
 */
 #include "./math.h"
 #include "./xmath.h"
-
+#include "errno.h"
 static const double tau = 6.28318530717958647693;
 
 double fabs(double x) {
