@@ -13,9 +13,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-// C Standard Library
-// math.h
-
+/*MainDevloper: AlexCui*/
+/*ISO C std Lib*/
 #ifndef _C_MATH_H_
 #define _C_MATH_H_
 

@@ -13,6 +13,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+/*MainDevloper: AlanCui*/
 #include "../lib/stdint.h"
 
 // 颜色结构，布局为 RGBA

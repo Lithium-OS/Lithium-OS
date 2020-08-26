@@ -14,8 +14,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include "../lib/stdint.h"
-
+extern uint32_t init_memory();
 void kernel(void)
 {
+    init_memory();
     while (1);
 }

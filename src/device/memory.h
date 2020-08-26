@@ -13,6 +13,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+/*MainDevloper: AlanCui*/
 #include "../lib/stdint.h"
 typedef struct mem_table
 {
@@ -35,3 +36,10 @@ typedef struct mem_pagedes
     /*Head:num*/
     /*Not Head  0x0fffffff*/
 }mem_pagedes; 
+
+typedef struct mem_b_ll
+{
+    mem_b_ll* next_ll;
+    uint16_t ptr;
+    uint16_t end;
+}mem_b_ll;

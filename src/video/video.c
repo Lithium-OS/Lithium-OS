@@ -1,3 +1,19 @@
+ /* Copyright (C) 2020 LithiumOS-Team
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as
+    published by the Free Software Foundation, either version 3 of the
+    License, or (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+/*MainDevloper: AlanCui,SteveXMH*/
 
 #define _UNIFONT_ONLY_ASCII // 只导入 0-127 范围的字库
 #include "unifont.ftl"
@@ -172,21 +188,6 @@ vdp_draw_hex(uint32_t value, uint32_t x, uint32_t y, color_t* color)
     vdp_draw_string(cache, 10, x, y, color);
 }
 
- /* Copyright (C) 2020 LithiumOS-Team
-
-    This program is free software: you can redistribute it and/or modify
-    it under the terms of the GNU Affero General Public License as
-    published by the Free Software Foundation, either version 3 of the
-    License, or (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU Affero General Public License for more details.
-
-    You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/
 // 绘制字符串到字符地址（不会自动换行）
 uint32_t
 vdp_draw_string(uint8_t *string, uint16_t len, uint32_t x, uint32_t y,

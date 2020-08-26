@@ -13,9 +13,5 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+/*In Programing*/
 /*MainDevloper: AlanCui*/
-/*C++Std Lib Shell*/
-#ifndef _CLIMITS_
-#define _CLIMITS_
-#include "limits.h"
-#endif

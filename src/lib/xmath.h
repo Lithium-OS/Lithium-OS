@@ -16,7 +16,8 @@
 // C Standard Library
 // C++ Standard Library
 // xmath.h [internal]
-
+/*MainDevloper: AlexCui*/
+/*ISO C std Lib*/
 // float properties, little-endian
 #ifndef __big_endian
 #   define _F0 1

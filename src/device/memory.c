@@ -13,6 +13,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+/*MainDevloper: AlanCui*/
+/*NotFin*/
 #include "memory.h"
 #include "./kernel/err.h"
 #include "../lib/limits.h"
@@ -32,7 +34,8 @@ uint32_t init_memory(){
     mem_table mtb;  //临时内存表
     mem_pagedes emp_page; //空表模板
     emp_page.attr = 0b00001000;     //属性Clean
-    emp_page.pid = UNIT_MAX;  //pid = UINT_MAX  
+    emp_page.pid = UNIT_MAX;  //pid = UINT_MAX 
+    //emp_page.b_ptr = 0; //清除byte分配指针 
     for (uint32_t i = 0; i < *(uint32_t*)cnt_ptr; i++){ //循环表项次
         mtb = *((mem_table*)memtab_ptr);
         if (mtb.attr == 1){
@@ -87,9 +90,9 @@ void* alloc_mem_page(uint16_t pid,uint32_t num){
             else
                 mempage_des_table[rtn].attr = ((mempage_des_table[rtn].attr | 0x0e) ^ 0x08); //去除Clean设置Busy和Kernel
             if (i == 0)
-                mempage_des_table[rtn].len_ptr = num;
+                mempage_des_table[rtn].len_ptr = num;  //如果为首Block设置后页计数
             else
-                mempage_des_table[rtn].len_ptr = 0x0fffffff;
+                mempage_des_table[rtn].len_ptr = 0x0fffffff; //如果不是首页就设置为0x0fffffff
             
             
         }
@@ -104,16 +107,38 @@ void* alloc_mem_page(uint16_t pid,uint32_t num){
 }
 
 uint32_t free_mem_page(void* ptr){
-    sys_cli();
-    if (mempage_des_table[((uint32_t)ptr / 4096)].len_ptr != 0x0fffffff)
-    {
+    if (mempage_des_table[((uint32_t)ptr / 4096)].len_ptr != 0x0fffffff) //判断是否为首Block
+    { //执行释放操作
         for (uint32_t i = (((uint32_t)ptr) / 4096); i < mempage_des_table[((uint32_t)ptr / 4096)].len_ptr; i++)
         {
            mempage_des_table[i].attr = ((mempage_des_table[i].attr & 0) | 0x08);// 清ALL设置Clean
         }
         return 0;
     }
-    errno = EFAULT;
-    return NULL;
-    sys_sti();
+    else
+    {//报告内存Block错误的致命错误
+        errno = EFAULT;
+        return NULL;
+    }
+    
 }
+
+void* alloc_mem_byte(void* ptr,uint32_t cnt){
+    void* rtn; //创建返回指针
+    rtn = mempage_des_table[((uint32_t)ptr / 4096)].addr;//将指针移到该表项的头
+    //rtn = rtn + mempage_des_table[((uint32_t)ptr / 4096)].b_ptr;//将指针移位至已经分配的内存后
+    //if ((mempage_des_table[((uint32_t)ptr / 4096)].b_ptr + cnt) > 4096) //判断是否还有MEM
+    {//如果有
+       // mempage_des_table[((uint32_t)ptr / 4096)].b_ptr = cnt + mempage_des_table[((uint32_t)ptr / 4096)].b_ptr; //b_ptr自增
+        rtn = rtn + cnt;//rtn自增
+        return rtn;
+    }
+    //else
+    {
+        errno = ENOMEM;
+        return NULL; //报告无内存致命错误
+    }
+    
+}
+
+uint32_t free_mem_byte(void* ptr,uint32_t cnt)

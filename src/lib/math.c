@@ -13,6 +13,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+/*MainDevloper: AlexCui*/
+/*ISO C std Lib*/
 #include "./math.h"
 #include "./xmath.h"
 #include "errno.h"

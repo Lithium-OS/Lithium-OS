@@ -13,8 +13,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-// C Standard Library
-// stdint.h
+/*MainDevloper: AlexCui*/
+/*ISO C std Lib*/
 
 #ifndef _C_STDINT_H
 #define _C_STDINT_H
