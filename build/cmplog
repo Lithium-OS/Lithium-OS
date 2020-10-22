@@ -1,0 +1,4 @@
+kernel.c: In function ‘kmain’:
+kernel.c:43:9: warning: unused variable ‘test’ [-Wunused-variable]
+     int test = 1;
+         ^
