@@ -15,7 +15,7 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include <gccm.h>
-#include <../include/sys/types.h>
+#include <sys/types.h>
 #include <sys/vbe.h>
 struct grap_info g_sysgrap;
 addr_t get_vbe_vbuf(char *ptr_vbi, char *ptr_vmi)
@@ -60,5 +60,6 @@ int init_vbe(char *ptr_vbi, char *ptr_vmi)
     g_sysgrap.res_x = get_vbe_xres(ptr_vbi, ptr_vmi);
     g_sysgrap.res_y = get_vbe_yres(ptr_vbi, ptr_vmi);
     g_sysgrap.base_addr = get_vbe_pdep(ptr_vbi, ptr_vmi);
+    g_sysgrap.type = ptr_vbi[27];
     return 0;
 }

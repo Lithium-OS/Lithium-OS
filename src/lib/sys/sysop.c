@@ -1,4 +1,4 @@
- /* Copyright (C) 2020 LithiumOS-Team
+/* Copyright (C) 2020 LithiumOS-Team
     This file is part of the Lithium Kernel.
     
     This program is free software: you can redistribute it and/or modify
@@ -14,47 +14,53 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include<gccm.h>
+#include <gccm.h>
 long long get_reg_rax()
 {
     long long tmp;
-    __asm__ ASM_DNO ("nop\n\t":"=a"(tmp)::);
+    __asm__ ASM_DNO("nop\n\t"
+                    : "=a"(tmp)::);
     return tmp;
 }
 long long get_reg_rbx()
 {
     long long tmp;
-    __asm__ ASM_DNO ("nop\n\t":"=b"(tmp)::);
+    __asm__ ASM_DNO("nop\n\t"
+                    : "=b"(tmp)::);
     return tmp;
 }
 
 long long get_reg_rcx()
 {
     long long tmp;
-    __asm__ ASM_DNO ("nop\n\t":"=c"(tmp)::);
+    __asm__ ASM_DNO("nop\n\t"
+                    : "=c"(tmp)::);
     return tmp;
 }
 
 long long get_reg_rdx()
 {
     long long tmp;
-    __asm__ ASM_DNO ("nop\n\t":"=d"(tmp)::);
+    __asm__ ASM_DNO("nop\n\t"
+                    : "=d"(tmp)::);
     return tmp;
 }
 long long get_reg_rsi()
 {
     long long tmp;
-    __asm__ ASM_DNO ("nop\n\t":"=S"(tmp)::);
+    __asm__ ASM_DNO("nop\n\t"
+                    : "=S"(tmp)::);
     return tmp;
 }
 long long get_reg_rdi()
 {
     long long tmp;
-    __asm__ ASM_DNO ("nop\n\t":"=D"(tmp)::);
+    __asm__ ASM_DNO("nop\n\t"
+                    : "=D"(tmp)::);
     return tmp;
 }
 void hlt_cpu(void)
 {
-    __asm__ ASM_DNO ("hlt\n\t":::"memory");
+    __asm__ ASM_DNO("hlt\n\t" ::
+                        : "memory");
 }
-

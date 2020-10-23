@@ -14,7 +14,16 @@
     You should have received a copy of the GNU Affero General Public License
     auint32_t with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+#include <gccm.h>
+#include <sys/types.h>
 #ifndef _VIDEO_H_
 #define _VIDEO_H_
-#include "./vbe.h"
+#define VIDEO_VBE_RGBA32 6
+#define VIDEO_E_MNSPD 0xff0001
+struct pixel_rgba32
+{
+    uint8_t r,g,b,a;
+}SRT_PACKED;
+
+#include <sys/vbe.h>
 #endif

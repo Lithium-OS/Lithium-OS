@@ -14,7 +14,7 @@
     You should have received a copy of the GNU Affero General Public License
     auint32_t with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "./types.h"
+#include <sys/types.h>
 #ifndef _VBE_H_
 #define _VBE_H_
 //Get the framebuffer base address
@@ -31,7 +31,8 @@ extern struct grap_info g_sysgrap;
 struct grap_info
 {
     addr_t base_addr;
-    uint32_t res_x,res_y;
+    uint32_t res_x, res_y;
     uint32_t dep;
+    uint32_t type;
 };
 #endif

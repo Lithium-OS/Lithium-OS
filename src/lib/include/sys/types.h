@@ -15,10 +15,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #ifndef _TYPE_H_
-#define _TYPT_H_
+#define _TYPE_H_
 typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned long uint32_t;
 typedef unsigned long long uint64_t;
 typedef uint64_t addr_t;
+typedef uint64_t size_t;
+typedef signed char sint8_t;
+typedef signed short sint16_t;
+typedef signed long sint32_t;
+typedef signed long long sint64_t;
 #endif

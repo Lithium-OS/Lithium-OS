@@ -1,4 +1,4 @@
- /* Copyright (C) 2020 LithiumOS-Team
+/* Copyright (C) 2020 LithiumOS-Team
     This file is part of the Lithium Kernel.
     
     This program is free software: you can redistribute it and/or modify
@@ -18,9 +18,9 @@
 #define _GCCM_H_
 //Complie object into a Fixed section
 #define IN_SECTION(scname) \
-__attribute__((section(scname)))
+    __attribute__((section(scname)))
 //Complie struct without any align
 #define SRT_PACKED __attribute__((__packed__))
 //Complie without any optimization
 #define ASM_DNO __volatile__
-#endif 
+#endif

@@ -19,29 +19,33 @@
 #include <sys/ioport.h>
 #include <sys/sysop.h>
 #include <sys/video.h>
-const long IN_SECTION(".mbt2std") k__mtb_header_magic = MBT_LDR_MAGIC;
-const long IN_SECTION(".mbt2std") k__mtb_header_arch = MBT_NOW_ARCH;
-const long IN_SECTION(".mbt2std") k__mtb_header_h_len = 16;
-const long IN_SECTION(".mbt2std") k__mtb_header_h_chksum = (unsigned long)(-(MBT_LDR_MAGIC + MBT_NOW_ARCH + 16));
-const short IN_SECTION(".mbt2std") k__mtb_elf_type = MBT_ELF64_TYPE;
-const short IN_SECTION(".mbt2std") k__mtb_elf_flags = 0;
-const long IN_SECTION(".mbt2std") k__mtb_elf_size = 8;
-const short IN_SECTION(".mbt2std") k__mtb_vbuf_type = MBT_VBUF_TYPE;
-const short IN_SECTION(".mbt2std") k__mtb_vbuf_flags = 0;
-const long IN_SECTION(".mbt2std") k__mtb_vbuf_size = 20;
-const long IN_SECTION(".mbt2std") k__mtb_vbuf_width = 1024;
-const long IN_SECTION(".mbt2std") k__mtb_vbuf_height = 768;
-const long IN_SECTION(".mbt2std") k__mtb_vbuf_depth = 32;
-const short IN_SECTION(".mbt2std") k__mtb_reloct_type = MBT_RELOCT_TYPE;
-const short IN_SECTION(".mbt2std") k__mtb_reloct_flags = 0;
-const long IN_SECTION(".mbt2std") k__mtb_reloct_size = 24;
-const long IN_SECTION(".mbt2std") k__mtb_reloct_min_addr = 0;
-const long IN_SECTION(".mbt2std") k__mtb_reloct_max_addr = 0xffffffffffffffff;
-const long IN_SECTION(".mbt2std") k__mtb_reloct_align = 4096;
-const long IN_SECTION(".mbt2std") k__mtb_reloct_perf = MBT_LDPHT_ADDR;
-const short IN_SECTION(".mbt2std") k__mtb_endtag_type = MBT_END_TYPE;
-const short IN_SECTION(".mbt2std") k__mtb_endtag_flags = 0;
-const long IN_SECTION(".mbt2std") k__mtb_endtag_size = 8;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_header_magic = MBT_LDR_MAGIC;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_header_arch = MBT_NOW_ARCH;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_header_h_len = 16;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_header_h_chksum = (unsigned long)(-(MBT_LDR_MAGIC + MBT_NOW_ARCH + 16));
+
+const uint16_t IN_SECTION(".mbt2std") k__mtb_elf_type = MBT_ELF64_TYPE;
+const uint16_t IN_SECTION(".mbt2std") k__mtb_elf_flags = 0;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_elf_size = 8;
+
+const uint16_t IN_SECTION(".mbt2std") k__mtb_vbuf_type = MBT_VBUF_TYPE;
+const uint16_t IN_SECTION(".mbt2std") k__mtb_vbuf_flags = 0;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_vbuf_size = 20;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_vbuf_width = 1024;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_vbuf_height = 768;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_vbuf_depth = 32;
+
+const uint16_t IN_SECTION(".mbt2std") k__mtb_reloct_type = MBT_RELOCT_TYPE;
+const uint16_t IN_SECTION(".mbt2std") k__mtb_reloct_flags = 0;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_reloct_size = 24;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_reloct_min_addr = 0;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_reloct_max_addr = 0xffffffffffffffff;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_reloct_align = 4096;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_reloct_perf = MBT_LDPHT_ADDR;
+
+const uint16_t IN_SECTION(".mbt2std") k__mtb_endtag_type = MBT_END_TYPE;
+const uint16_t IN_SECTION(".mbt2std") k__mtb_endtag_flags = 0;
+const uint32_t IN_SECTION(".mbt2std") k__mtb_endtag_size = 8;
 int kmain()
 {
     if (get_reg_rax() != MBT_AFL_MAGIC) //Do not loaded from Multiboot2 loader
@@ -53,23 +57,30 @@ int kmain()
     char *p_ldr_name;
     int des_alf = (p_mbti->total_size - 8);
     struct mbt_afl_stdhdr *p_nfub = p_mbti;
-    while (des_alf == 0)
+    while (des_alf != 0)
     {
         switch (p_nfub->type)
         {
         case MBT_AFL_VBE_TYPE:
 
             init_vbe(((struct mbt_afi_vbe *)p_nfub)->vbe_contol_info, ((struct mbt_afi_vbe *)p_nfub)->vbe_mode_info);
-
+            
+            des_alf -= p_nfub->size;
             p_nfub = ((char *)p_nfub + p_nfub->size);
             break;
         case MBT_AFL_BLDN_TYPE:
             *p_ldr_name = &(((struct mbt_afi_blname *)p_nfub)->string);
+            des_alf -= p_nfub->size;
             p_nfub = ((char *)p_nfub + p_nfub->size);
             break;
         default:
+            des_alf -= p_nfub->size;
             p_nfub = ((char *)p_nfub + p_nfub->size);
             break;
         }
     }
+    test_video();
+    while (1)
+        hlt_cpu();
+    
 }

@@ -17,8 +17,8 @@
 
 //Still NOT support all afl blocks --AlanCui 2020/10/23
 
-#include "gccm.h"
-#include "sys/types.h"
+#include <gccm.h>
+#include <sys/types.h>
 #ifndef _MULTIBOOT_H_
 #define _MULTIBOOT_H_
 //Define MultiBoot version

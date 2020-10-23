@@ -14,7 +14,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "./types.h"
+#include <sys/types.h>
 #ifndef _SYSOP_H_
 #define _SYSOP_H_
 //Get the valve of RAX
@@ -29,5 +29,6 @@ extern uint64_t get_reg_rdx();
 extern uint64_t get_reg_rsi();
 //Get the valve of RDI
 extern uint64_t get_reg_rdi();
+//Halt Cpu
 extern void hlt_cpu();
 #endif

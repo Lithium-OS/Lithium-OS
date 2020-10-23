@@ -22,5 +22,8 @@ MKDIR = ../../../build
 LIBDIRM = -I ../include
 CMKFLGS = -mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib
 CMKLG = 2>>$(MKDIR)/cmplog >>$(MKDIR)/cmplog
-lib-video:vbe.c
+lib-video:$(MKDIR)/vbe.o $(MKDIR)/univideo.o
+$(MKDIR)/vbe.o:vbe.c
 	$(CC) $(CMKFLGS) vbe.c -o $(MKDIR)/vbe.o $(CMKLG)
+$(MKDIR)/univideo.o:univideo.c
+	$(CC) $(CMKFLGS) univideo.c -o $(MKDIR)/univideo.o $(CMKLG)
