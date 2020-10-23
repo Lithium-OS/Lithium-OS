@@ -16,6 +16,7 @@
 */
 #include <multiboot.h>
 #include <gccm.h>
+#include <sys/types.h>
 #include <sys/ioport.h>
 #include <sys/sysop.h>
 #include <sys/video.h>

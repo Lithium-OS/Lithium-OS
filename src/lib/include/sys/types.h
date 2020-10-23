@@ -20,7 +20,7 @@ typedef unsigned char uint8_t;
 typedef unsigned short uint16_t;
 typedef unsigned long uint32_t;
 typedef unsigned long long uint64_t;
-typedef uint64_t addr_t;
+typedef void* addr_t;
 typedef uint64_t size_t;
 typedef signed char sint8_t;
 typedef signed short sint16_t;

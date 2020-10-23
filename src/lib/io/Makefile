@@ -22,5 +22,8 @@ MKDIR = ../../../build
 LIBDIRM = -I ../include
 CMKFLGS = -mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib
 CMKLG = 2>>$(MKDIR)/cmplog >>$(MKDIR)/cmplog
-lib-io:ioport.c
+lib-io:$(MKDIR)/ioport.o $(MKDIR)/ata.o
+$(MKDIR)/ioport.o:ioport.c
 	$(CC) $(CMKFLGS) ioport.c -o $(MKDIR)/ioport.o $(CMKLG)
+$(MKDIR)/ata.o:ata.c
+	$(CC) $(CMKFLGS) ata.c -o $(MKDIR)/ata.o $(CMKLG)

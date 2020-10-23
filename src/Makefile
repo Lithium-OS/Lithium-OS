@@ -52,4 +52,4 @@ libs:
 	@echo "\033[34m[II] Making Libs\033[0m"
 	make -C ./lib libs
 dmp:
-	objdump -Ss ../build/lithium.elf
+	objdump -s ../build/lithium.elf
