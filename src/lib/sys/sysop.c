@@ -1,6 +1,6 @@
  /* Copyright (C) 2020 LithiumOS-Team
     This file is part of the Lithium Kernel.
-
+    
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
     published by the Free Software Foundation, either version 3 of the
@@ -15,23 +15,46 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include<gccm.h>
-short in_port16(short port)
+long long get_reg_rax()
 {
-    short tmp = 0;
-    __asm__ ASM_DNO ("inw %%dx,%%ax":"=a"(tmp):"d"(port):);
+    long long tmp;
+    __asm__ ASM_DNO ("nop\n\t":"=a"(tmp)::);
     return tmp;
 }
-char in_port8(short port)
+long long get_reg_rbx()
 {
-    char tmp = 0;
-    __asm__ ASM_DNO ("inb %%dx,%%al":"=a"(tmp):"d"(port):);
+    long long tmp;
+    __asm__ ASM_DNO ("nop\n\t":"=b"(tmp)::);
     return tmp;
 }
-void out_port16(short port,short valve)
+
+long long get_reg_rcx()
 {
-    __asm__ ASM_DNO ("outw %%ax,%%dx"::"d"(port),"a"(valve):);
+    long long tmp;
+    __asm__ ASM_DNO ("nop\n\t":"=c"(tmp)::);
+    return tmp;
 }
-void out_port8(short port,char valve)
+
+long long get_reg_rdx()
 {
-    __asm__ ASM_DNO ("outb %%al,%%dx"::"d"(port),"a"(valve):);
+    long long tmp;
+    __asm__ ASM_DNO ("nop\n\t":"=d"(tmp)::);
+    return tmp;
 }
+long long get_reg_rsi()
+{
+    long long tmp;
+    __asm__ ASM_DNO ("nop\n\t":"=S"(tmp)::);
+    return tmp;
+}
+long long get_reg_rdi()
+{
+    long long tmp;
+    __asm__ ASM_DNO ("nop\n\t":"=D"(tmp)::);
+    return tmp;
+}
+void hlt_cpu(void)
+{
+    __asm__ ASM_DNO ("hlt\n\t":::"memory");
+}
+

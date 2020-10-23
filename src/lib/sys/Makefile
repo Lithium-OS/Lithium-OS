@@ -18,20 +18,9 @@ CPP = g++
 LD = ld
 GAS = as
 IAS = nasm
-MKDIR = ../build
-LIBDIRM = -I ../lib/include
+MKDIR = ../../../build
+LIBDIRM = -I ../include
 CMKFLGS = -mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib
 CMKLG = 2>>$(MKDIR)/cmplog >>$(MKDIR)/cmplog
-MKDIR = ../../build
-LIBSO = lib-io lib-sys lib-video
-libs:$(LIBSO)
-	@echo "\033[34m[II] All Libs Ok\033[0m"
-lib-io:
-	@echo "\033[34m[II] Making IO Lib\033[0m"
-	make -C ./io lib-io
-lib-sys:
-	@echo "\033[34m[II] Making SYS Lib\033[0m"
-	make -C ./sys lib-sys
-lib-video:
-	@echo "\033[34m[II] Making Video Lib\033[0m"
-	make -C ./video lib-video
+lib-sys:sysop.c
+	$(CC) $(CMKFLGS) sysop.c -o $(MKDIR)/sysop.o $(CMKLG)

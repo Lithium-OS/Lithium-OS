@@ -4,6 +4,10 @@ ENTRY(kmain)
 SECTIONS
 {
     . = 0x200000;
+    .osstart :
+    {
+        *(.osstart)
+    }
     .mbt2std : 
     {
         *(.mbt2std)
@@ -11,6 +15,10 @@ SECTIONS
     .text :
     {
         *(.text)
+    }
+    .rodata :
+    {
+        *(.data)
     }
     .data :
     {

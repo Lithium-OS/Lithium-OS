@@ -19,8 +19,8 @@ LD = ld
 GAS = as
 IAS = nasm
 MKDIR = ../../../build
-LIBDIRM = -I ../
-CMKFLGS = -mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall
+LIBDIRM = -I ../include
+CMKFLGS = -mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib
 CMKLG = 2>>$(MKDIR)/cmplog >>$(MKDIR)/cmplog
 lib-io:ioport.c
 	$(CC) $(CMKFLGS) ioport.c -o $(MKDIR)/ioport.o $(CMKLG)

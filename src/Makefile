@@ -19,15 +19,24 @@ LD = ld
 GAS = as
 IAS = nasm
 MKDIR = ../build
-LIBDIRM = -I ./lib/
+LIBDIRM = -I ./lib/include
 CMKLG = 2>>$(MKDIR)/cmplog >>$(MKDIR)/cmplog
-CMKFLGS = -mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall
-all:kernel.o
+CMKFLGS = -mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib
+system total:
 	make clean
+	time make all
+	@echo "\033[34m[II] Compile Complete.\033[0m"
+	@echo "\033[34m[II] Kernel:$(MKDIR)/lithium.elf\033[0m"
+	@echo "\033[0m"
+	ls -l $(MKDIR)/lithium.elf
+	@echo "\033[34m"
+	objdump -f ../build/lithium.elf
+
+all:kernel.o
 	@echo "\033[34m[II] Linking\033[0m"
 	ld -T kernel.lds -b elf64-x86-64 -o $(MKDIR)/lithium~dirty.o $(MKDIR)/*.o
-	@echo "\033[34m[II] Cleaning\033[0m"
-	objcopy -R ".eh_frame" -R ".comment" $(MKDIR)/lithium~dirty.o $(MKDIR)/lithium.o
+	@echo "\033[34m[II] Cleaning Other Section\033[0m"
+	objcopy -R ".eh_frame" -R ".comment" $(MKDIR)/lithium~dirty.o $(MKDIR)/lithium.elf
 clean:
 	rm -rf ../build/
 	mkdir ../build/
@@ -42,3 +51,5 @@ kernel.o:libs $(MKDIR)/kheader.o
 libs:
 	@echo "\033[34m[II] Making Libs\033[0m"
 	make -C ./lib libs
+dmp:
+	objdump -Ss ../build/lithium.elf
