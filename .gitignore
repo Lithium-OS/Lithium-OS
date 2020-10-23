@@ -2,7 +2,6 @@
 *.iso
 *.bin
 *.sys
-*.s
 *.out
 *.o
 *.elf
