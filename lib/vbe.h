@@ -14,7 +14,25 @@
     You should have received a copy of the GNU Affero General Public License
     auint32_t with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef _VIDEO_H_
-#define _VIDEO_H_
-#include "./vbe.h"
+#include <types.h>
+#ifndef _VBE_H_
+#define _VBE_H_
+//Get the framebuffer base address
+extern addr_t get_vbe_vbuf(char *ptr_vbi, char *ptr_vmi);
+//Get the width
+extern uint32_t get_vbe_xres(char *ptr_vbi, char *ptr_vmi);
+//Get the height
+extern uint32_t get_vbe_yres(char *ptr_vbi, char *ptr_vmi);
+//Get the pixel depth
+extern uint32_t get_vbe_pdep(char *ptr_vbi, char *ptr_vmi);
+//initialization VBE video (g_sysgrap)
+extern int init_vbe(char *ptr_vbi, char *ptr_vmi);
+extern struct grap_info g_sysgrap;
+struct grap_info
+{
+    addr_t base_addr;
+    uint32_t res_x, res_y;
+    uint32_t dep;
+    uint32_t type;
+};
 #endif

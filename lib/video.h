@@ -14,11 +14,16 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef _TYPE_H_
-#define _TYPT_H_
-typedef unsigned char uint8_t;
-typedef unsigned short uint16_t;
-typedef unsigned long uint32_t;
-typedef unsigned long long uint64_t;
-typedef uint64_t addr_t;
+#include <gccm.h>
+#include <types.h>
+#include <vbe.h>
+#ifndef _VIDEO_H_
+#define _VIDEO_H_
+#define VIDEO_VBE_RGBA32 6
+#define VIDEO_E_MNSPD 0xff0001
+struct pixel_rgba32
+{
+    uint8_t r,g,b,a;
+}SRT_PACKED;
+
 #endif

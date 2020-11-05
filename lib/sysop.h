@@ -12,26 +12,23 @@
     GNU Affero General Public License for more details.
 
     You should have received a copy of the GNU Affero General Public License
-    auint32_t with this program.  If not, see <https://www.gnu.org/licenses/>.
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include "./types.h"
-#ifndef _VBE_H_
-#define _VBE_H_
-//Get the framebuffer base address
-extern addr_t get_vbe_vbuf(char *ptr_vbi, char *ptr_vmi);
-//Get the width
-extern uint32_t get_vbe_xres(char *ptr_vbi, char *ptr_vmi);
-//Get the height
-extern uint32_t get_vbe_yres(char *ptr_vbi, char *ptr_vmi);
-//Get the pixel depth
-extern uint32_t get_vbe_pdep(char *ptr_vbi, char *ptr_vmi);
-//initialization VBE video (g_sysgrap)
-extern int init_vbe(char *ptr_vbi, char *ptr_vmi);
-extern struct grap_info g_sysgrap;
-struct grap_info
-{
-    addr_t base_addr;
-    uint32_t res_x,res_y;
-    uint32_t dep;
-};
+#include <types.h>
+#ifndef _SYSOP_H_
+#define _SYSOP_H_
+//Get the valve of RAX
+extern uint64_t get_reg_rax();
+//Get the valve of RBX
+extern uint64_t get_reg_rbx();
+//Get the valve of RCX
+extern uint64_t get_reg_rcx();
+//Get the valve of RDX
+extern uint64_t get_reg_rdx();
+//Get the valve of RSI
+extern uint64_t get_reg_rsi();
+//Get the valve of RDI
+extern uint64_t get_reg_rdi();
+//Halt Cpu
+extern void hlt_cpu();
 #endif

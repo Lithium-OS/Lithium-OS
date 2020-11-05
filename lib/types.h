@@ -1,4 +1,4 @@
- /* Copyright (C) 2020 LithiumOS-Team
+/* Copyright (C) 2020 LithiumOS-Team
     This file is part of the Lithium Kernel.
     
     This program is free software: you can redistribute it and/or modify
@@ -14,13 +14,16 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef _GCCM_H_
-#define _GCCM_H_
-//Complie object into a Fixed section
-#define IN_SECTION(scname) \
-__attribute__((section(scname)))
-//Complie struct without any align
-#define SRT_PACKED __attribute__((__packed__))
-//Complie without any optimization
-#define ASM_DNO __volatile__
-#endif 
+#ifndef _TYPE_H_
+#define _TYPE_H_
+typedef unsigned char uint8_t;
+typedef unsigned short uint16_t;
+typedef unsigned long uint32_t;
+typedef unsigned long long uint64_t;
+typedef void* addr_t;
+typedef uint64_t size_t;
+typedef signed char sint8_t;
+typedef signed short sint16_t;
+typedef signed long sint32_t;
+typedef signed long long sint64_t;
+#endif
