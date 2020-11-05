@@ -14,21 +14,16 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <sys/types.h>
-#ifndef _SYSOP_H_
-#define _SYSOP_H_
-//Get the valve of RAX
-extern uint64_t get_reg_rax();
-//Get the valve of RBX
-extern uint64_t get_reg_rbx();
-//Get the valve of RCX
-extern uint64_t get_reg_rcx();
-//Get the valve of RDX
-extern uint64_t get_reg_rdx();
-//Get the valve of RSI
-extern uint64_t get_reg_rsi();
-//Get the valve of RDI
-extern uint64_t get_reg_rdi();
-//Halt Cpu
-extern void hlt_cpu();
+#include <gccm.h>
+#include <types.h>
+#include <vbe.h>
+#ifndef _VIDEO_H_
+#define _VIDEO_H_
+#define VIDEO_VBE_RGBA32 6
+#define VIDEO_E_MNSPD 0xff0001
+struct pixel_rgba32
+{
+    uint8_t r,g,b,a;
+}SRT_PACKED;
+
 #endif

@@ -18,7 +18,7 @@
 //Still NOT support all afl blocks --AlanCui 2020/10/23
 
 #include <gccm.h>
-#include <sys/types.h>
+#include <types.h>
 #ifndef _MULTIBOOT_H_
 #define _MULTIBOOT_H_
 //Define MultiBoot version
@@ -33,7 +33,7 @@
 //The type num of reloca_tag
 #define MBT_RELOCT_TYPE 10
 //The address of Kernel(PERF)
-#define MBT_LDPHT_ADDR 0x200000
+#define MBT_LDPHT_ADDR 0x100000
 //Magic Num
 #define MBT_LDR_MAGIC 0xe85250d6
 //Magic Num

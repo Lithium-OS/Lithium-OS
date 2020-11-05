@@ -13,17 +13,9 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #*/
-CC = gcc
-CPP = g++
-LD = ld
-GAS = as
-IAS = nasm
-MKDIR = ../../../build
-LIBDIRM = -I ../include
-CMKFLGS = -mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib
-CMKLG = 2>>$(MKDIR)/cmplog >>$(MKDIR)/cmplog
-lib-io:$(MKDIR)/ioport.o $(MKDIR)/ata.o
-$(MKDIR)/ioport.o:ioport.c
-	$(CC) $(CMKFLGS) ioport.c -o $(MKDIR)/ioport.o $(CMKLG)
-$(MKDIR)/ata.o:ata.c
-	$(CC) $(CMKFLGS) ata.c -o $(MKDIR)/ata.o $(CMKLG)
+
+lib-video:$(MKDIR)/vbe.o $(MKDIR)/univideo.o
+$(MKDIR)/vbe.o:vbe.c
+	$(CC) $(CMKFLGS) vbe.c -o $(MKDIR)/vbe.o $(CMKLG)
+$(MKDIR)/univideo.o:univideo.c
+	$(CC) $(CMKFLGS) univideo.c -o $(MKDIR)/univideo.o $(CMKLG)

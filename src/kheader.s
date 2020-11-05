@@ -1,2 +1,0 @@
-.section .osstart
-call kmain

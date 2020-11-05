@@ -15,49 +15,92 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include <gccm.h>
-long long get_reg_rax()
+#include <types.h>
+uint64_t get_reg_rax()
 {
-    long long tmp;
+    uint64_t tmp;
     __asm__ ASM_DNO("nop\n\t"
                     : "=a"(tmp)::);
     return tmp;
 }
-long long get_reg_rbx()
+uint64_t get_reg_rbx()
 {
-    long long tmp;
+    uint64_t tmp;
     __asm__ ASM_DNO("nop\n\t"
                     : "=b"(tmp)::);
     return tmp;
 }
 
-long long get_reg_rcx()
+uint64_t get_reg_rcx()
 {
-    long long tmp;
+    uint64_t tmp;
     __asm__ ASM_DNO("nop\n\t"
                     : "=c"(tmp)::);
     return tmp;
 }
 
-long long get_reg_rdx()
+uint64_t get_reg_rdx()
 {
-    long long tmp;
+    uint64_t tmp;
     __asm__ ASM_DNO("nop\n\t"
                     : "=d"(tmp)::);
     return tmp;
 }
-long long get_reg_rsi()
+uint64_t get_reg_rsi()
 {
-    long long tmp;
+    uint64_t tmp;
     __asm__ ASM_DNO("nop\n\t"
                     : "=S"(tmp)::);
     return tmp;
 }
-long long get_reg_rdi()
+uint64_t get_reg_rdi()
 {
-    long long tmp;
+    uint64_t tmp;
     __asm__ ASM_DNO("nop\n\t"
                     : "=D"(tmp)::);
     return tmp;
+}
+void set_reg_rax(uint64_t tmp)
+{
+    __asm__ ASM_DNO("nop\n\t"
+                    ::"a"(tmp):);
+}
+void set_reg_rbx(uint64_t tmp)
+{
+
+    __asm__ ASM_DNO("nop\n\t"
+                    ::"b"(tmp):);
+
+}
+
+void set_reg_rcx(uint64_t tmp)
+{
+
+    __asm__ ASM_DNO("nop\n\t"
+                    ::"c"(tmp):);
+
+}
+
+void set_reg_rdx(uint64_t tmp)
+{
+
+    __asm__ ASM_DNO("nop\n\t"
+                    ::"d"(tmp):);
+
+}
+void set_reg_rsi(uint64_t tmp)
+{
+
+    __asm__ ASM_DNO("nop\n\t"
+                    ::"S"(tmp):);
+
+}
+void set_reg_rdi(uint64_t tmp)
+{
+
+    __asm__ ASM_DNO("nop\n\t"
+                    ::"D"(tmp):);
+
 }
 void hlt_cpu(void)
 {

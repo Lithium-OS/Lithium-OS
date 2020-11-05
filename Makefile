@@ -13,16 +13,27 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #*/
+INCPATH = /home/alan/git/Lithium-OS/lib
 CC = gcc
 CPP = g++
 LD = ld
 GAS = as
 IAS = nasm
 MKDIR = ../build
-LIBDIRM = -I ./lib/include
-CMKLG = 2>>$(MKDIR)/cmplog >>$(MKDIR)/cmplog
+LIBDIRM = -I $(INCPATH)
+CMKLG = 
 CMKFLGS = -mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib
+export CC
+export CPP
+export LD
+export GAS
+export IAS
+export MKDIR
+export LIBDIRM
+export CMKLG
+export CMKFLGS
 system total:
+	@echo '\033[34m[WW] Setting INCPATH to $(INCPATH) \033[0m'
 	make clean
 	time make all
 	@echo "\033[34m[II] Compile Complete.\033[0m"
@@ -31,12 +42,14 @@ system total:
 	ls -l $(MKDIR)/lithium.elf
 	@echo "\033[34m"
 	objdump -f ../build/lithium.elf
+	@echo "\033[34m[II] Checking Vaild MB2\033[0m"
+	make chkmb
 
 all:kernel.o
 	@echo "\033[34m[II] Linking\033[0m"
-	ld -T kernel.lds -b elf64-x86-64 -o $(MKDIR)/lithium~dirty.o $(MKDIR)/*.o
+	ld -z max-page-size=0x1000 -T kernel.lds --build-id=none -b elf64-x86-64 -o $(MKDIR)/lithium~dirty.o $(MKDIR)/*.o
 	@echo "\033[34m[II] Cleaning Other Section\033[0m"
-	objcopy -R ".eh_frame" -R ".comment" $(MKDIR)/lithium~dirty.o $(MKDIR)/lithium.elf
+	objcopy -R ".eh_frame" -R ".comment" -O elf32-i386 $(MKDIR)/lithium~dirty.o $(MKDIR)/lithium.elf
 clean:
 	rm -rf ../build/
 	mkdir ../build/
@@ -46,10 +59,39 @@ kernel.o:libs $(MKDIR)/kheader.o
 	@echo "\033[34m[II] EveryLib is Ok,Start Linking\033[0m"
 ../build/kheader.o:kheader.s
 	@echo "\033[34m[II] Making KernelHeader\033[0m"
-	$(GAS) --64 -o $(MKDIR)/kheader.o kheader.s
+	$(GAS) --32 -o $(MKDIR)/kheader.o kheader.s
+	objcopy -O elf64-x86-64 $(MKDIR)/kheader.o $(MKDIR)/kheader.o
 	@echo "\033[34m[II] Header is OK\033[0m"
-libs:
-	@echo "\033[34m[II] Making Libs\033[0m"
-	make -C ./lib libs
 dmp:
 	objdump -s ../build/lithium.elf
+sdmp:
+	objdump -Ss ../build/lithium.elf
+chkmb:
+	grub-file --is-x86-multiboot2  $(MKDIR)/lithium.elf && echo "\033[34m[II] Vaild Multiboot Header\033[0m" ||echo "\033[34m[II] Invaild Multiboot Header\033[0m"
+install:
+	sudo cp $(MKDIR)/lithium.elf /lithium.elf
+d8g:
+	make all
+	make install
+	sudo mount /dev/sdb1 $(MKDIR)
+	sudo cp /lithium.elf $(MKDIR)/lithium.elf
+	sudo umount /dev/sdb1
+	sudo qemu-system-x86_64 -hda /dev/sdb -S -s -m 128
+
+LIBSO = lib-io lib-sys lib-video
+libs:$(LIBSO)
+	@echo "\033[34m[II] All Libs Ok\033[0m"
+lib-io:
+
+
+	@echo "\033[34m[II] Making IO Lib\033[0m"
+	make -C ./io lib-io
+lib-sys:
+
+	@echo "\033[34m[II] Making SYS Lib\033[0m"
+	make -C ./sys lib-sys
+lib-video:
+
+
+	@echo "\033[34m[II] Making Video Lib\033[0m"
+	make -C ./video lib-video

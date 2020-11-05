@@ -13,14 +13,6 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #*/
-CC = gcc
-CPP = g++
-LD = ld
-GAS = as
-IAS = nasm
-MKDIR = ../../../build
-LIBDIRM = -I ../include
-CMKFLGS = -mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib
-CMKLG = 2>>$(MKDIR)/cmplog >>$(MKDIR)/cmplog
+
 lib-sys:sysop.c
 	$(CC) $(CMKFLGS) sysop.c -o $(MKDIR)/sysop.o $(CMKLG)

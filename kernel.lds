@@ -1,19 +1,12 @@
-OUTPUT_FORMAT("elf64-x86-64")
+OUTPUT_FORMAT("elf32-i386")
 OUTPUT_ARCH(i386:x86-64)
-ENTRY(kmain)
+ENTRY(_kstart)
 SECTIONS
 {
-    . = 0x200000;
-    .osstart :
-    {
-        *(.osstart)
-    }
-    .mbt2std : 
+    . = 32M;
+    .text ALIGN(8):
     {
         *(.mbt2std)
-    }
-    .text :
-    {
         *(.text)
     }
     .rodata :

@@ -14,7 +14,7 @@
     You should have received a copy of the GNU Affero General Public License
     auint32_t with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <sys/types.h>
+#include <types.h>
 #ifndef _VBE_H_
 #define _VBE_H_
 //Get the framebuffer base address
