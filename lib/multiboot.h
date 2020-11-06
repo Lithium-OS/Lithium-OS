@@ -1,4 +1,4 @@
- /* Copyright (C) 2020 LithiumOS-Team
+/* Copyright (C) 2020 LithiumOS-Team
     This file is part of the Lithium Kernel.
     
     This program is free software: you can redistribute it and/or modify
@@ -17,13 +17,12 @@
 
 //Still NOT support all afl blocks --AlanCui 2020/10/23
 
-#include <gccm.h>
 #include <types.h>
 #ifndef _MULTIBOOT_H_
 #define _MULTIBOOT_H_
 //Define MultiBoot version
 #define MBT_VERSION 2
-#if MBT_VERSION==2
+#if MBT_VERSION == 2
 //The type num of end_tag
 #define MBT_END_TYPE 0
 //The type num of video_frame_buffer_tag
@@ -53,7 +52,7 @@ struct mbt_afl_header
 {
     uint32_t total_size;
     uint32_t rev;
-}SRT_PACKED;
+} __attribute__((__packed__));
 // Stdheader of funcblock provided by BootLoader
 struct mbt_afl_stdhdr
 {
@@ -61,7 +60,7 @@ struct mbt_afl_stdhdr
     uint32_t type;
     // size of this block (byte)
     uint32_t size;
-}SRT_PACKED;
+} __attribute__((__packed__));
 // Basic memory infomation provided by BootLoader
 struct mbt_afl_bmi
 {
@@ -70,7 +69,7 @@ struct mbt_afl_bmi
     uint32_t mem_lower;
     // the highest memory address that can be accessed safely
     uint32_t mem_upper;
-}SRT_PACKED;
+} __attribute__((__packed__));
 // BIOS boot device infomation provided by BootLoader
 struct mbt_afl_bd
 {
@@ -81,14 +80,14 @@ struct mbt_afl_bd
     uint32_t partition;
     // number of boot subpartition
     uint32_t sub_partition;
-}SRT_PACKED;
+} __attribute__((__packed__));
 // Boot command line provided by BootLoader
 struct mbt_afi_cmd
 {
     struct mbt_afl_stdhdr header;
     // commandline [Caution! string member is varies]
     uint8_t string;
-}SRT_PACKED;
+} __attribute__((__packed__));
 // Modules infomation provided by BootLoader
 struct mbt_afi_mods
 {
@@ -99,7 +98,7 @@ struct mbt_afi_mods
     uint32_t mod_end;
     // mods [Caution! string member is varies]
     uint8_t string;
-}SRT_PACKED;
+} __attribute__((__packed__));
 // ELFsym provided by BootLoader [Caution! section headers is varies]
 struct mbt_afi_ELFsym
 {
@@ -113,7 +112,7 @@ struct mbt_afi_ELFsym
     // no description
     uint16_t rev;
 
-}SRT_PACKED;
+} __attribute__((__packed__));
 // Memory mapping infomation provided by BootLoader [Caution! memorydes(mbt_metr) is varies]
 struct mbt_afi_mmap
 {
@@ -122,7 +121,7 @@ struct mbt_afi_mmap
     uint32_t entry_size;
     // version of entries
     uint32_t entry_version;
-}SRT_PACKED;
+} __attribute__((__packed__));
 struct mbt_metr
 {
     // base address of this memory section
@@ -132,25 +131,25 @@ struct mbt_metr
     // type of this memory section
     uint32_t type;
     uint32_t rev;
-}SRT_PACKED;
+} __attribute__((__packed__));
 // Bootloader name provided by BootLoader
 struct mbt_afi_blname
 {
     struct mbt_afl_stdhdr header;
     // name [Caution! string member is varies]
     uint8_t string;
-}SRT_PACKED;
+} __attribute__((__packed__));
 // APM table provided by BootLoader
 struct mbt_afi_apmt
 {
     struct mbt_afl_stdhdr header;
     // see Advanced power managenment (APM) BIOS Interface Specification for more infomation
-    uint16_t version,cseg;
+    uint16_t version, cseg;
     // see Advanced power managenment (APM) BIOS Interface Specification for more infomation
     uint32_t offset;
     // see Advanced power managenment (APM) BIOS Interface Specification for more infomation
-    uint16_t cseg_16,dseg,flags,cseg_len,cseg_16_len,dseg_len;
-}SRT_PACKED;
+    uint16_t cseg_16, dseg, flags, cseg_len, cseg_16_len, dseg_len;
+} __attribute__((__packed__));
 // VBE info provided by BootLoader
 struct mbt_afi_vbe
 {
@@ -167,7 +166,7 @@ struct mbt_afi_vbe
     uint8_t vbe_contol_info[512];
     // vbe video mode info block(see VESA BIOS Expand for more infomation)
     uint8_t vbe_mode_info[256];
-}SRT_PACKED;
+} __attribute__((__packed__));
 // Video framebuffer infomation provided by BootLoader [Caution! color_info member is varies]
 struct mbt_afl_vbuf
 {
@@ -175,16 +174,16 @@ struct mbt_afl_vbuf
     // vbuf base address(see VESA BIOS Expand for more infomation)
     uint64_t addr;
     // vbuf pixel infomation attr(see VESA BIOS Expand for more infomation)
-    uint32_t pit,width,height;
+    uint32_t pit, width, height;
     // vbuf pixel infomation attr(see VESA BIOS Expand for more infomation)
-    uint8_t bpp,type,rev;
-}SRT_PACKED;
+    uint8_t bpp, type, rev;
+} __attribute__((__packed__));
 // ELF 32/64bit system table provided by BootLoader
 struct mbt_afl_elf_syst
 {
     struct mbt_afl_stdhdr header;
     uint64_t *ptr;
-}SRT_PACKED;
+} __attribute__((__packed__));
 
 #if 0
 struct mbt_header
@@ -235,7 +234,7 @@ struct mbt_endtag
     const uint32_t size;
 };
 #endif
-#else 
+#else
 #error NOT SUPPORT MBT_VERSION
 #endif
 #endif

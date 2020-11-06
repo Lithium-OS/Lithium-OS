@@ -14,15 +14,14 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <gccm.h>
-#include <sys/types.h>
-#include <sys/vbe.h>
+#include <types.h>
+#include <vbe.h>
 struct grap_info g_sysgrap;
-addr_t get_vbe_vbuf(char *ptr_vbi, char *ptr_vmi)
+addr_t *get_vbe_vbuf(char *ptr_vbi, char *ptr_vmi)
 {
     if (ptr_vbi[0] == 'V' && ptr_vbi[1] == 'E' && ptr_vbi[2] == 'S' && ptr_vbi[3] == 'A')
     {
-        return (addr_t)((uint32_t *)ptr_vmi)[40 / 4];
+        return (addr_t *)((uint32_t *)ptr_vmi)[40 / 4];
     }
     else
         return 0;
@@ -56,7 +55,7 @@ uint32_t get_vbe_pdep(char *ptr_vbi, char *ptr_vmi)
 }
 int init_vbe(char *ptr_vbi, char *ptr_vmi)
 {
-    g_sysgrap.base_addr = get_vbe_vbuf(ptr_vbi, ptr_vmi);
+    g_sysgrap.base_addr = (addri_t)get_vbe_vbuf(ptr_vbi, ptr_vmi);
     g_sysgrap.res_x = get_vbe_xres(ptr_vbi, ptr_vmi);
     g_sysgrap.res_y = get_vbe_yres(ptr_vbi, ptr_vmi);
     g_sysgrap.base_addr = get_vbe_pdep(ptr_vbi, ptr_vmi);

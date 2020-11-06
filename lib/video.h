@@ -14,7 +14,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <gccm.h>
 #include <types.h>
 #include <vbe.h>
 #ifndef _VIDEO_H_
@@ -23,7 +22,7 @@
 #define VIDEO_E_MNSPD 0xff0001
 struct pixel_rgba32
 {
-    uint8_t r,g,b,a;
-}SRT_PACKED;
+    uint8_t r, g, b, a;
+} __attribute__((__packed__));
 
 #endif

@@ -16,14 +16,47 @@
 */
 #ifndef _TYPE_H_
 #define _TYPE_H_
+//8-bit unsigned integer type
 typedef unsigned char uint8_t;
+//16-bit unsigned integer type
 typedef unsigned short uint16_t;
+//32-bit unsigned integer type
 typedef unsigned long uint32_t;
+//64-bit unsigned integer type
 typedef unsigned long long uint64_t;
-typedef void* addr_t;
+//typedef void* addr_t;
+#ifdef __i386__
+//32-bit unsigned integer type(i386)
+typedef uint32_t size_t;
+#endif
+#ifdef __amd64
+//64-bit unsigned integer type(amd64)
 typedef uint64_t size_t;
+#endif
+//Address Type
+typedef void addr_t;
+#ifdef __i386__
+//32-bit address integer type(i386)
+typedef uint32_t addri_t;
+#endif
+#ifdef __amd64
+//64-bit address integer type(amd64)
+typedef uint64_t addri_t;
+#endif
+//8-bit unsigned integer type
 typedef signed char sint8_t;
+//8-bit unsigned integer type
 typedef signed short sint16_t;
+//8-bit unsigned integer type
 typedef signed long sint32_t;
+//8-bit unsigned integer type
 typedef signed long long sint64_t;
+#ifdef __i386__
+//32-bit unsigned integer type(i386)
+typedef uint32_t regv_t;
+#endif
+#ifdef __amd64
+//64-bit unsigned integer type(amd64)
+typedef uint64_t regv_t;
+#endif
 #endif

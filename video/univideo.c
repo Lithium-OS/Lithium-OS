@@ -14,8 +14,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <sys/video.h>
-#include <sys/types.h>
+#include <video.h>
+#include <types.h>
 sint32_t test_video()
 {
     if (g_sysgrap.type != VIDEO_VBE_RGBA32)

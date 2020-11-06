@@ -18,7 +18,7 @@
 #ifndef _VBE_H_
 #define _VBE_H_
 //Get the framebuffer base address
-extern addr_t get_vbe_vbuf(char *ptr_vbi, char *ptr_vmi);
+extern addr_t *get_vbe_vbuf(char *ptr_vbi, char *ptr_vmi);
 //Get the width
 extern uint32_t get_vbe_xres(char *ptr_vbi, char *ptr_vmi);
 //Get the height
@@ -30,7 +30,7 @@ extern int init_vbe(char *ptr_vbi, char *ptr_vmi);
 extern struct grap_info g_sysgrap;
 struct grap_info
 {
-    addr_t base_addr;
+    addri_t base_addr;
     uint32_t res_x, res_y;
     uint32_t dep;
     uint32_t type;

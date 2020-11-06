@@ -14,96 +14,53 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <gccm.h>
 #include <types.h>
-uint64_t get_reg_rax()
+regv_t get_reg_rax()
 {
-    uint64_t tmp;
-    __asm__ ASM_DNO("nop\n\t"
-                    : "=a"(tmp)::);
+    regv_t tmp;
+    __asm__ __volatile__("nop\n\t"
+                         : "=a"(tmp)::);
     return tmp;
 }
-uint64_t get_reg_rbx()
+regv_t get_reg_rbx()
 {
-    uint64_t tmp;
-    __asm__ ASM_DNO("nop\n\t"
-                    : "=b"(tmp)::);
-    return tmp;
-}
-
-uint64_t get_reg_rcx()
-{
-    uint64_t tmp;
-    __asm__ ASM_DNO("nop\n\t"
-                    : "=c"(tmp)::);
+    regv_t tmp;
+    __asm__ __volatile__("nop\n\t"
+                         : "=b"(tmp)::);
     return tmp;
 }
 
-uint64_t get_reg_rdx()
+regv_t get_reg_rcx()
 {
-    uint64_t tmp;
-    __asm__ ASM_DNO("nop\n\t"
-                    : "=d"(tmp)::);
+    regv_t tmp;
+    __asm__ __volatile__("nop\n\t"
+                         : "=c"(tmp)::);
     return tmp;
 }
-uint64_t get_reg_rsi()
+
+regv_t get_reg_rdx()
 {
-    uint64_t tmp;
-    __asm__ ASM_DNO("nop\n\t"
-                    : "=S"(tmp)::);
+    regv_t tmp;
+    __asm__ __volatile__("nop\n\t"
+                         : "=d"(tmp)::);
     return tmp;
 }
-uint64_t get_reg_rdi()
+regv_t get_reg_rsi()
 {
-    uint64_t tmp;
-    __asm__ ASM_DNO("nop\n\t"
-                    : "=D"(tmp)::);
+    regv_t tmp;
+    __asm__ __volatile__("nop\n\t"
+                         : "=S"(tmp)::);
     return tmp;
 }
-void set_reg_rax(uint64_t tmp)
+regv_t get_reg_rdi()
 {
-    __asm__ ASM_DNO("nop\n\t"
-                    ::"a"(tmp):);
-}
-void set_reg_rbx(uint64_t tmp)
-{
-
-    __asm__ ASM_DNO("nop\n\t"
-                    ::"b"(tmp):);
-
-}
-
-void set_reg_rcx(uint64_t tmp)
-{
-
-    __asm__ ASM_DNO("nop\n\t"
-                    ::"c"(tmp):);
-
-}
-
-void set_reg_rdx(uint64_t tmp)
-{
-
-    __asm__ ASM_DNO("nop\n\t"
-                    ::"d"(tmp):);
-
-}
-void set_reg_rsi(uint64_t tmp)
-{
-
-    __asm__ ASM_DNO("nop\n\t"
-                    ::"S"(tmp):);
-
-}
-void set_reg_rdi(uint64_t tmp)
-{
-
-    __asm__ ASM_DNO("nop\n\t"
-                    ::"D"(tmp):);
-
+    regv_t tmp;
+    __asm__ __volatile__("nop\n\t"
+                         : "=D"(tmp)::);
+    return tmp;
 }
 void hlt_cpu(void)
 {
-    __asm__ ASM_DNO("hlt\n\t" ::
-                        : "memory");
+    __asm__ __volatile__("hlt\n\t" ::
+                             : "memory");
 }
