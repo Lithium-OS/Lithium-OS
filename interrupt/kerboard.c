@@ -14,13 +14,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#ifndef _GCCM_H_
-#define _GCCM_H_
-//Complie object into a Fixed section
-#define IN_SECTION(scname) \
-    __attribute__((section(scname)))
-//Complie struct without any align
-#define SRT_PACKED __attribute__((__packed__))
-//Complie without any optimization
-#define ASM_DNO __volatile__
-#endif
+#include <types.h>
+uint8_t kb_buf[512]={0};
+uint8_t * kbb_p = kb_buf;

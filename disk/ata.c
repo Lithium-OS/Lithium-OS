@@ -14,9 +14,8 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <gccm.h>
-#include <sys/types.h>
-#include <sys/ioport.h>
+#include <types.h>
+#include <ioport.h>
 const uint16_t ata_port_master[9] = {0x1f0, 0x1f1, 0x1f2, 0x1f3, 0x1f4, 0x1f5, 0x1f6, 0x1f7, 0b010000};
 void ata_wait(uint8_t *ata)
 {

@@ -17,12 +17,32 @@
 #include <types.h>
 #ifndef _IOPORT_H_
 #define _IOPORT_H_
-//Get a word data from port
-extern uint16_t in_port16(uint16_t port);
-//Get a byte data from port
-extern uint8_t in_port8(uint16_t port);
-//Output a word data to port
-extern void out_port16(uint16_t port, uint16_t valve);
-//Output a byte data to port
-extern void out_port8(uint16_t port, uint8_t valve);
+inline static uint16_t in_port16(uint16_t port)
+{
+    uint16_t tmp = 0;
+    __asm__ __volatile__("inw %%dx,%%ax"
+                         : "=a"(tmp)
+                         : "d"(port)
+                         :);
+    return tmp;
+} __attribute__((always_inline))
+inline static uint8_t in_port8(uint16_t port)
+{
+    uint8_t tmp = 0;
+    __asm__ __volatile__("inb %%dx,%%al"
+                         : "=a"(tmp)
+                         : "d"(port)
+                         :);
+    return tmp;
+} __attribute__((always_inline))
+inline static void out_port16(uint16_t port, uint16_t valve)
+{
+    __asm__ __volatile__("outw %%ax,%%dx" ::"d"(port), "a"(valve)
+                         :);
+} __attribute__((always_inline))
+inline static void out_port8(uint16_t port, uint8_t valve)
+{
+    __asm__ __volatile__("outb %%al,%%dx" ::"d"(port), "a"(valve)
+                         :);
+} __attribute__((always_inline))
 #endif
