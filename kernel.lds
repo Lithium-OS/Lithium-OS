@@ -1,8 +1,16 @@
-OUTPUT_FORMAT("elf32-i386")
-OUTPUT_ARCH(i386:x86-64)
 ENTRY(_kstart)
 SECTIONS
 {
+    . = 1M;
+    .intpg1M ALIGN(4K):
+    {
+        *(.intpg1M)
+    }
+    . = 2M;
+    .intpg2M ALIGN(4K):
+    {
+        *(.intpg2M)
+    }
     . = 32M;
     .text ALIGN(8):
     {
@@ -11,11 +19,7 @@ SECTIONS
     }
     .rodata :
     {
-        *(.data)
-    }
-    .data :
-    {
-        *(.data)
+        *(.rodata)
     }
     .bss :
     {

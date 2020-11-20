@@ -26,7 +26,10 @@ tag_start:
 #.long 8
 tag_end:
 .long 0xffffffffffffffff
+
+.section .text
 _kstart:
+
     movl %ebx,%eax
     .lopsvge:
         addl $1,%ebx
@@ -37,8 +40,7 @@ _kstart:
         addl $0x238,%ebx
     movl $0x5000,%ecx
     movl (%ebx),%edx
-    movl %edx,.vbebaddress
-
+    /*
     .lop:
         movl $0x00ff0000,(%edx) #Red
         addl $0x4,%edx
@@ -85,23 +87,19 @@ _kstart:
         subl $1,%ecx
         cmp $1,%ecx
         jnz .lop5
-        hlt
-        hlt
-    .main:
-        #movl %cr4,%eax
-        #bts $5,%eax
-        #movl %eax,%cr4
-        #movl %cr0,%eax
-        #bts $31,%eax
-        #movl %eax,%cr0
-        #hlt
-        #movl $0xc0000080,%ecx
-        #rdmsr
-        #bts $8,%eax
-        #wrmsr
-        movl .infopak,%edi
-        ljmp * kmain
-    .infopak:
-    .vbebaddress:
-    .long 0x0 # VBE Base Address 
+        movl $0x5000,%ecx    
+        
+        
+
+*/
+lidt (idtrp)
+jmp kmain
+idt_s:
+sys_idt: .fill 512,8,0 
+idt_e:
+idtrp:
+    .word idt_e - idt_s - 1
+    .long sys_idt
+    
 .globl _kstart
+.globl sys_idt

@@ -14,5 +14,19 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <types.h>
-#include <vbe.h>
+#include<types.h>
+struct intr_entry
+{
+    uint16_t offset_low;
+    uint16_t selector;
+    uint8_t zero;
+    uint8_t type;
+    uint16_t offset_high;
+} __attribute__((__packed__));
+
+struct intr_info
+{
+    addr_t * idt_addr;
+};
+extern struct intr_entry * sys_idt;
+extern void init_interrupt();

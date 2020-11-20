@@ -1,3 +1,4 @@
+
 /* Copyright (C) 2020 LithiumOS-Team
     This file is part of the Lithium Kernel.
     
@@ -17,18 +18,65 @@
 #include <types.h>
 #ifndef _SYSOP_H_
 #define _SYSOP_H_
-//Get the valve of RAX
-extern uint64_t get_reg_rax();
-//Get the valve of RBX
-extern uint64_t get_reg_rbx();
-//Get the valve of RCX
-extern uint64_t get_reg_rcx();
-//Get the valve of RDX
-extern uint64_t get_reg_rdx();
-//Get the valve of RSI
-extern uint64_t get_reg_rsi();
-//Get the valve of RDI
-extern uint64_t get_reg_rdi();
-//Halt Cpu
-extern void hlt_cpu();
+inline static regv_t get_reg_eax()
+{
+    regv_t __tmp;
+    __asm__ __volatile__("nop\n\t"
+                         : "=a"(__tmp)::);
+    return __tmp;
+} __attribute__((always_inline))
+inline static regv_t get_reg_ebx()
+{
+    regv_t __tmp;
+    __asm__ __volatile__("nop\n\t"
+                         : "=b"(__tmp)::);
+    return __tmp;
+} __attribute__((always_inline))
+
+inline static regv_t get_reg_ecx()
+{
+    regv_t __tmp;
+    __asm__ __volatile__("nop\n\t"
+                         : "=c"(__tmp)::);
+    return __tmp;
+} __attribute__((always_inline))
+
+inline static regv_t get_reg_edx()
+{
+    regv_t __tmp;
+    __asm__ __volatile__("nop\n\t"
+                         : "=d"(__tmp)::);
+    return __tmp;
+} __attribute__((always_inline))
+inline static regv_t get_reg_esi()
+{
+    regv_t __tmp;
+    __asm__ __volatile__("nop\n\t"
+                         : "=S"(__tmp)::);
+    return __tmp;
+} __attribute__((always_inline))
+inline static regv_t get_reg_edi()
+{
+    regv_t __tmp;
+    __asm__ __volatile__("nop\n\t"
+                         : "=D"(__tmp)::);
+    return __tmp;
+} __attribute__((always_inline))
+inline static uint16_t get_reg_cs()
+{
+    uint16_t __tmp;
+    __asm__ __volatile__("movw %%cs,%%ax\n\t"
+                         : "=a"(__tmp)::);
+    return __tmp;
+} __attribute__((always_inline))
+inline static void hlt_cpu(void)
+{
+    __asm__ __volatile__("hlt\n\t" ::
+                             : "memory");
+} __attribute__((always_inline))
+inline static void sti(void)
+{
+    __asm__ __volatile__("sti\n\t" ::
+                             : "memory");
+} __attribute__((always_inline))
 #endif

@@ -59,4 +59,5 @@ typedef uint32_t regv_t;
 //64-bit unsigned integer type(amd64)
 typedef uint64_t regv_t;
 #endif
+#define NULL (void *)0
 #endif

@@ -1,6 +1,6 @@
 /* Copyright (C) 2020 LithiumOS-Team
     This file is part of the Lithium Kernel.
-
+    
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
     published by the Free Software Foundation, either version 3 of the
@@ -14,31 +14,6 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-short in_port16(short port)
-{
-    short tmp = 0;
-    __asm__ __volatile__("inw %%dx,%%ax"
-                         : "=a"(tmp)
-                         : "d"(port)
-                         :);
-    return tmp;
-}
-char in_port8(short port)
-{
-    char tmp = 0;
-    __asm__ __volatile__("inb %%dx,%%al"
-                         : "=a"(tmp)
-                         : "d"(port)
-                         :);
-    return tmp;
-}
-void out_port16(short port, short valve)
-{
-    __asm__ __volatile__("outw %%ax,%%dx" ::"d"(port), "a"(valve)
-                         :);
-}
-void out_port8(short port, char valve)
-{
-    __asm__ __volatile__("outb %%al,%%dx" ::"d"(port), "a"(valve)
-                         :);
-}
+#include <types.h>
+uint8_t kb_buf[512]={0};
+uint8_t * kbb_p = kb_buf;

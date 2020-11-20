@@ -12,7 +12,10 @@
     GNU Affero General Public License for more details.
 
     You should have received a copy of the GNU Affero General Public License
-    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+    auint32_t with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include <types.h>
-#include <vbe.h>
+struct mem_info 
+{
+    uint8_t * mgn;
+};

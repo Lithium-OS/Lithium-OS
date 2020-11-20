@@ -20,9 +20,22 @@
 #define _VIDEO_H_
 #define VIDEO_VBE_RGBA32 6
 #define VIDEO_E_MNSPD 0xff0001
-struct pixel_rgba32
+/*struct pixel_argb32
 {
-    uint8_t r, g, b, a;
-} __attribute__((__packed__));
+    uint8_t  r, g, b , a;
+} __attribute__((__packed__));*/
+extern struct grap_info g_sysgrap;
+extern void kputchar(uint32_t x,uint32_t y,uint8_t chr,uint32_t fcolor,uint32_t bcolor);
+extern void kputstr(uint32_t x,uint32_t y,uint8_t * chr,uint32_t fcolor,uint32_t bcolor);
+extern void kputnum(uint32_t x,uint32_t y,uint32_t num,uint32_t fcolor,uint32_t bcolor);
+#define RED 0x00ff0000
+#define GREEN 0x0000ff00
+#define BLUE 0x000000ff
+#define YELLOW 0x00ffff00
+#define CYAN 0x0000ffff
+#define PINK 0x00ff00ff
+#define WHITE 0x00ffffff
+#define BLACK 0x00000000
+#define GRAY 0x00aaaaaa
 
 #endif

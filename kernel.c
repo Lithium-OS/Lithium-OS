@@ -19,42 +19,43 @@
 #include <ioport.h>
 #include <sysop.h>
 #include <video.h>
-int kmain(addr_t* g_kinfo)
+
+int kmain()
 {
-    if (get_reg_rax() != MBT_AFL_MAGIC) //Do not loaded from Multiboot2 loader
-    {
-        while (1)
-            hlt_cpu();
-    }
-    const struct mbt_afl_header *p_mbti = (void *)get_reg_rbx;
-    char *p_ldr_name;
-    int des_alf = (p_mbti->total_size - 8);
-    struct mbt_afl_stdhdr *p_nfub = (struct mbt_afl_stdhdr *)p_mbti;
-    while (des_alf > 0)
-    {
-        switch (p_nfub->type)
-        {
-        case MBT_AFL_VBE_TYPE:
-
-            init_vbe(((struct mbt_afi_vbe *)p_nfub)->vbe_contol_info, ((struct mbt_afi_vbe *)p_nfub)->vbe_mode_info);
-
-            des_alf -= p_nfub->size;
-            p_nfub = ((char *)p_nfub + p_nfub->size);
-            break;
-        case MBT_AFL_BLDN_TYPE:
-            *p_ldr_name = &(((struct mbt_afi_blname *)p_nfub)->string);
-            des_alf -= p_nfub->size;
-            p_nfub = ((char *)p_nfub + p_nfub->size);
-            break;
-        default:
-            des_alf -= p_nfub->size;
-            p_nfub = ((char *)p_nfub + p_nfub->size);
-            break;
-        }
-    }
-    test_video();
-    while (1)
-    {
-    }
-    hlt_cpu();
+    __asm__("movl $0xa000000,%eax");
+    __asm__("movl %eax,%ebp");
+    __asm__("movl %eax,%esp");
+    g_sysgrap.base_addr = get_reg_edx();
+    g_sysgrap.res_x = 1024;
+    g_sysgrap.res_y = 768;
+    kputstr(0,0,"Welcome to Lithium OS!!",WHITE,BLACK);
+    kputstr(0,1,"EAX:",WHITE,BLACK);
+    kputnum(4,1,get_reg_eax(),WHITE,BLACK);
+    kputstr(0,2,"EBX:",WHITE,BLACK);
+    kputnum(4,2,get_reg_ebx(),WHITE,BLACK);
+    kputstr(0,3,"ECX:",WHITE,BLACK);
+    kputnum(4,3,get_reg_ecx(),WHITE,BLACK);
+    kputstr(0,4,"EDX:",WHITE,BLACK);
+    kputnum(4,4,get_reg_edx(),WHITE,BLACK);
+    kputstr(0,5,"ESI:",WHITE,BLACK);
+    kputnum(4,5,get_reg_esi(),WHITE,BLACK);
+    kputstr(0,6,"EDI:",WHITE,BLACK);
+    kputnum(4,6,get_reg_edi(),WHITE,BLACK);
+    kputstr(0,7,"VGA:           @             x             TEXT:             x            ",WHITE,BLACK);
+    kputnum(4,7,g_sysgrap.base_addr,WHITE,BLACK);
+    kputnum(17,7,g_sysgrap.res_x,WHITE,BLACK);
+    kputnum(32,7,g_sysgrap.res_y,WHITE,BLACK);
+    kputnum(49,7,g_sysgrap.res_x/8,WHITE,BLACK);
+    kputnum(63,7,g_sysgrap.res_y/16,WHITE,BLACK);
+    kputchar(0,8,'0',RED,BLACK);
+    kputchar(1,8,'0',GREEN,BLACK);
+    kputchar(2,8,'0',BLUE,BLACK);
+    kputchar(3,8,'0',YELLOW,BLACK);
+    kputchar(4,8,'0',CYAN,BLACK);
+    kputchar(5,8,'0',PINK,BLACK);
+    init_interrupt();
+    out_port8(0x21,0xff);//BACU
+    init_mem();
+    while (1);
+    
 }

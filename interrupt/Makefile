@@ -13,8 +13,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #*/
-lib-io:$(MKDIR)/ioport.o $(MKDIR)/ata.o
-$(MKDIR)/ioport.o:ioport.c
-	$(CC) $(CMKFLGS) ioport.c -o $(MKDIR)/ioport.o $(CMKLG)
-$(MKDIR)/ata.o:ata.c
-	$(CC) $(CMKFLGS) ata.c -o $(MKDIR)/ata.o $(CMKLG)
+
+lib-intr:
+	$(CC) $(CMKFLGS) kerboard.c -o $(MKDIR)/kerboard.o $(CMKLG)
+	$(CC) $(CMKFLGS) interrupt.c -o $(MKDIR)/interrupt.o $(CMKLG)
