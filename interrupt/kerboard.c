@@ -26,7 +26,6 @@ void als_keyborad_code()
 {
        switch (*kbb_p)
        {
-           kputnum(0,29,*kbb_p,GREEN,BLACK);
         case 0x1d://Left ctrl MAKE
             lctrl =1;
            break;

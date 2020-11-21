@@ -16,9 +16,9 @@
 */
 #include <video.h>
 #include <types.h>
-uint8_t unifont[128][32];
+extern uint8_t unifont[128][32];
 struct grap_info g_sysgrap;
-void kputchar(uint32_t x, uint32_t y, uint8_t chr, uint32_t fcolor, uint32_t bcolor)
+void kputchar(uint32_t x, uint32_t y, char chr, uint32_t fcolor, uint32_t bcolor)
 {
     addr_t *target_addr = (void *)(g_sysgrap.base_addr + (y * g_sysgrap.res_x * 32 * 2 + x * 32));
     if (chr == 0x00)
@@ -27,7 +27,7 @@ void kputchar(uint32_t x, uint32_t y, uint8_t chr, uint32_t fcolor, uint32_t bco
     {
         for (size_t l = 1; l <= 8; l++)
         {
-            if (((unifont[chr][i] >> (8 - l)) & 1UL) == 1)
+            if (((unifont[(uint32_t)chr][i] >> (8 - l)) & 1UL) == 1)
                 *(uint32_t *)target_addr = fcolor;
             else
                 *(uint32_t *)target_addr = bcolor;
@@ -37,7 +37,7 @@ void kputchar(uint32_t x, uint32_t y, uint8_t chr, uint32_t fcolor, uint32_t bco
         target_addr += g_sysgrap.res_x * 4;
     }
 }
-void kputwchar(uint32_t x,uint32_t y,uint16_t wchr,uint32_t fcolor,uint32_t bcolor) //Exp
+void kputwchar(uint32_t x,uint32_t y,wchar_t wchr,uint32_t fcolor,uint32_t bcolor) //Exp
 {
     for (size_t i = 0; i < 32; i++)
     {
@@ -77,7 +77,7 @@ void kputwchar(uint32_t x,uint32_t y,uint16_t wchr,uint32_t fcolor,uint32_t bcol
     }
     
 }
-void kputstr(uint32_t x, uint32_t y, uint8_t *chr, uint32_t fcolor, uint32_t bcolor)
+void kputstr(uint32_t x, uint32_t y, char *chr, uint32_t fcolor, uint32_t bcolor)
 {
     uint32_t lr = y;
     for (size_t i = 0; *chr != '\0'; i++)
@@ -94,7 +94,7 @@ void kputstr(uint32_t x, uint32_t y, uint8_t *chr, uint32_t fcolor, uint32_t bco
         chr++;
     }
 }
-void kputstrc(uint32_t x, uint32_t y, uint8_t *chr, uint32_t fcolor, uint32_t bcolor, uint32_t l)
+void kputstrc(uint32_t x, uint32_t y, char *chr, uint32_t fcolor, uint32_t bcolor, uint32_t l)
 {
     uint32_t lr = y;
     for (size_t i = 0; i < l; i++)
@@ -113,7 +113,7 @@ void kputstrc(uint32_t x, uint32_t y, uint8_t *chr, uint32_t fcolor, uint32_t bc
 }
 void kputnum(uint32_t x, uint32_t y, uint32_t num, uint32_t fcolor, uint32_t bcolor)
 {
-    uint8_t tmp[11] = {"0x????????\0"};
+    char tmp[11] = {"0x????????\0"};
     for (size_t i = 2; i < 10; i++)
     {
         switch (((num >> ((9 - i)) * 4)) & 0xfUL)
@@ -173,4 +173,3 @@ void kputnum(uint32_t x, uint32_t y, uint32_t num, uint32_t fcolor, uint32_t bco
     }
     kputstr(x, y, tmp, fcolor, bcolor);
 }
-void kdrawline_h(uint32_t x,uint32_t y,)

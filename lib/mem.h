@@ -14,8 +14,13 @@
     You should have received a copy of the GNU Affero General Public License
     auint32_t with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+#pragma once
+#ifndef _MEM_H_
+#define _MEM_H_
 #include <types.h>
 struct mem_info
 {
     uint8_t *mgn;
 };
+extern void init_mem(void);
+#endif 

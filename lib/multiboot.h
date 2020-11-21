@@ -16,10 +16,10 @@
 */
 
 //Still NOT support all afl blocks --AlanCui 2020/10/23
-
-#include <types.h>
+#pragma once
 #ifndef _MULTIBOOT_H_
 #define _MULTIBOOT_H_
+#include <types.h>
 //Define MultiBoot version
 #define MBT_VERSION 2
 #if MBT_VERSION == 2

@@ -20,6 +20,7 @@
 #include <sysop.h>
 #include <video.h>
 extern uint8_t * kbb_p;
+extern void _do_irq33(void);
 struct intr_info g_sysintr;
 uint32_t cnt = 0;
 void do_irq33(void)

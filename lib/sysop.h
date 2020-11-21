@@ -15,10 +15,11 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <types.h>
+#pragma once
 #ifndef _SYSOP_H_
 #define _SYSOP_H_
-inline static regv_t get_reg_eax()
+#include <types.h>
+__attribute__((always_inline)) inline static regv_t get_reg_eax()
 {
     regv_t __tmp;
     __asm__ __volatile__("nop\n\t"
@@ -32,20 +33,16 @@ __attribute__((always_inline)) inline static regv_t get_reg_ebx()
                          : "=b"(__tmp)::);
     return __tmp;
 }
-__attribute__((always_inline))
 
-inline static regv_t
-get_reg_ecx()
+__attribute__((always_inline)) inline static regv_t get_reg_ecx()
 {
     regv_t __tmp;
     __asm__ __volatile__("nop\n\t"
                          : "=c"(__tmp)::);
     return __tmp;
 }
-__attribute__((always_inline))
 
-inline static regv_t
-get_reg_edx()
+__attribute__((always_inline)) inline static regv_t get_reg_edx()
 {
     regv_t __tmp;
     __asm__ __volatile__("nop\n\t"
@@ -83,5 +80,4 @@ __attribute__((always_inline)) inline static void sti(void)
     __asm__ __volatile__("sti\n\t" ::
                              : "memory");
 }
-__attribute__((always_inline))
 #endif

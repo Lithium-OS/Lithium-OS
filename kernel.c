@@ -20,20 +20,21 @@
 #include <sysop.h>
 #include <video.h>
 #include <ata.h>
-extern uint8_t logo_cpu[];
+#include <interrupt.h>
+#include <mem.h>
+#include <keyboard.h>
+extern uint32_t fb_addr;
+extern uint32_t mem_info;
+extern char logo_cpu[];
 int kmain()
 {
     __asm__("movl $0xa000000,%eax");
     __asm__("movl %eax,%ebp");
     __asm__("movl %eax,%esp");
-    g_sysgrap.base_addr = get_reg_edx();
+    g_sysgrap.base_addr = fb_addr;
     g_sysgrap.res_x = 1024;
     g_sysgrap.res_y = 768;
     kputstr(0, 0, "Welcome to Lithium OS!!", WHITE, BLACK);
-    kputchar(34,0,'A',GREEN,BLACK);
-    kputchar(36,0,'A',GREEN,BLACK);
-    kputchar(37,0,'A',GREEN,BLACK);
-    kputwchar(35,0,'A',BLUE,BLACK);
     kputstr(0, 1, "EAX:", WHITE, BLACK);
     kputnum(4, 1, get_reg_eax(), WHITE, BLACK);
     kputstr(0, 2, "EBX:", WHITE, BLACK);
@@ -61,8 +62,8 @@ int kmain()
     init_interrupt();
     //out_port8(0x21,0xff);//BACU
     init_mem();
-    kputstrc(0, 9, logo_cpu, GREEN, BLACK, 52);
-
+    kputstrc(0, 9,logo_cpu, GREEN, BLACK, 52);
+    kputnum(0,14,mem_info,WHITE, BLACK);
     while (1)
     {
         als_keyborad_code();

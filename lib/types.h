@@ -14,8 +14,10 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+#pragma once
 #ifndef _TYPE_H_
 #define _TYPE_H_
+typedef unsigned int wchar_t;
 //8-bit unsigned integer type
 typedef unsigned char uint8_t;
 //16-bit unsigned integer type

@@ -17,12 +17,5 @@
 #include <types.h>
 #ifndef _VBE_H_
 #define _VBE_H_
-extern struct grap_info g_sysgrap;
-struct grap_info
-{
-    addri_t base_addr;
-    uint32_t res_x, res_y;
-    uint32_t dep;
-    uint32_t type;
-};
+
 #endif

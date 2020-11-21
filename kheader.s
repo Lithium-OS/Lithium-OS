@@ -28,7 +28,6 @@ tag_end:
 .long 0xffffffffffffffff
 .section .text
 _kstart:
-
     movl %ebx,%eax
     .lopsvge:
         addl $1,%ebx
@@ -37,9 +36,18 @@ _kstart:
         cmpl $0x310,4(%ebx)
         jne .lopsvge
         addl $0x238,%ebx
-    movl $0x5000,%ecx
     movl (%ebx),%edx
+    movl %edx,(fb_addr)
     pushl %edx
+   /* movl %eax,%ebx
+    .lopsvge1:
+        addl $1,%ebx
+        cmpl $0x2,(%ebx)
+        jne .lopsvge1
+        cmpl $16,4(%ebx)
+        jne .lopsvge1
+    movl (%ebx),%edx
+    movl %edx,(mem_info)*/
 movl $0x80000002,%eax
 cpuid
 movl %eax,(logo_cpu)
@@ -58,7 +66,6 @@ movl %eax,(36+logo_cpu)
 movl %ebx,(40+logo_cpu)
 movl %ecx,(44+logo_cpu)
 movl %edx,(48+logo_cpu)
-popl %edx
 
     /*
     .lop:
@@ -124,5 +131,8 @@ idtrp:
 .globl logo_cpu
 .globl _kstart
 .globl sys_idt
-
+.globl fb_addr
+.globl mem_info
 logo_cpu:.fill 53,8,0 
+fb_addr: .fill 4,8,0
+mem_info: .fill 4,8,0

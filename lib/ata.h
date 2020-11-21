@@ -14,6 +14,10 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+#pragma once
+#ifndef _ATA_H_
+#define _ATA_H_
 #include <types.h>
 extern sint32_t ata_read_sector(uint8_t *ata, uint64_t lba, void *addr);
 extern uint8_t *ata_port_master;
+#endif
