@@ -36,7 +36,6 @@ void do_irq33(void)
 
 void init_interrupt()
 {
-    kputstr(0,9,"Init Interrupt",WHITE,BLACK);
     g_sysintr.idt_addr = &sys_idt;
     set_intr_gate(33,&_do_irq33);
 

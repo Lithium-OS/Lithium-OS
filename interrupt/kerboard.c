@@ -53,5 +53,4 @@ void als_keyborad_code()
     {
         out_port8(0x64,0xfe);
     }
-    kputnum(0,25,*kbb_p,GREEN,BLACK);
 }

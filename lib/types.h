@@ -17,7 +17,6 @@
 #pragma once
 #ifndef _TYPE_H_
 #define _TYPE_H_
-typedef unsigned int wchar_t;
 //8-bit unsigned integer type
 typedef unsigned char uint8_t;
 //16-bit unsigned integer type
@@ -62,4 +61,5 @@ typedef uint32_t regv_t;
 typedef uint64_t regv_t;
 #endif
 #define NULL (void *)0
+typedef uint32_t wchar_t;
 #endif

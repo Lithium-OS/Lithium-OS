@@ -16,7 +16,7 @@
 */
 #include <video.h>
 #include <types.h>
-extern uint8_t unifont[128][32];
+extern uint8_t unifont[65534][32];
 struct grap_info g_sysgrap;
 void kputchar(uint32_t x, uint32_t y, char chr, uint32_t fcolor, uint32_t bcolor)
 {
@@ -39,40 +39,21 @@ void kputchar(uint32_t x, uint32_t y, char chr, uint32_t fcolor, uint32_t bcolor
 }
 void kputwchar(uint32_t x,uint32_t y,wchar_t wchr,uint32_t fcolor,uint32_t bcolor) //Exp
 {
-    for (size_t i = 0; i < 32; i++)
-    {
-        kputnum(100,i,unifont[wchr][i],WHITE,BLACK);
-    }
-    
+    if (wchr == 0x00)
+        wchr = L' ';   
     addr_t * target_addr = (void *)(g_sysgrap.base_addr + (y*g_sysgrap.res_x*32*2 + x*32));
-    /*if (wchr == 0x00)
-        wchr = ' ';*/
-    for (size_t i = 0; i < 16; i++)
+    for (size_t i = 0; i < 32; i+=2)
     {
-        for (size_t l = 1; l <=8; l++)
+        for (size_t l = 1; l <=16; l++)
         {
-            if ( ((unifont[wchr][i] >> (8-l) )& 1UL) == 1)
+            if  (((uint16_t)((uint16_t)unifont[wchr][i]<<8)+unifont[wchr][i+1] >> (16-l) )& 1UL)
                 *(uint32_t *)target_addr = fcolor;
             else
                 *(uint32_t *)target_addr = bcolor;
             target_addr += 4;
+        
         }
-        target_addr -=32 ;
-        target_addr += g_sysgrap.res_x*4;
-    }
-    x++;
-    target_addr = (void *)(g_sysgrap.base_addr + (y*g_sysgrap.res_x*32*2 + x*32));
-        for (size_t i = 0; i < 16; i++)
-    {
-        for (size_t l = 1; l <=8; l++)
-        {
-            if ( ((unifont[wchr][i+16] >> (8-l) )& 1UL) == 1)
-                *(uint32_t *)target_addr = fcolor;
-            else
-                *(uint32_t *)target_addr = bcolor;
-            target_addr += 4;
-        }
-        target_addr -=32 ;
+        target_addr -=64 ;
         target_addr += g_sysgrap.res_x*4;
     }
     
@@ -89,6 +70,40 @@ void kputstr(uint32_t x, uint32_t y, char *chr, uint32_t fcolor, uint32_t bcolor
             break;
         default:
             kputchar(x + i, lr, *chr, fcolor, bcolor);
+            break;
+        }
+        chr++;
+    }
+}
+void kputwstr(uint32_t x, uint32_t y, wchar_t *chr, uint32_t fcolor, uint32_t bcolor)
+{
+    uint32_t lr = y;
+    for (size_t i = 0; *chr != 0; i++)
+    {
+        switch (*chr)
+        {
+        case '\n':
+            lr++;
+            break;
+        default:
+            kputwchar(x + 2*i, lr, *chr, fcolor, bcolor);
+            break;
+        }
+        chr++;
+    }
+}
+void kputwstrc(uint32_t x, uint32_t y, wchar_t *chr, uint32_t fcolor, uint32_t bcolor, uint32_t l)
+{
+    uint32_t lr = y;
+    for (size_t i = 0; i < l; i++)
+    {
+        switch (*chr)
+        {
+        case '\n':
+            lr++;
+            break;
+        default:
+            kputwchar(x + 2*i, lr, *chr, fcolor, bcolor);
             break;
         }
         chr++;

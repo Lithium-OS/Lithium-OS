@@ -13,8 +13,8 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #*/
-INCPATH = /home/alan/git/Lithium-OS/lib
-MKDIR =  /home/alan/git/Lithium-OS/build
+INCPATH = $(LOS)/lib
+MKDIR =  $(LOS)/build
 CC = gcc
 CPP = g++
 LD = ld
