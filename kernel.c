@@ -34,7 +34,7 @@ int kmain()
     g_sysgrap.base_addr = fb_addr;
     g_sysgrap.res_x = 1024;
     g_sysgrap.res_y = 768;
-    kputstr(0, 0, "Welcome to Lithium OS!!", WHITE, BLACK);
+    kputstr(0, 0, "Welcome to Lithium OS!!          (2020_11_21_A01)", WHITE, BLACK);
     kputstr(0, 1, "EAX:", WHITE, BLACK);
     kputnum(4, 1, get_reg_eax(), WHITE, BLACK);
     kputstr(0, 2, "EBX:", WHITE, BLACK);
