@@ -19,21 +19,25 @@
 #include <interrupt.h>
 #include <sysop.h>
 #include <video.h>
-
-struct intr_info g_sysintr;
 extern uint8_t * kbb_p;
-void keyboard_handle(void)
+struct intr_info g_sysintr;
+uint32_t cnt = 0;
+void do_irq33(void)
 {
-    kputstr(0,21,"Keyboard Interrupt",WHITE,BLACK);
-    kputnum(0,22,in_port8(0x60),GREEN,BLACK);
-    hlt_cpu();
+    if (*kbb_p != 0xff)//bufEND
+    {
+            *kbb_p = in_port8(0x60);
+        kbb_p--;
+        out_port8(0x20,0x20);
+        return;
+    }
 }
 
 void init_interrupt()
 {
     kputstr(0,9,"Init Interrupt",WHITE,BLACK);
     g_sysintr.idt_addr = &sys_idt;
-    set_intr_gate(33,&keyboard_handle);
+    set_intr_gate(33,&_do_irq33);
 
     
     out_port8(0x20,0x11);
@@ -48,7 +52,6 @@ void init_interrupt()
 
     out_port8(0x21,0xfd);
     out_port8(0xa1,0xff);
-
 
     __asm__ ("sti");
 }

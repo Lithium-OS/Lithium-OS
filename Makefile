@@ -36,7 +36,6 @@ export CMKLG
 export CMKFLGS
 system:
 	@echo "\033[34m[II] Setting INCPATH to $(INCPATH)\033[0m"
-	make clean
 	time make all
 	@echo "\033[34m[II] Compile Complete.\033[0m"
 	@echo "\033[34m[II] Kernel:$(MKDIR)/lithium.elf\033[0m"
@@ -50,9 +49,13 @@ system:
 
 all:kernel.o
 	@echo "\033[34m[II] Linking\033[0m"
+	sync
+	sync
+	sync
 	ld -z max-page-size=0x1000 -m elf_i386 -T kernel.lds --build-id=none $(MKDIR)/*.o -o $(MKDIR)/lithium~dirty.o
 	@echo "\033[34m[II] Cleaning Other Section\033[0m"
 	objcopy -R ".eh_frame" -R ".comment" -O elf32-i386 $(MKDIR)/lithium~dirty.o $(MKDIR)/lithium.elf
+	rm -f $(MKDIR)/lithium~dirty.o
 clean:
 	rm -rf $(MKDIR)
 	mkdir $(MKDIR)

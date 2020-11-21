@@ -25,9 +25,9 @@
     uint8_t  r, g, b , a;
 } __attribute__((__packed__));*/
 extern struct grap_info g_sysgrap;
-extern void kputchar(uint32_t x,uint32_t y,uint8_t chr,uint32_t fcolor,uint32_t bcolor);
-extern void kputstr(uint32_t x,uint32_t y,uint8_t * chr,uint32_t fcolor,uint32_t bcolor);
-extern void kputnum(uint32_t x,uint32_t y,uint32_t num,uint32_t fcolor,uint32_t bcolor);
+extern void kputchar(uint32_t x, uint32_t y, uint8_t chr, uint32_t fcolor, uint32_t bcolor);
+extern void kputstr(uint32_t x, uint32_t y, uint8_t *chr, uint32_t fcolor, uint32_t bcolor);
+extern void kputnum(uint32_t x, uint32_t y, uint32_t num, uint32_t fcolor, uint32_t bcolor);
 #define RED 0x00ff0000
 #define GREEN 0x0000ff00
 #define BLUE 0x000000ff

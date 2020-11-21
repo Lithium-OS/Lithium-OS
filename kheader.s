@@ -26,7 +26,6 @@ tag_start:
 #.long 8
 tag_end:
 .long 0xffffffffffffffff
-
 .section .text
 _kstart:
 
@@ -40,6 +39,27 @@ _kstart:
         addl $0x238,%ebx
     movl $0x5000,%ecx
     movl (%ebx),%edx
+    pushl %edx
+movl $0x80000002,%eax
+cpuid
+movl %eax,(logo_cpu)
+movl %ebx,(4+logo_cpu)
+movl %ecx,(8+logo_cpu)
+movl %edx,(16+logo_cpu)
+movl $0x80000003,%eax
+cpuid
+movl %eax,(20+logo_cpu)
+movl %ebx,(24+logo_cpu)
+movl %ecx,(28+logo_cpu)
+movl %edx,(32+logo_cpu)
+movl $0x80000004,%eax
+cpuid
+movl %eax,(36+logo_cpu)
+movl %ebx,(40+logo_cpu)
+movl %ecx,(44+logo_cpu)
+movl %edx,(48+logo_cpu)
+popl %edx
+
     /*
     .lop:
         movl $0x00ff0000,(%edx) #Red
@@ -92,6 +112,7 @@ _kstart:
         
 
 */
+
 lidt (idtrp)
 jmp kmain
 idt_s:
@@ -100,6 +121,8 @@ idt_e:
 idtrp:
     .word idt_e - idt_s - 1
     .long sys_idt
-    
+.globl logo_cpu
 .globl _kstart
 .globl sys_idt
+
+logo_cpu:.fill 53,8,0 

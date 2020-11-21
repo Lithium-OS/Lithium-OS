@@ -15,7 +15,7 @@
     auint32_t with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #include <types.h>
-struct mem_info 
+struct mem_info
 {
-    uint8_t * mgn;
+    uint8_t *mgn;
 };

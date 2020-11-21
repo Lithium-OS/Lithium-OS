@@ -14,7 +14,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include<types.h>
+#include <types.h>
 struct intr_entry
 {
     uint16_t offset_low;
@@ -26,7 +26,8 @@ struct intr_entry
 
 struct intr_info
 {
-    addr_t * idt_addr;
+    addr_t *idt_addr;
 };
-extern struct intr_entry * sys_idt;
+extern struct intr_entry *sys_idt;
 extern void init_interrupt();
+extern void _do_irq33(void);

@@ -33,7 +33,7 @@ typedef uint32_t size_t;
 //64-bit unsigned integer type(amd64)
 typedef uint64_t size_t;
 #endif
-//Address Type
+//Address TypeF
 typedef void addr_t;
 #ifdef __i386__
 //32-bit address integer type(i386)

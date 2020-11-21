@@ -18,21 +18,21 @@
 #include <mem.h>
 #include <video.h>
 #include <sysop.h>
-uint8_t g_lsmemmag[128]={0};
+uint8_t g_lsmemmag[128] = {0};
 struct mem_info g_meminfo;
 void init_mem(void)
 {
-    kputstr(0,10,"Init Memory",WHITE,BLACK);
+    kputstr(0, 10, "Init Memory", WHITE, BLACK);
     g_meminfo.mgn = g_lsmemmag;
     for (size_t i = 0; i < 64; i++)
     {
         g_meminfo.mgn[i] = 0xff; // 0-128MiB Used (Kernel)
     }
-    kputstr(0,11,"Memory 0 - 128 MiB Used (Kernel File)",WHITE,BLACK);
+    kputstr(0, 11, "Memory 0 - 128 MiB Used (Kernel File)", WHITE, BLACK);
     for (size_t i = 64; i < 80; i++)
     {
         g_meminfo.mgn[i] = 0xff; // 128-160MiB Used (Kernel Stack)
     }
-    kputstr(0,12,"Memory 128 - 160 MiB Used (Kernel Stack)",WHITE,BLACK);
-    kputstr(0,13,"ebp->0xa000000 (160Mib) (Kernel Stack)",WHITE,BLACK);
+    kputstr(0, 12, "Memory 128 - 160 MiB Used (Kernel Stack)", WHITE, BLACK);
+    kputstr(0, 13, "ebp->0xa000000 (160Mib) (Kernel Stack)", WHITE, BLACK);
 }

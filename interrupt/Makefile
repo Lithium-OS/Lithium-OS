@@ -17,3 +17,4 @@
 lib-intr:
 	$(CC) $(CMKFLGS) kerboard.c -o $(MKDIR)/kerboard.o $(CMKLG)
 	$(CC) $(CMKFLGS) interrupt.c -o $(MKDIR)/interrupt.o $(CMKLG)
+	$(GAS) --32 entry.S -o $(MKDIR)/entry.o
