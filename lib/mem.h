@@ -23,4 +23,6 @@ struct mem_info
     uint8_t *mgn;
 };
 extern void init_mem(void);
+extern uint32_t sys_pdt_start;
+extern uint32_t sys_pt_start;
 #endif 

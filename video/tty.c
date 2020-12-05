@@ -16,4 +16,5 @@
 */
 #include <video.h>
 #include <types.h>
-uint8_t tty0[48][129] = {0};
+#include <tty.h>
+

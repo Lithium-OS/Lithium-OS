@@ -86,7 +86,16 @@ void kputwstr(uint32_t x, uint32_t y, wchar_t *chr, uint32_t fcolor, uint32_t bc
             lr++;
             break;
         default:
-            kputwchar(x + 2*i, lr, *chr, fcolor, bcolor);
+            if (*chr < 128 && *chr > 32)
+            {
+                kputchar(x, lr, *chr, fcolor, bcolor);
+                x += 2;
+            }
+            else
+            {
+                kputwchar(x, lr, *chr, fcolor, bcolor);
+                x += 1;
+            }
             break;
         }
         chr++;

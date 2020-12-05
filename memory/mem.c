@@ -18,17 +18,23 @@
 #include <mem.h>
 #include <video.h>
 #include <sysop.h>
-uint8_t g_lsmemmag[128] = {0};
-struct mem_info g_meminfo;
+//struct mem_info g_meminfo;
 void init_mem(void)
-{
-    g_meminfo.mgn = g_lsmemmag;
-    for (size_t i = 0; i < 64; i++)
+{/*
+    for (size_t i = 0; i < 48; i++) // 0-192MiB
     {
-        g_meminfo.mgn[i] = 0xff; // 0-128MiB Used (Kernel)
+        *(((uint32_t*)(&sys_pdt_start)) + i) = ((uint32_t)(&sys_pt_start + 4096*i))<<12 + 0x0b;//Persent + Supervistor + Writethrouth + PCD
+        for (size_t l = 0; l < 1024; l++)
+        {
+            *(&sys_pt_start + 1024*i + 4*1) = ((uint32_t)(l+i*4096))<<12 + 0x0b;//Persent + Supervistor + Writethrouth + PCD
+        }
+        
     }
-    for (size_t i = 64; i < 80; i++)
-    {
-        g_meminfo.mgn[i] = 0xff; // 128-160MiB Used (Kernel Stack)
-    }
+    __asm__ ("movl $sys_pdt_start,%%eax\n\t"\
+            "movl %%eax,%%cr3\n\t"\
+    :::"memory") ;
+    __asm__("movl %%cr0,%%eax\n\t"\
+            "bts $31,%%eax\n\t"\
+            "movl %%eax,%%cr0\n\t"\
+        :::"memory");*/
 }

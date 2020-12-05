@@ -14,10 +14,12 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #*/
 
-lib-video:$(MKDIR)/vbe.o $(MKDIR)/univideo.o $(MKDIR)/unifont.o
+lib-video:$(MKDIR)/vbe.o $(MKDIR)/univideo.o $(MKDIR)/unifont.o $(MKDIR)/tty.o
 $(MKDIR)/vbe.o:vbe.c
 	$(CC) $(CMKFLGS) vbe.c -o $(MKDIR)/vbe.o $(CMKLG)
 $(MKDIR)/univideo.o:univideo.c
 	$(CC) $(CMKFLGS) univideo.c -o $(MKDIR)/univideo.o $(CMKLG)
 $(MKDIR)/unifont.o:unifont.c
 	$(CC) $(CMKFLGS) unifont.c -o $(MKDIR)/unifont.o $(CMKLG)
+$(MKDIR)/tty.o:tty.c
+	$(CC) $(CMKFLGS) tty.c -o $(MKDIR)/tty.o $(CMKLG)

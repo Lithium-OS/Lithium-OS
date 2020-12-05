@@ -20,6 +20,7 @@
 #include <sysop.h>
 #include <video.h>
 #include <ata.h>
+#include <tty.h>
 #include <interrupt.h>
 #include <mem.h>
 #include <keyboard.h>
@@ -36,10 +37,17 @@ int kmain()
     g_sysgrap.res_y = 768;
     kputstr(0, 0, "Welcome to Lithium OS!!          (2020_11_21_A02)", WHITE, BLACK);
     kputstrc(0, 1,logo_cpu, GREEN, BLACK, 52);
-    kputwstr(0,2,L"准备就绪         (按下lCtrl+lAlt+Backspace重启)",GREEN,BLACK);
+    kputstr(0,2,"Ready",GREEN,BLACK);
     init_interrupt();
     //out_port8(0x21,0xff);//BACU
     init_mem();
+    char wdnmd[512] = {0};
+    ata_read_sector(ata_port_master,1,wdnmd);
+    for (size_t i = 0; i < 16; i++)
+    {
+        kputnum(20,5+i,*(((uint32_t *)wdnmd)+i),YELLOW,BLACK);
+    }
+    
     while (1)
     {
         als_keyborad_code();

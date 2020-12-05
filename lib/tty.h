@@ -1,6 +1,7 @@
+
 /* Copyright (C) 2020 LithiumOS-Team
     This file is part of the Lithium Kernel.
-
+    
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
     published by the Free Software Foundation, either version 3 of the
@@ -15,10 +16,8 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 #pragma once
-#ifndef _ATA_H_
-#define _ATA_H_
+#ifndef _TTY_H_
+#define _TTY_H_
 #include <types.h>
-extern sint32_t ata_read_sector(uint8_t *ata, uint64_t lba, void *addr);
-extern uint8_t *ata_port_master;
-extern uint8_t *ata_port_slave;
-#endif
+
+#endif _TTY_H_

@@ -21,6 +21,9 @@
 #include <video.h>
 extern uint8_t * kbb_p;
 extern void _do_irq33(void);
+extern void _do_irq13(void);
+extern void _do_irq14(void);
+extern void _do_irqnull(void);
 struct intr_info g_sysintr;
 uint32_t cnt = 0;
 void do_irq33(void)
@@ -33,11 +36,32 @@ void do_irq33(void)
         return;
     }
 }
-
+void do_irq13(void)
+{
+    kputwstr(0,7,L"#GP General Protection Error",RED,WHITE);
+    return;
+}
+void do_irq14(void)
+{
+    kputwstr(0,7,L"#PF Page Fault              ",RED,WHITE);
+    return;
+}
+void do_irqnull(void)
+{
+    kputwstr(0,7,L"#UKE Unknow Error or Fault  ",RED,WHITE);
+    return;
+}
 void init_interrupt()
 {
     g_sysintr.idt_addr = &sys_idt;
+    for (size_t i = 0; i < 32; i++)
+    {
+        set_intr_gate(i,&_do_irqnull);
+    }
+    
     set_intr_gate(33,&_do_irq33);
+    set_intr_gate(13,&_do_irq13);
+    set_intr_gate(14,&_do_irq14);
 
     
     out_port8(0x20,0x11);

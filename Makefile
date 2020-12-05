@@ -23,6 +23,8 @@ IAS = nasm
 LIBDIRM = -I $(INCPATH)
 CMKLG = 
 CMKFLGS=-fno-builtin $(LIBDIRM) -m32 -c -Wall -nostdinc -nostdlib -fno-pie
+MKDEV = /dev/sda1
+MKDEVROOT = /dev/sda
 #/*-fno-builtin $(LIBDIRM) -m32 -c -Wall -nostdinc -nostdlib*/
 #/*-mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib*/
 export CC
@@ -77,21 +79,21 @@ chkmb:
 install:system
 	sudo cp $(MKDIR)/lithium.elf /lithium.elf
 d8g:install
-	sudo mount /dev/sdb1 $(MKDIR)
+	sudo mount $(MKDEV) $(MKDIR)
 	sudo cp /lithium.elf $(MKDIR)/lithium.elf
 	sync
 	sync
 	sync
-	sudo umount /dev/sdb1
-	sudo qemu-system-i386 -s -S -m 512 /dev/sdb
+	sudo umount $(MKDEV)
+	sudo qemu-system-i386 -s -S -m 512 -hda $(MKDEVROOT)
 run:install
-	sudo mount /dev/sdb1 $(MKDIR)
+	sudo mount $(MKDEV) $(MKDIR)
 	sudo cp /lithium.elf $(MKDIR)/lithium.elf
 	sync
 	sync
 	sync
-	sudo umount /dev/sdb1
-	sudo qemu-system-i386 -s -m 512 /dev/sdb
+	sudo umount $(MKDEV)
+	sudo qemu-system-i386 -s -m 512 -hda $(MKDEVROOT)
 LIBSO = lib-sys lib-video lib-dsk lib-mem
 libs:$(LIBSO)
 	@echo "\033[34m[II] All Libs Ok\033[0m"

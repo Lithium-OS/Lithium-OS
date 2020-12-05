@@ -25,4 +25,17 @@ SECTIONS
     {
         *(.bss)
     }
+    . = 128M;
+    . = 160M;
+    sys_pdt_start = .;
+    .pdt ALIGN(4K):
+    {
+        *(.pdt)
+    }
+    . = 162M;
+    sys_pt_start = .;
+    .pt ALIGN(4K):
+    {
+        *(.pt)
+    }    
 }
