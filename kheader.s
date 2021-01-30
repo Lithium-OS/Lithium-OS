@@ -122,6 +122,16 @@ movl %edx,(48+logo_cpu)
 
 lidt (idtrp)
 jmp kmain
+jmp kmain
+jmp kmain
+jmp kmain
+jmp kmain
+jmp kmain
+jmp kmain
+nop
+nop
+nop
+hlt
 idt_s:
 sys_idt: .fill 512,8,0 
 idt_e:

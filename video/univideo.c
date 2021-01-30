@@ -1,6 +1,6 @@
-/* Copyright (C) 2020 LithiumOS-Team
+/* Copyright (C) 2020-2021 AlanCui
     This file is part of the Lithium Kernel.
-    
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
     published by the Free Software Foundation, either version 3 of the
@@ -14,7 +14,7 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#include <video.h>
+#include <console/video.h>
 #include <types.h>
 extern uint8_t unifont[65534][32];
 struct grap_info g_sysgrap;

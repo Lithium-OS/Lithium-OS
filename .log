@@ -1,0 +1,44 @@
+[34m[II] Setting INCPATH to /home/alan/git/Lithium-OS/lib[0m
+time make all
+make[1]: 进入目录“/home/alan/git/Lithium-OS”
+[34m[II] Making Interrupt Lib[0m
+make -C ./interrupt lib-intr
+make[2]: 进入目录“/home/alan/git/Lithium-OS/interrupt”
+gcc -fno-builtin -I /home/alan/git/Lithium-OS/lib -m32 -c -Wall -nostdinc -nostdlib -fno-pie keyboard.c -o /home/alan/git/Lithium-OS/build/keyboard.o 
+gcc -fno-builtin -I /home/alan/git/Lithium-OS/lib -m32 -c -Wall -nostdinc -nostdlib -fno-pie interrupt.c -o /home/alan/git/Lithium-OS/build/interrupt.o 
+as --32 entry.S -o /home/alan/git/Lithium-OS/build/entry.o
+make[2]: 离开目录“/home/alan/git/Lithium-OS/interrupt”
+[34m[II] Making Video Lib[0m
+make -C ./video lib-video
+make[2]: 进入目录“/home/alan/git/Lithium-OS/video”
+make[2]: 对“lib-video”无需做任何事。
+make[2]: 离开目录“/home/alan/git/Lithium-OS/video”
+[34m[II] Making Disk Lib[0m
+make -C ./disk lib-dsk
+make[2]: 进入目录“/home/alan/git/Lithium-OS/disk”
+make[2]: 对“lib-dsk”无需做任何事。
+make[2]: 离开目录“/home/alan/git/Lithium-OS/disk”
+[34m[II] Making Memory Lib[0m
+make -C ./memory lib-mem
+make[2]: 进入目录“/home/alan/git/Lithium-OS/memory”
+gcc -fno-builtin -I /home/alan/git/Lithium-OS/lib -m32 -c -Wall -nostdinc -nostdlib -fno-pie mem.c -o /home/alan/git/Lithium-OS/build/mem.o 
+make[2]: 离开目录“/home/alan/git/Lithium-OS/memory”
+[34m[II] Making C Lib[0m
+make -C ./stdlib lib-std
+make[2]: 进入目录“/home/alan/git/Lithium-OS/stdlib”
+gcc -fno-builtin -I /home/alan/git/Lithium-OS/lib -m32 -c -Wall -nostdinc -nostdlib -fno-pie string.c -o /home/alan/git/Lithium-OS/build/string.o 
+make[2]: 离开目录“/home/alan/git/Lithium-OS/stdlib”
+[34m[II] All Libs Ok[0m
+[34m[II] Making KernelHeader[0m
+as --32 -o /home/alan/git/Lithium-OS/build/kheader.o kheader.s
+objcopy -O elf32-i386 /home/alan/git/Lithium-OS/build/kheader.o /home/alan/git/Lithium-OS/build/kheader.o
+[34m[II] Header is OK[0m
+[34m[II] Making Kernel[0m
+gcc -fno-builtin -I /home/alan/git/Lithium-OS/lib -m32 -c -Wall -nostdinc -nostdlib -fno-pie kernel.c -o /home/alan/git/Lithium-OS/build/kernel.o 
+[34m[II] EveryLib is Ok,Start Linking[0m
+[34m[II] Linking[0m
+sync
+sync
+sync
+ld -z max-page-size=0x1000 -m elf_i386 -T kernel.lds --build-id=none /home/alan/git/Lithium-OS/build/*.o  -o /home/alan/git/Lithium-OS/build/lithium~dirty.o
+make[1]: 离开目录“/home/alan/git/Lithium-OS”

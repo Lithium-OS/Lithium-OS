@@ -23,8 +23,8 @@ IAS = nasm
 LIBDIRM = -I $(INCPATH)
 CMKLG = 
 CMKFLGS=-fno-builtin $(LIBDIRM) -m32 -c -Wall -nostdinc -nostdlib -fno-pie
-MKDEV = /dev/sda1
-MKDEVROOT = /dev/sda
+MKDEV = /dev/sdc1
+MKDEVROOT = /dev/sdc
 #/*-fno-builtin $(LIBDIRM) -m32 -c -Wall -nostdinc -nostdlib*/
 #/*-mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib*/
 export CC
@@ -54,7 +54,7 @@ all:kernel.o
 	sync
 	sync
 	sync
-	ld -z max-page-size=0x1000 -m elf_i386 -T kernel.lds --build-id=none $(MKDIR)/*.o -o $(MKDIR)/lithium~dirty.o
+	ld -z max-page-size=0x1000 -m elf_i386 -T kernel.lds --build-id=none $(MKDIR)/*.o  -o $(MKDIR)/lithium~dirty.o
 	@echo "\033[34m[II] Cleaning Other Section\033[0m"
 	objcopy -R ".eh_frame" -R ".comment" -O elf32-i386 $(MKDIR)/lithium~dirty.o $(MKDIR)/lithium.elf
 	rm -f $(MKDIR)/lithium~dirty.o
@@ -85,7 +85,7 @@ d8g:install
 	sync
 	sync
 	sudo umount $(MKDEV)
-	sudo qemu-system-i386 -s -S -m 512 -hda $(MKDEVROOT)
+	sudo qemu-system-i386 -s -S -m 256 -hda $(MKDEVROOT)
 run:install
 	sudo mount $(MKDEV) $(MKDIR)
 	sudo cp /lithium.elf $(MKDIR)/lithium.elf
@@ -93,15 +93,14 @@ run:install
 	sync
 	sync
 	sudo umount $(MKDEV)
-	sudo qemu-system-i386 -s -m 512 -hda $(MKDEVROOT)
-LIBSO = lib-sys lib-video lib-dsk lib-mem
+	sudo qemu-system-i386 -s -m 256 -hda $(MKDEVROOT)
+LIBSO = lib-sys lib-video lib-dsk lib-mem lib-std
 libs:$(LIBSO)
 	@echo "\033[34m[II] All Libs Ok\033[0m"
 lib-dsk:
 	@echo "\033[34m[II] Making Disk Lib\033[0m"
 	make -C ./disk lib-dsk
 lib-sys:
-
 	@echo "\033[34m[II] Making Interrupt Lib\033[0m"
 	make -C ./interrupt lib-intr
 lib-video:
@@ -110,3 +109,6 @@ lib-video:
 lib-mem:
 	@echo "\033[34m[II] Making Memory Lib\033[0m"
 	make -C ./memory lib-mem
+lib-std:
+	@echo "\033[34m[II] Making C Lib\033[0m"
+	make -C ./stdlib lib-std

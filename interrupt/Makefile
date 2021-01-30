@@ -1,4 +1,4 @@
-#* Copyright (C) 2020 LithiumOS-Team
+#
 #	 This file is part of the Lithium Kernel.
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -13,8 +13,8 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #*/
-
+#/*Copyright (C) 2020-2021 AlanCui*/
 lib-intr:
-	$(CC) $(CMKFLGS) kerboard.c -o $(MKDIR)/kerboard.o $(CMKLG)
+	$(CC) $(CMKFLGS) keyboard.c -o $(MKDIR)/keyboard.o $(CMKLG)
 	$(CC) $(CMKFLGS) interrupt.c -o $(MKDIR)/interrupt.o $(CMKLG)
 	$(GAS) --32 entry.S -o $(MKDIR)/entry.o

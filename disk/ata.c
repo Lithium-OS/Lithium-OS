@@ -1,6 +1,6 @@
-/* Copyright (C) 2020 LithiumOS-Team
+/*
     This file is part of the Lithium Kernel.
-
+    
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
     published by the Free Software Foundation, either version 3 of the
@@ -14,9 +14,10 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+/*Copyright (C) 2020-2021 AlanCui*/
 #include <types.h>
-#include <ioport.h>
-#include <video.h>
+#include <io/port.h>
+#include <console/video.h>
 int log = 8;
 const uint16_t ata_port_master[9] = {0x1f0, 0x1f1, 0x1f2, 0x1f3, 0x1f4, 0x1f5, 0x1f6, 0x1f7, 0b01000000};
 const uint16_t ata_port_slave[9] = {0x170, 0x171, 0x172, 0x173, 0x174, 0x175, 0x176, 0x177, 0b010000};

@@ -1,4 +1,4 @@
-/* Copyright (C) 2020 LithiumOS-Team
+/* Copyright (C) 2020 AlanCui
     This file is part of the Lithium Kernel.
     
     This program is free software: you can redistribute it and/or modify
@@ -12,10 +12,29 @@
     GNU Affero General Public License for more details.
 
     You should have received a copy of the GNU Affero General Public License
-    auint32_t with this program.  If not, see <https://www.gnu.org/licenses/>.
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+#pragma once
+#ifndef _INTERRUPT_H_
+#define _INTERRUPT_H_
 #include <types.h>
-#ifndef _VBE_H_
-#define _VBE_H_
+struct intr_entry
+{
+    uint16_t offset_low;
+    uint16_t selector;
+    uint8_t zero;
+    uint8_t type;
+    uint16_t offset_high;
+} __attribute__((__packed__));
 
+struct intr_info
+{
+    addr_t *idt_addr;
+};
+//Base IDT Entry
+extern struct intr_entry *sys_idt;
+//INIT interrupt
+extern void init_interrupt();
+//Set an interrupt_gate
+extern void set_intr_gate(uint32_t num,void * handle);
 #endif

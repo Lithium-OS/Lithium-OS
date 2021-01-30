@@ -1,4 +1,4 @@
-/* Copyright (C) 2020 LithiumOS-Team
+/*
     This file is part of the Lithium Kernel.
     
     This program is free software: you can redistribute it and/or modify
@@ -14,15 +14,16 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+/*Copyright (C) 2020-2021 AlanCui*/
 #include <types.h>
-#include <ioport.h>
-#include <video.h>
+#include <io/port.h>
+#include <console/video.h>
 uint8_t kb_buf[512]={0xff};
 uint8_t * kbb_p = &(kb_buf[511]);
 uint32_t lctrl = 0;
 uint32_t lalt = 0;
 uint32_t backspace = 0;
-void als_keyborad_code()
+void als_keyboard_code()
 {
        switch (*kbb_p)
        {

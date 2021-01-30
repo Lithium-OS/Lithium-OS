@@ -1,6 +1,6 @@
-/* Copyright (C) 2020 LithiumOS-Team
+/* Copyright (C) 2020-2021 AlanCui
     This file is part of the Lithium Kernel.
-    
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
     published by the Free Software Foundation, either version 3 of the
@@ -12,17 +12,10 @@
     GNU Affero General Public License for more details.
 
     You should have received a copy of the GNU Affero General Public License
-    auint32_t with this program.  If not, see <https://www.gnu.org/licenses/>.
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#pragma once
-#ifndef _MEM_H_
-#define _MEM_H_
 #include <types.h>
-struct mem_info
-{
-    uint8_t *mgn;
-};
-extern void init_mem(void);
-extern uint32_t sys_pdt_start;
-extern uint32_t sys_pt_start;
-#endif 
+#ifndef _VBE_H_
+#define _VBE_H_
+
+#endif

@@ -15,27 +15,15 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /*Copyright (C) 2020-2021 AlanCui*/
+#pragma once
+#ifndef _MEM_H_
+#define _MEM_H_
 #include <types.h>
-#include <mm/mem.h>
-#include <console/video.h>
-#include <sys/sysop.h>
-//struct mem_info g_meminfo;
-void init_mem(void)
-{/*
-    for (size_t i = 0; i < 48; i++) // 0-192MiB
-    {
-        *(((uint32_t*)(&sys_pdt_start)) + i) = ((uint32_t)(&sys_pt_start + 4096*i))<<12 + 0x0b;//Persent + Supervistor + Writethrouth + PCD
-        for (size_t l = 0; l < 1024; l++)
-        {
-            *(&sys_pt_start + 1024*i + 4*1) = ((uint32_t)(l+i*4096))<<12 + 0x0b;//Persent + Supervistor + Writethrouth + PCD
-        }
-        
-    }
-    __asm__ ("movl $sys_pdt_start,%%eax\n\t"\
-            "movl %%eax,%%cr3\n\t"\
-    :::"memory") ;
-    __asm__("movl %%cr0,%%eax\n\t"\
-            "bts $31,%%eax\n\t"\
-            "movl %%eax,%%cr0\n\t"\
-        :::"memory");*/
-}
+struct mem_info
+{
+    uint8_t *mgn;
+};
+extern void init_mem(void);
+extern uint32_t sys_pdt_start;
+extern uint32_t sys_pt_start;
+#endif 

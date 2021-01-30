@@ -6,4 +6,4 @@
 *.o
 *.elf
 *cmplog*
-.vscodeF
+.vscode

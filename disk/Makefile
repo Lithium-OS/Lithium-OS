@@ -1,4 +1,4 @@
-#* Copyright (C) 2020 LithiumOS-Team
+#
 #	 This file is part of the Lithium Kernel.
 #    This program is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU Affero General Public License as
@@ -13,6 +13,7 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #*/
+#/*Copyright (C) 2020-2021 AlanCui*/
 lib-dsk: $(MKDIR)/ata.o
 $(MKDIR)/ata.o:ata.c
 	$(CC) $(CMKFLGS) ata.c -o $(MKDIR)/ata.o $(CMKLG)
