@@ -1,4 +1,4 @@
-/* Copyright (C) 2020-2021 AlanCui
+/*
     This file is part of the Lithium Kernel.
 
     This program is free software: you can redistribute it and/or modify
@@ -14,18 +14,15 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#pragma once
-#ifndef _TTY_H_
-#define _TTY_H_
-#include <types.h>
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-extern void klog(char* mod,char* info,...);
-
-#ifdef __cplusplus
+/*Copyright (C) 2020-2021 AlanCui*/
+#include <kfrme.h>
+#include <console/tty.h>
+#include <mm/mem.h>
+#include "vfs.h"
+#include <string.h>
+int path_type(char* path){
+    if (path[strlen(path)] == '/')
+        return TYPE_DIR;
+    else
+        return TYPE_FILE;
 }
-#endif
-#endif

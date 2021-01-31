@@ -16,6 +16,29 @@
 */
 /*Copyright (C) 2020-2021 AlanCui*/
 .section .text
+_do_irq3:
+    cld
+    pushl %eax
+    pushl %ebx
+    pushl %ecx
+    pushl %edx
+    pushl %esi
+    pushl %edi
+
+    pushl %eax
+    pushl %ebx
+    pushl %ecx
+    pushl %edx
+    
+    call do_irq3
+    popl %edi
+    popl %esi
+    popl %edx
+    popl %ecx
+    popl %ebx
+    popl %eax
+    iret
+.globl _do_irq3
 _do_irq33:
     cld
     pushl %eax
@@ -86,3 +109,28 @@ _do_irqnull:
 .globl _do_irqnull
 
 
+_do_irq80:
+    cld
+    pushl %eax
+    pushl %ebx
+    pushl %ecx
+    pushl %edx
+    pushl %esi
+    pushl %edi
+
+    movl %eax,(syscall_cls)
+    movl %ebx,(syscall_ptr)
+    
+    call do_irq80
+    popl %edi
+    popl %esi
+    popl %edx
+    popl %ecx
+    popl %ebx
+    popl %eax
+    iret
+syscall_cls:.fill 4,8,0
+syscall_ptr:.fill 4,8,0
+.globl _do_irq80
+.globl syscall_cls
+.globl syscall_ptr

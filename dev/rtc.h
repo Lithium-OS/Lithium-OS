@@ -1,4 +1,4 @@
-/*
+/* Copyright (C) 2020-2021 AlanCui
     This file is part of the Lithium Kernel.
 
     This program is free software: you can redistribute it and/or modify
@@ -14,12 +14,14 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-/*Copyright (C) 2020-2021 AlanCui*/
-#pragma once
-#ifndef _ATA_H_
-#define _ATA_H_
-#include <types.h>
-extern sint32_t ata_read_sector(uint8_t *ata, uint64_t lba, void *addr);
-extern uint8_t *ata_port_master;
-extern uint8_t *ata_port_slave;
+#ifndef _RTC_H_
+#define _RTC_H_
+#include<kfrme.h>
+extern void init_rtc(void);
+typedef struct
+{
+    uint32_t yr,mo,dy,hr,min,sec;
+}rtime_t;
+
+extern int get_rtc_time(rtime_t *time);
 #endif

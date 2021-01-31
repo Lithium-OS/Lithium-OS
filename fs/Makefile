@@ -13,13 +13,10 @@
 #    You should have received a copy of the GNU Affero General Public License
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #*/
-
-lib-video:$(MKDIR)/vbe.o $(MKDIR)/univideo.o $(MKDIR)/unifont.o $(MKDIR)/999klog.o
-$(MKDIR)/vbe.o:vbe.c
-	$(CC) $(CMKFLGS) vbe.c -o $(MKDIR)/vbe.o $(CMKLG)
-$(MKDIR)/unifont.o:unifont.c
-	$(CC) $(CMKFLGS) unifont.c -o $(MKDIR)/unifont.o $(CMKLG)
-$(MKDIR)/univideo.o:univideo.c
-	$(CC) $(CMKFLGS) univideo.c -o $(MKDIR)/univideo.o $(CMKLG)
-$(MKDIR)/999klog.o:klog.c 
-	$(CC) $(CMKFLGS) klog.c -o $(MKDIR)/999klog.o $(CMKLG)
+lib-fs:$(MKDIR)/vfs.o $(MKDIR)/vfstring.o
+fs-lifsrd:
+	make -C ./lifsrd lifsrd
+$(MKDIR)/vfs.o:vfs.c
+	$(CC) $(CMKFLGS) vfs.c -o $(MKDIR)/vfs.o $(CMKLG)
+$(MKDIR)/vfstring.o:vfstring.c
+	$(CC) $(CMKFLGS) vfstring.c -o $(MKDIR)/vfstring.o $(CMKLG)

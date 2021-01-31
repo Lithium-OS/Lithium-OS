@@ -23,7 +23,26 @@ struct mem_info
 {
     uint8_t *mgn;
 };
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 extern void init_mem(void);
+extern void *kpmalloc(void);
 extern uint32_t sys_pdt_start;
 extern uint32_t sys_pt_start;
+extern char sys_fp_start;
+extern char sys_fp_end;
+
+
+#define PAGE_FREE 0
+#define PAGE_DIRTY 1
+#define PAGE_BUSY 2
+#define PAGE_BROKEN 3
+
+#ifdef __cplusplus
+}
+#endif
 #endif 

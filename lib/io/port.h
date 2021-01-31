@@ -18,6 +18,11 @@
 #ifndef _IOPORT_H_
 #define _IOPORT_H_
 #include <types.h>
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 __attribute__((always_inline)) inline static uint16_t in_port16(uint16_t port)
 {
     uint16_t tmp = 0;
@@ -46,4 +51,8 @@ __attribute__((always_inline)) inline static void out_port8(uint16_t port, uint8
     __asm__ __volatile__("outb %%al,%%dx" ::"d"(port), "a"(valve)
                          :);
 }
+
+#ifdef __cplusplus
+}
+#endif
 #endif

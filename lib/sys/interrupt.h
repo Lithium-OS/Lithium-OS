@@ -31,10 +31,21 @@ struct intr_info
 {
     addr_t *idt_addr;
 };
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 //Base IDT Entry
 extern struct intr_entry *sys_idt;
 //INIT interrupt
 extern void init_interrupt();
 //Set an interrupt_gate
 extern void set_intr_gate(uint32_t num,void * handle);
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif

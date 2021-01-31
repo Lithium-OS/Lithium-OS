@@ -20,10 +20,13 @@
 #include <sys/interrupt.h>
 #include <sys/sysop.h>
 #include <console/video.h>
+extern uint32_t syscall_cls;
+extern void *syscall_ptr;
 extern uint8_t * kbb_p;
 extern void _do_irq33(void);
 extern void _do_irq13(void);
 extern void _do_irq14(void);
+extern void _do_irq80(void);
 extern void _do_irqnull(void);
 struct intr_info g_sysintr;
 uint32_t cnt = 0;
@@ -35,22 +38,30 @@ void do_irq33(void)
             *kbb_p = in_port8(0x60);
         kbb_p--;
         out_port8(0x20,0x20);
-        return;
     }
+}
+void do_irq3(uint32_t edx,uint32_t ecx,uint32_t ebx,uint32_t eax)
+{
+    klog("imgr","int 3 : debug intrrupt");
+    klog("imgr","eax:%h");
+}
+void do_irq80(void)
+{
+    //TODO wwww
 }
 void do_irq13(void)
 {
-    kputwstr(0,7,L"#GP General Protection Error",RED,WHITE);
+    kputstr(0,7,"GP General Protection Error",RED,WHITE);
     return;
 }
 void do_irq14(void)
 {
-    kputwstr(0,7,L"#PF Page Fault              ",RED,WHITE);
+    kputstr(0,7,"PF Page Fault              ",RED,WHITE);
     return;
 }
 void do_irqnull(void)
 {
-    kputwstr(0,7,L"#UKE Unknow Error or Fault  ",RED,WHITE);
+    panic("UKE Unknow Error or Fault  ");
     return;
 }
 void init_interrupt()
@@ -69,7 +80,8 @@ void init_interrupt()
     set_intr_gate(13,&_do_irq13);
     klog("imgr","init intr_gate 14 -> _do_irq_14(#PF Page Fault)");
     set_intr_gate(14,&_do_irq14);
-
+    klog("imgr","init intr_gate 80 -> _do_irq_80(Syscall)");
+    set_intr_gate(80,&_do_irq80);
     klog("imgr","init kb_master_contorller");
     out_port8(0x20,0x11);
     out_port8(0x21,0x20);

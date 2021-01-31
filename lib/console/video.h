@@ -24,6 +24,10 @@
 {
     uint8_t  r, g, b , a;
 } __attribute__((__packed__));*/
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 extern struct grap_info g_sysgrap;
 extern void kputchar(uint32_t x, uint32_t y, char chr, uint32_t fcolor, uint32_t bcolor);
 extern void kputstr(uint32_t x, uint32_t y, char *chr, uint32_t fcolor, uint32_t bcolor);
@@ -32,6 +36,9 @@ extern void kputstrc(uint32_t x, uint32_t y, char *chr, uint32_t fcolor, uint32_
 extern void kputwstr(uint32_t x, uint32_t y, wchar_t *chr, uint32_t fcolor, uint32_t bcolor);
 extern void kputwchar(uint32_t x,uint32_t y,wchar_t wchr,uint32_t fcolor,uint32_t bcolor);
 extern void kputwstrc(uint32_t x, uint32_t y, wchar_t *chr, uint32_t fcolor, uint32_t bcolor, uint32_t l);
+#ifdef __cplusplus
+}
+#endif
 #define RED 0x00ff0000
 #define GREEN 0x0000ff00
 #define BLUE 0x000000ff
@@ -41,7 +48,6 @@ extern void kputwstrc(uint32_t x, uint32_t y, wchar_t *chr, uint32_t fcolor, uin
 #define WHITE 0x00ffffff
 #define BLACK 0x00000000
 #define GRAY 0x00aaaaaa
-extern struct grap_info g_sysgrap;
 struct grap_info
 {
     addri_t base_addr;

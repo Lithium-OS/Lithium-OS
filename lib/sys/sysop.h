@@ -18,6 +18,10 @@
 #ifndef _SYSOP_H_
 #define _SYSOP_H_
 #include <types.h>
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 __attribute__((always_inline)) inline static regv_t get_reg_eax()
 {
     regv_t __tmp;
@@ -79,4 +83,7 @@ __attribute__((always_inline)) inline static void sti(void)
     __asm__ __volatile__("sti\n\t" ::
                              : "memory");
 }
+#ifdef __cplusplus
+}
+#endif
 #endif

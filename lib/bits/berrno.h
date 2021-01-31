@@ -1,4 +1,4 @@
-/* Copyright (C) 2020-2021 AlanCui
+/*
     This file is part of the Lithium Kernel.
 
     This program is free software: you can redistribute it and/or modify
@@ -14,18 +14,4 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#pragma once
-#ifndef _TTY_H_
-#define _TTY_H_
-#include <types.h>
-
-#ifdef __cplusplus
-extern "C"
-{
-#endif
-extern void klog(char* mod,char* info,...);
-
-#ifdef __cplusplus
-}
-#endif
-#endif
+/*Copyright (C) 2020-2021 AlanCui*/

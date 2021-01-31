@@ -17,12 +17,75 @@
 #include <console/video.h>
 #include <types.h>
 #include<string.h>
+#include <sys/sysop.h>
+#include <stdarg.h>
 char klog_buf[4096][128] = {0};
 uint32_t buf_ptr = 0;
-void klog(char* mod,char* info){
+static void rklog(char* mod,char* info){
     char bufn[128] = {'[','0',']'};
-    strncpy(klog_buf[buf_ptr++],strcat(strcat(strcat(bufn,mod),":"),info),128);
+    strcat(strcat(strcat(bufn,mod),":"),info);
+    strncpy(klog_buf[buf_ptr++],bufn,128);
     klog_flsh();
+}
+void panic(char* mod,char* info,...)
+{
+    char bufn[128] = {'P',' ',' '};
+    strcat(strcat(strcat(bufn,mod),":"),info);
+    strncpy(klog_buf[buf_ptr++],bufn,128);
+    klog_flsh();
+    klog("panic","dumping system infomation");
+    klog("panic","kernel halted");
+    __asm__("cli");
+    hlt_cpu();
+}
+void klog(char* mod,char* info,...)
+{
+    va_list vlst;
+    size_t cnt = 0;
+    //kputnum(0,0,strlen(info),BLUE,BLACK);
+    
+   /* for (size_t i = 0; i < strlen(info); i++)
+    {
+        if(*(info+i) == (char)'%')
+        {
+            cnt++;
+            //kputnum(0,i+1,*(info+i),YELLOW,BLACK);
+            continue;
+        }
+        else if(*(info+i) == 0)
+            break;  
+        //kputnum(0,i+1,*(info+i),GREEN,BLACK);
+    }*/
+    va_start(vlst,info);
+    for (size_t i = 0; i < SIZE_T_MAX; i++)
+    {
+        if(info[i] == '%')
+        {
+          //  kputnum(0,i+1,*(info+i),BLUE,BLACK);
+            i++;
+            char tmp[12] = {"0x????????\0\0"};
+            switch (info[i])
+            {
+            case 'h':
+                strdel(info,i,1);
+                strins(info,num2str32(tmp,va_arg(vlst,size_t)),i);
+                break;
+            }
+        }
+        if (info[i]==0)
+        {
+            break;
+        }
+        
+    }
+        /*else if(info[i] == '\\')
+        {
+            strdel(info,i,1);
+            i++;
+        }*/
+    rklog(mod,info);
+    
+    //va_end(vlst);
 }
 void klog_flsh(){
     if(buf_ptr > 35)
@@ -30,7 +93,9 @@ void klog_flsh(){
         for (size_t i = buf_ptr-35; i < buf_ptr; i++)
         {
             if(klog_buf[i][0] == '[')
-                kputstrc(0,i-(buf_ptr-35),klog_buf[i],WHITE,BLACK,80);
+                kputstrc(11,i-(buf_ptr-35),klog_buf[i],WHITE,BLACK,80);
+            if(klog_buf[i][0] == 'P')
+                kputstrc(11,i-(buf_ptr-35),klog_buf[i],RED,BLACK,80);
         }
     }
     else
@@ -38,7 +103,9 @@ void klog_flsh(){
         for (size_t i = 0; i < 35; i++)
         {
             if(klog_buf[i][0] == '[')
-                kputstrc(0,i,klog_buf[i],WHITE,BLACK,80);
+                kputstrc(11,i,klog_buf[i],WHITE,BLACK,80);
+            if(klog_buf[i][0] == 'P')
+                kputstrc(11,i,klog_buf[i],RED,BLACK,80);
         }
     }
     

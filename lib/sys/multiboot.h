@@ -19,6 +19,9 @@
 #pragma once
 #ifndef _MULTIBOOT_H_
 #define _MULTIBOOT_H_
+#ifdef __cplusplus
+#error do not include this file while you are using cpp
+#endif
 #include <types.h>
 //Define MultiBoot version
 #define MBT_VERSION 2

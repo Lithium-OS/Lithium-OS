@@ -19,5 +19,16 @@
 #ifndef _KEYBOARD_H_
 #define _KEYBOARD_H_
 #include <types.h>
+
+#ifdef __cplusplus
+extern "C"
+{
+#endif
+
 extern void als_keyboard_code();
+
+#ifdef __cplusplus
+}
+#endif
+
 #endif

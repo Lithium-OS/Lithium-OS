@@ -23,6 +23,7 @@ IAS = nasm
 LIBDIRM = -I $(INCPATH)
 CMKLG = 
 CMKFLGS=-fno-builtin $(LIBDIRM) -m32 -c -Wall -nostdinc -nostdlib -fno-pie
+CMKFLGSTD= $(LIBDIRM) -m32 -Wall
 MKDEV = /dev/sdc1
 MKDEVROOT = /dev/sdc
 #/*-fno-builtin $(LIBDIRM) -m32 -c -Wall -nostdinc -nostdlib*/
@@ -36,6 +37,7 @@ export MKDIR
 export LIBDIRM
 export CMKLG
 export CMKFLGS
+export CMKFLGSTD
 system:
 	@echo "\033[34m[II] Setting INCPATH to $(INCPATH)\033[0m"
 	time make all
@@ -94,7 +96,7 @@ run:install
 	sync
 	sudo umount $(MKDEV)
 	sudo qemu-system-i386 -s -m 256 -hda $(MKDEVROOT)
-LIBSO = lib-sys lib-video lib-dsk lib-mem lib-std
+LIBSO = lib-sys lib-video lib-dsk lib-mem lib-std lib-fs lib-dev
 libs:$(LIBSO)
 	@echo "\033[34m[II] All Libs Ok\033[0m"
 lib-dsk:
@@ -112,3 +114,13 @@ lib-mem:
 lib-std:
 	@echo "\033[34m[II] Making C Lib\033[0m"
 	make -C ./stdlib lib-std
+lib-fs:
+	@echo "\033[34m[II] Making FileSystem Lib\033[0m"
+	make -C ./fs lib-fs
+lib-dev:
+	@echo "\033[34m[II] Making Device Lib\033[0m"
+	make -C ./dev lib-dev
+cnt: 
+	mv video/unifont.c video/unifont.xx
+	cloc .
+	mv video/unifont.xx video/unifont.c

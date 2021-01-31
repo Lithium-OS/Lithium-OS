@@ -1,4 +1,4 @@
-/* Copyright (C) 2020-2021 AlanCui
+/*
     This file is part of the Lithium Kernel.
 
     This program is free software: you can redistribute it and/or modify
@@ -14,18 +14,23 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
+/*Copyright (C) 2020-2021 AlanCui*/
 #pragma once
-#ifndef _TTY_H_
-#define _TTY_H_
+#ifndef _ATA_H_
+#define _ATA_H_
 #include <types.h>
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-extern void klog(char* mod,char* info,...);
+
+extern sint32_t ata_read_sector(uint8_t *ata, uint64_t lba, void *addr);
+extern uint8_t *ata_port_master;
+extern uint8_t *ata_port_slave;
 
 #ifdef __cplusplus
 }
 #endif
+
 #endif

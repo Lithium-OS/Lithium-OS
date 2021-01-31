@@ -24,6 +24,9 @@
 #include <sys/interrupt.h>
 #include <mm/mem.h>
 #include <keyboard.h>
+#include <io/ata.h>
+#include <fs/fsops.h>
+#include <string.h>
 extern uint32_t fb_addr;
 extern uint32_t mem_info;
 extern char logo_cpu[];
@@ -43,13 +46,25 @@ int kmain()
     init_interrupt();
     //out_port8(0x21,0xff);//BACU
     init_mem();
+    init_vfs();
+    struct vfs_fsnode tnode;
+    memcpy(tnode.mount_pt,"/dev/null/",10);
+    vfs_regfs(tnode);
+    vfs_unloadfs(1);
+    memcpy(tnode.mount_pt,"/dev/null/",10);
+    vfs_regfs(tnode);
+    //memcpy(tnode.mount_pt,"/",1);
+    //vfs_regfs(tnode);
+    init_rtc();
+    //memcpy(tnode.mount_pt,"/srv/",5);
+    //vfs_regfs(tnode);
     char wdnmd[512] = {0};
-    /*ata_read_sector(ata_port_master,1,wdnmd);
-    for (size_t i = 0; i < 16; i++)
+    //ata_read_sector(ata_port_slave,1,wdnmd);
+    /*for (size_t i = 0; i < 16; i++)
     {
-        kputnum(20,5+i,*(((uint32_t *)wdnmd)+i),YELLOW,BLACK);
-    }
-    */
+        kputnum(0,5+i,*(((uint32_t *)wdnmd)+i),YELLOW,BLACK);
+    }*/
+    char * pa = NULL;
     while (1)
     {
         als_keyboard_code();

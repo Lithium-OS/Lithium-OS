@@ -16,12 +16,27 @@
 */
 /*Copyright (C) 2020-2021 AlanCui*/
 #include <types.h>
+#include<errno.h>
 #include <mm/mem.h>
-#include <console/video.h>
+#include <console/tty.h>
 #include <sys/sysop.h>
+#include <console/video.h>
 //struct mem_info g_meminfo;
+char ctrlp_lst[6145] = {0};
+size_t g_to4kpgs = 0;
 void init_mem(void)
-{/*
+{
+   // klog("mmc","system memory aera:");
+   // klog("mmc","---sys_fp_start: %h (linear)",&sys_fp_start);
+    klog("mmc","init kernel base 4-Kib aera");
+    klog("mmc","total available: %h bytes",&sys_fp_end - &sys_fp_start);
+    klog("mmc","             ");
+    g_to4kpgs = (&sys_fp_end - &sys_fp_start)/4096;
+    klog("mmc","total available : %h page(s)",(&sys_fp_end - &sys_fp_start)/4096);
+    klog("mmc","             ");
+    klog("mmc","4-kib aera ok");
+    
+    /*
     for (size_t i = 0; i < 48; i++) // 0-192MiB
     {
         *(((uint32_t*)(&sys_pdt_start)) + i) = ((uint32_t)(&sys_pt_start + 4096*i))<<12 + 0x0b;//Persent + Supervistor + Writethrouth + PCD
@@ -38,4 +53,20 @@ void init_mem(void)
             "bts $31,%%eax\n\t"\
             "movl %%eax,%%cr0\n\t"\
         :::"memory");*/
+}
+void *kpmalloc(void){
+        for (size_t i = 0; i < g_to4kpgs; i++)
+        {
+            if (ctrlp_lst[i] == PAGE_FREE)
+            {  
+                ctrlp_lst[i] = PAGE_DIRTY;
+                return ctrlp_lst+i;
+            }
+        }
+        klog("mmc","kernel all page(s) are alloced:%h                   ",g_to4kpgs);
+        return -ENOMEM;        
+}
+void kpfree(void* ptr){
+        ctrlp_lst[(int)((char *)ptr - sys_fp_start)/4096] = PAGE_DIRTY;      
+        return;
 }

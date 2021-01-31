@@ -18,7 +18,12 @@
 /*Copyright (C) 2020-2021 AlanCui*/
 #ifndef _STRING_H_
 #define _STRING_H_
-#include <btypes.h>
+#include <bits/btypes.h>
+#ifdef __cplusplus
+extern "C"
+{
+#define restrict
+#endif
 extern size_t strlen(const char *s);
 extern size_t strnlen(const char *s, size_t maxlen);
 extern void *memchr(const void *s, int c, size_t n);
@@ -32,5 +37,11 @@ extern int strcmp(const char *s1, const char *s2);
 extern int strncmp(const char *s1, const char *s2, size_t n);
 extern char *strchr(const char *s, int c);
 extern char *strrchr(const char *s, int c);
-
+extern char *strins(char *restrict s1, const char *restrict s2,size_t n);
+extern void *memset(void *s, int c, size_t n);
+extern char *strdel(char *restrict s, int p, size_t n);
+extern char *num2str32(char *tmp,  uint32_t n);
+#ifdef __cplusplus
+}
+#endif
 #endif

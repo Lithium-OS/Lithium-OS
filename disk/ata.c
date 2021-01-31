@@ -18,59 +18,55 @@
 #include <types.h>
 #include <io/port.h>
 #include <console/video.h>
+#include <console/tty.h>
 int log = 8;
 const uint16_t ata_port_master[9] = {0x1f0, 0x1f1, 0x1f2, 0x1f3, 0x1f4, 0x1f5, 0x1f6, 0x1f7, 0b01000000};
 const uint16_t ata_port_slave[9] = {0x170, 0x171, 0x172, 0x173, 0x174, 0x175, 0x176, 0x177, 0b010000};
 void ata_wait(uint8_t *ata)
 {
-    kputstr(0, ++log, "ATA WAIT", YELLOW, BLACK);
+    klog("atapi","wait");
     while ((in_port8(ata[7]) >> 6) == 1)
         ;
-    kputnum(0, ++log, in_port8(ata[7]), YELLOW, BLACK);
+    klog("atapi","wait OK:%h",in_port8(ata[7]) >> 6);
+    
 }
 sint32_t ata_read_sector(uint8_t *ata, uint64_t lba, void *addr)
 {
     if ((lba) > 0xFFFFFFFFFFFF)
         return -1;
-    kputstr(0, ++log, "ATA READ EXEC", YELLOW, BLACK);
     ata_wait(ata);
     out_port8(ata[1], 0);
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
+    klog("atapi","stat:%h",in_port8(ata[7]) >> 6);
     out_port8(ata[1], 0);
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
+    klog("atapi","stat:%h",in_port8(ata[7]) >> 6);
     out_port8(ata[2], 0);
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
+    klog("atapi","stat:%h",in_port8(ata[7]) >> 6);
     out_port8(ata[2], 1);
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
-    out_port8(ata[3], ((lba >> 24)& 0xff));
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
+    klog("atapi","stat:%h",in_port8(ata[7]) >> 6);
+    out_port8(ata[3], ((lba >> 24) & 0xff));
+    klog("atapi","stat:%h",in_port8(ata[7]) >> 6);
     out_port8(ata[3], (lba & 0xff));
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
-    out_port8(ata[4], ((lba >>32)& 0xff));
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
-    out_port8(ata[4], ((lba >> 8)& 0xff));
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
-    out_port8(ata[5], ((lba >> 40)&0xff));
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
-    out_port8(ata[5], ((lba >> 16)&0xff));
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
+    klog("atapi","stat:%h",in_port8(ata[7]) >> 6);
+    out_port8(ata[4], ((lba >> 32) & 0xff));
+    klog("atapi","stat:%h",in_port8(ata[7]) >> 6);
+    out_port8(ata[4], ((lba >> 8) & 0xff));
+    klog("atapi","stat:%h",in_port8(ata[7]) >> 6);
+    out_port8(ata[5], ((lba >> 40) & 0xff));
+    klog("atapi","stat:%h",in_port8(ata[7]) >> 6);
+    out_port8(ata[5], ((lba >> 16) & 0xff));
+    klog("atapi","stat:%h",in_port8(ata[7]) >> 6);
     out_port8(ata[6], ata[8]);
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
+    klog("atapi","stat:%h",in_port8(ata[7]) >> 6);
     ata_wait(ata);
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
     out_port8(ata[7], 0x24);
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
+    klog("atapi","stat:%h",in_port8(ata[7]) >> 6);
     ata_wait(ata);
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
     void *p = (void *)addr;
-    kputnum(0, ++log, in_port8(ata[7]), GREEN, BLACK);
-    kputstr(0,++log,"ATA READ FIN",YELLOW,BLACK);
     while ((in_port8(ata[7]) << 4) >> 7 == 1)
     {
         *(uint16_t *)p = in_port16(ata[1]);
         p += 2;
     }
-    kputstr(0,++log,"ATA FIN",YELLOW,BLACK);
     return 0;
 }
 sint32_t ata_write_sector(uint8_t *ata, void *addr, uint64_t lba)

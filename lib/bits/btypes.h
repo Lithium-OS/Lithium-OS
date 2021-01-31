@@ -17,6 +17,7 @@
 /*Copyright (C) 2020-2021 AlanCui*/
 #ifndef _BTYPES_H_
 #define _BTYPES_H_
+#include"blimits.h"
 //8-bit unsigned integer type
 typedef unsigned char uint8_t;
 //16-bit unsigned integer type
@@ -70,5 +71,5 @@ typedef uint64_t size_t;
 #endif
 #define NULL (void *)0
 typedef uint32_t wchar_t;
-#include<blimits.h>
+typedef size_t time_t;
 #endif

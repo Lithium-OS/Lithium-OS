@@ -1,4 +1,4 @@
-/* Copyright (C) 2020-2021 AlanCui
+/*
     This file is part of the Lithium Kernel.
 
     This program is free software: you can redistribute it and/or modify
@@ -14,17 +14,18 @@
     You should have received a copy of the GNU Affero General Public License
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
-#pragma once
-#ifndef _TTY_H_
-#define _TTY_H_
-#include <types.h>
+/*Copyright (C) 2020-2021 AlanCui*/
+#ifndef _FSOPS_H_
+#define _FSOPS_H_
 
 #ifdef __cplusplus
 extern "C"
 {
 #endif
-extern void klog(char* mod,char* info,...);
-
+#include"../../fs/vfs.h"
+extern void init_vfs(void);
+extern int vfs_regfs(struct vfs_fsnode node);
+extern int vfs_unloadfs(uint32_t major);
 #ifdef __cplusplus
 }
 #endif

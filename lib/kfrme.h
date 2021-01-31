@@ -17,6 +17,13 @@
 /*Copyright (C) 2020-2021 AlanCui*/
 #ifndef _KFRME_H_
 #define _KFRME_H
-#include <btypes.h>
+#include <bits/btypes.h>
+#ifdef __cplusplus
+extern "C"
+{
+#endif
 extern uint32_t g_time;
+#ifdef __cplusplus
+}
+#endif
 #endif
