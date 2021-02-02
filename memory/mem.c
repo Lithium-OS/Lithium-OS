@@ -55,18 +55,18 @@ void init_mem(void)
         :::"memory");*/
 }
 void *kpmalloc(void){
-        for (size_t i = 0; i < g_to4kpgs; i++)
-        {
-            if (ctrlp_lst[i] == PAGE_FREE)
-            {  
-                ctrlp_lst[i] = PAGE_DIRTY;
-                return ctrlp_lst+i;
-            }
+    for (size_t i = 0; i < g_to4kpgs; i++)
+    {
+        if (ctrlp_lst[i] == PAGE_FREE)
+        {  
+            ctrlp_lst[i] = PAGE_DIRTY;
+            return ctrlp_lst+i;
         }
-        klog("mmc","kernel all page(s) are alloced:%h                   ",g_to4kpgs);
-        return -ENOMEM;        
+    }
+    klog("mmc","kernel all page(s) are alloced:%h                   ",g_to4kpgs);
+    return -ENOMEM;        
 }
 void kpfree(void* ptr){
-        ctrlp_lst[(int)((char *)ptr - sys_fp_start)/4096] = PAGE_DIRTY;      
-        return;
+    ctrlp_lst[(int)((char *)ptr - sys_fp_start)/4096] = PAGE_DIRTY;      
+    return;
 }

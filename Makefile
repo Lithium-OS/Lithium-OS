@@ -24,8 +24,8 @@ LIBDIRM = -I $(INCPATH)
 CMKLG = 
 CMKFLGS=-fno-builtin $(LIBDIRM) -m32 -c -Wall -nostdinc -nostdlib -fno-pie
 CMKFLGSTD= $(LIBDIRM) -m32 -Wall
-MKDEV = /dev/sdc1
-MKDEVROOT = /dev/sdc
+MKDEV = /dev/sdb1
+MKDEVROOT = /dev/sdb
 #/*-fno-builtin $(LIBDIRM) -m32 -c -Wall -nostdinc -nostdlib*/
 #/*-mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib*/
 export CC
@@ -40,7 +40,7 @@ export CMKFLGS
 export CMKFLGSTD
 system:
 	@echo "\033[34m[II] Setting INCPATH to $(INCPATH)\033[0m"
-	time make all
+	make all
 	@echo "\033[34m[II] Compile Complete.\033[0m"
 	@echo "\033[34m[II] Kernel:$(MKDIR)/lithium.elf\033[0m"
 	@echo "\033[0m"

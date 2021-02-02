@@ -44,6 +44,7 @@ int kmain()
     klog("kernel","init vga -> 1024x768@?hz");
     klog("kernel","start to init");
     init_interrupt();
+    klog("TEST", logo_cpu);
     //out_port8(0x21,0xff);//BACU
     init_mem();
     init_vfs();
