@@ -26,19 +26,20 @@ SECTIONS
         *(.bss)
     }
     . = 128M;
-    sys_fp_start = .;
-    . = 152M;
-    sys_fp_end = .;
-    . = 160M;
     sys_pdt_start = .;
     .pdt ALIGN(4K):
     {
         *(.pdt)
     }
-    . = 162M;
+    . = 130M;
     sys_pt_start = .;
     .pt ALIGN(4K):
     {
         *(.pt)
-    }    
+    }
+    . = 142M;
+    sys_fp_start = .;
+    . = 256M;
+    sys_fp_end = .;
+
 }

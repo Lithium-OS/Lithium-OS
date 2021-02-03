@@ -24,10 +24,11 @@ LIBDIRM = -I $(INCPATH)
 CMKLG = 
 CMKFLGS=-fno-builtin $(LIBDIRM) -m32 -c -Wall -nostdinc -nostdlib -fno-pie
 CMKFLGSTD= $(LIBDIRM) -m32 -Wall
-MKDEV = /dev/sdc1
-MKDEVROOT = /dev/sdc
+MKDEV = /dev/sdb1
+MKDEVROOT = /dev/sdb
 #/*-fno-builtin $(LIBDIRM) -m32 -c -Wall -nostdinc -nostdlib*/
 #/*-mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib*/
+
 export CC
 export CPP
 export LD
@@ -96,9 +97,11 @@ run:install
 	sync
 	sudo umount $(MKDEV)
 	sudo qemu-system-i386 -s -m 256 -hda $(MKDEVROOT)
-LIBSO = lib-sys lib-video lib-dsk lib-mem lib-std lib-fs lib-dev
+LIBSO = lib-da lib-sys lib-video lib-dsk lib-mem lib-std lib-fs lib-dev
 libs:$(LIBSO)
 	@echo "\033[34m[II] All Libs Ok\033[0m"
+lib-da:
+	bash settime.sh
 lib-dsk:
 	@echo "\033[34m[II] Making Disk Lib\033[0m"
 	make -C ./disk lib-dsk

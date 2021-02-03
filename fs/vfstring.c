@@ -22,7 +22,20 @@
 #include <string.h>
 int path_type(char* path){
     if (path[strlen(path)] == '/')
-        return TYPE_DIR;
+        return TYPE_NULL;
     else
-        return TYPE_FILE;
+        return TYPE_NULL;
+}
+char *vfs_getroot(char *spath, size_t depth, char *path)
+{
+    strcpy(path, spath);
+    size_t of = 0;
+    char *pt = path;
+    for (size_t i = 0; i < depth; i++)
+    {
+        pt = strchr(pt, '/') + 1;
+    }
+    memset(pt, 0, pt - path);
+    klog("groot", path);
+    return path;
 }

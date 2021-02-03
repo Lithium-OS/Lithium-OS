@@ -72,4 +72,8 @@ typedef uint64_t size_t;
 #define NULL (void *)0
 typedef uint32_t wchar_t;
 typedef size_t time_t;
+typedef size_t uid_t;
+typedef size_t gid_t;
+typedef size_t pid_t;
+
 #endif

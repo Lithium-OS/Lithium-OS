@@ -15,3 +15,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /*Copyright (C) 2020-2021 AlanCui*/
+#include<kfrme.h>
+#include<vfs.h>
+#include<sys/udev.h>
+size_t kfme_read_file(DEV *dev,FILE *dst,void *buf,size_t n,sprem_t prem)
+{
+
+    udev_read_dev(dev->major,dev->minjor,)
+}

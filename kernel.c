@@ -26,7 +26,9 @@
 #include <keyboard.h>
 #include <io/ata.h>
 #include <fs/fsops.h>
+#include <sys/udev.h>
 #include <string.h>
+#include "build.h"
 extern uint32_t fb_addr;
 extern uint32_t mem_info;
 extern char logo_cpu[];
@@ -34,25 +36,30 @@ uint32_t g_time = 0;
 int kmain()
 {
     
-    __asm__("movl $0xa000000,%eax");
+    __asm__("movl $0x8000000,%eax");
     __asm__("movl %eax,%ebp");
     __asm__("movl %eax,%esp");
     g_sysgrap.base_addr = fb_addr;
     g_sysgrap.res_x = 1024;
     g_sysgrap.res_y = 768;
+    klog("kernel","this version of kernel is built at");
+    klog("kernel",BUILD_TIME);
     klog("kernel","init ebp&esp -> 0xa000000(160M)");
     klog("kernel","init vga -> 1024x768@?hz");
     klog("kernel","start to init");
     init_interrupt();
     //out_port8(0x21,0xff);//BACU
     init_mem();
+    init_slab();
     init_vfs();
     struct vfs_fsnode tnode;
     memcpy(tnode.mount_pt,"/dev/null/",10);
-    vfs_regfs(tnode);
+    vfs_insertfs(tnode);
     vfs_unloadfs(1);
-    memcpy(tnode.mount_pt,"/dev/null/",10);
-    vfs_regfs(tnode);
+    init_udev();
+    char buf[50];
+    udev_read_dev(65535,0,buf,233);
+    klog("kernel","ppp %h",*((int *)buf));
     //memcpy(tnode.mount_pt,"/",1);
     //vfs_regfs(tnode);
     init_rtc();

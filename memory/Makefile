@@ -15,3 +15,4 @@
 #*/
 lib-mem:
 	$(CC) $(CMKFLGS) -O2 mem.c -o $(MKDIR)/mem.o $(CMKLG)
+	$(CC) $(CMKFLGS) -O2 slab.c -o $(MKDIR)/slab.o $(CMKLG)

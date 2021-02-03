@@ -17,6 +17,7 @@
 /*Copyright (C) 2020-2021 AlanCui*/
 #include <bits/btypes.h>
 #include <console/video.h>
+#include <mm/mem.h>
 size_t strlen(const char *s)
 {
     for (size_t i = 0; i < SIZE_T_MAX; i++)

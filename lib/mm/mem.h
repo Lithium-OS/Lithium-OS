@@ -18,6 +18,9 @@
 #pragma once
 #ifndef _MEM_H_
 #define _MEM_H_
+
+#define INIT_PAGE_MIB 256
+
 #include <types.h>
 struct mem_info
 {
@@ -29,8 +32,10 @@ extern "C"
 {
 #endif
 
+#include "../memory/slab.h"
+
 extern void init_mem(void);
-extern void *kpmalloc(void);
+extern void *kpmalloc(size_t n);
 extern uint32_t sys_pdt_start;
 extern uint32_t sys_pt_start;
 extern char sys_fp_start;

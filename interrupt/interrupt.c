@@ -27,6 +27,8 @@ extern void _do_irq33(void);
 extern void _do_irq13(void);
 extern void _do_irq14(void);
 extern void _do_irq80(void);
+extern void _do_irq3(void);
+
 extern void _do_irqnull(void);
 struct intr_info g_sysintr;
 uint32_t cnt = 0;
@@ -43,7 +45,7 @@ void do_irq33(void)
 void do_irq3(uint32_t edx,uint32_t ecx,uint32_t ebx,uint32_t eax)
 {
     klog("imgr","int 3 : debug intrrupt");
-    klog("imgr","eax:%h");
+    hlt_cpu();
 }
 void do_irq80(void)
 {
@@ -82,7 +84,10 @@ void init_interrupt()
     set_intr_gate(14,&_do_irq14);
     klog("imgr","init intr_gate 80 -> _do_irq_80(Syscall)");
     set_intr_gate(80,&_do_irq80);
+    klog("imgr","init intr_gate 3 -> _do_irq_3(Debug)");
+    set_intr_gate(3,&_do_irq3);
     klog("imgr","init kb_master_contorller");
+
     out_port8(0x20,0x11);
     out_port8(0x21,0x20);
     out_port8(0x21,0x04);
