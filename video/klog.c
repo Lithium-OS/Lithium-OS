@@ -19,10 +19,14 @@
 #include<string.h>
 #include <sys/sysop.h>
 #include <stdarg.h>
+#include <time.h>
 char klog_buf[4096][128] = {0};
 uint32_t buf_ptr = 0;
 static void rklog(char* mod,char* info){
-    char bufn[128] = {'[','0',']'};
+    char bufn[128] = {'['};
+    char tmp[12] = {"0x????????\0\0"};
+    strcat(bufn,num2str32(tmp,g_kmaincnt));
+    strcat(bufn,"]");
     strcat(strcat(strcat(bufn,mod),":"),info);
     strncpy(klog_buf[buf_ptr++],bufn,128);
     klog_flsh();

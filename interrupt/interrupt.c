@@ -28,10 +28,15 @@ extern void _do_irq13(void);
 extern void _do_irq14(void);
 extern void _do_irq80(void);
 extern void _do_irq3(void);
-
+extern void _do_irq16(void);
 extern void _do_irqnull(void);
+extern void do_irq16(void);
 struct intr_info g_sysintr;
 uint32_t cnt = 0;
+void do_irq16(void)
+{
+    g_kmaincnt++;
+}
 void do_irq33(void)
 {
     klog("imgr","get int 33");
@@ -86,7 +91,10 @@ void init_interrupt()
     set_intr_gate(80,&_do_irq80);
     klog("imgr","init intr_gate 3 -> _do_irq_3(Debug)");
     set_intr_gate(3,&_do_irq3);
+    klog("imgr","init intr_gate 16 -> do_irq_16(PIT)");
+    set_intr_gate(16,&_do_irq3);
     klog("imgr","init kb_master_contorller");
+    
 
     out_port8(0x20,0x11);
     out_port8(0x21,0x20);
@@ -99,7 +107,7 @@ void init_interrupt()
     out_port8(0xa1,0x02);
     out_port8(0xa1,0x01);
 
-    out_port8(0x21,0xfd);
+    out_port8(0x21,0xfc);
     out_port8(0xa1,0xff);
 
     __asm__ ("sti");
