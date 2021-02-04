@@ -24,8 +24,6 @@ LIBDIRM = -I $(INCPATH)
 CMKLG = 
 CMKFLGS=-fno-builtin $(LIBDIRM) -m32 -c -Wall -nostdinc -nostdlib -fno-pie
 CMKFLGSTD= $(LIBDIRM) -m32 -Wall
-MKDEV = /dev/sdb1
-MKDEVROOT = /dev/sdb
 #/*-fno-builtin $(LIBDIRM) -m32 -c -Wall -nostdinc -nostdlib*/
 #/*-mcmodel=large -fno-builtin $(LIBDIRM) -m64 -c -Wall -nostdinc -nostdlib*/
 
@@ -127,3 +125,5 @@ cnt:
 	mv video/unifont.c video/unifont.xx
 	cloc .
 	mv video/unifont.xx video/unifont.c
+config:
+	bash settenv.sh
