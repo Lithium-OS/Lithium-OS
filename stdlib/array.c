@@ -35,7 +35,7 @@ typedef struct Array {
 
 void array_init(array *obj,uint32_t size) {
     obj->N=size;
-    obj->arr=(ADT*)kpmalloc();
+    obj->arr=(ADT*)kpmalloc(1);
 }
 
 ADT *array_at(array *obj,uint32_t idx) {
@@ -64,7 +64,7 @@ ADT *array_end(array *obj) {
     return &obj->arr[obj->N];
 }
 
-_Bool array_fill(ADT *head,ADT *tail,ADT val) {
+int array_fill(ADT *head,ADT *tail,ADT val) {
     if(head>tail)
       return false;
     for(;head!=tail;head++)
