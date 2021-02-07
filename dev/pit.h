@@ -1,6 +1,6 @@
-/* 
+/*
     This file is part of the Lithium Kernel.
-
+    
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as
     published by the Free Software Foundation, either version 3 of the
@@ -15,8 +15,11 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 /*Copyright (C) 2020-2021 AlanCui*/
-#ifndef _TIME_H_
-#define _TIME_H
-#include "../dev/rtc.h"
-extern uint32_t g_kmaincnt;
+#ifndef _PIT_H_
+#define _PIT_H_
+
+#define PIT_HZ 1193182
+#define PIT_FREQ_MS 1
+#define PIT_TARGET 1193
+
 #endif
