@@ -21,7 +21,7 @@
 #include <console/tty.h>
 #include <sys/sysop.h>
 #include <console/video.h>
-
+#include <io/port.h>
 #define set_pt(a, b, c) set_pdt(a, b, c)
 
 void set_pdt(void *dst, void *pt, uint16_t flag)
@@ -43,19 +43,33 @@ void init_mem(void)
     klog("mmc", "total available : %h page(s)", (&sys_fp_end - &sys_fp_start) / 4096);
     klog("mmc", "             ");
     klog("mmc", "4-kib aera ok");
-    /*
-    for (size_t i = 0; i < INIT_PAGE_MIB * 1024 / 4 /4096 ; i++)
-        set_pdt(&sys_pdt_start+i,&sys_pt_start+i*4096,3);
-    for (size_t i = 0; i < INIT_PAGE_MIB * 1024 / 4  ; i++)
-        set_pt(&sys_pt_start+i,i*4096*1024,3);
-    #error !!!TODO:FB_ADDR
+    
+    for (size_t i = 0; i < INIT_PAGE_MIB * 1024 * 1024 / 4096 / 1024 ; i++)
+    {
+        set_pdt((char *)&sys_pdt_start+i,(char *)&sys_pt_start+i*1024,3);
+        for (size_t n = 0; n < 1024; n++)
+            set_pdt((int*)((char *)&sys_pt_start+i*1024)+n,(int*)(i*1024*4096+n*4096) ,3);
+    }
+    for (size_t i = g_sysgrap.base_addr / 4096 / 1024 ; i < (g_sysgrap.base_addr / 1024 +3)/ 4096 ; i++)
+    {
+        set_pdt((char *)&sys_pdt_start+i,(char *)&sys_pt_start+i*1024,3);
+        for (size_t n = 0; n < 1024; n++)
+            set_pdt((int*)((char *)&sys_pt_start+i*1024)+n,(int*)(i*1024*4096+n*4096) ,3);
+    }
+        klog("MMC","ok!");
     __asm__ ("movl $sys_pdt_start,%%eax\n\t"\
             "movl %%eax,%%cr3\n\t"\
     :::"memory") ;
     __asm__("movl %%cr0,%%eax\n\t"\
-            "bts $31,%%eax\n\t"\
+            "or $0x80000001,%%eax\n\t"\
             "movl %%eax,%%cr0\n\t"\
-        :::"memory");*/
+        :::"memory");
+    hlt_cpu();
+    out_port16(0x3f8,'N');
+    out_port16(0x3f8,'M');  
+    out_port16(0x3f8,'S');
+    out_port16(0x3f8,'L');
+
 }
 void *kpmalloc(size_t n)
 {

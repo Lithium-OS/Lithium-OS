@@ -86,7 +86,7 @@ d8g:install
 	sync
 	sync
 	sudo umount $(MKDEV)
-	sudo qemu-system-i386 -s -S -m 256 -hda $(MKDEVROOT)
+	sudo qemu-system-i386 -s -S -m 256 -hda $(MKDEVROOT) -monitor stdio
 run:install
 	sudo mount $(MKDEV) $(MKDIR)
 	sudo cp /lithium.elf $(MKDIR)/lithium.elf
@@ -94,7 +94,7 @@ run:install
 	sync
 	sync
 	sudo umount $(MKDEV)
-	sudo qemu-system-i386 -s -m 256 -hda $(MKDEVROOT)
+	sudo qemu-system-i386 -s -m 256 -hda $(MKDEVROOT) -monitor stdio
 LIBSO = lib-da lib-sys lib-video lib-dsk lib-mem lib-std lib-fs lib-dev
 libs:$(LIBSO)
 	@echo "\033[34m[II] All Libs Ok\033[0m"

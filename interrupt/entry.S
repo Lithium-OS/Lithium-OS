@@ -16,6 +16,29 @@
 */
 /*Copyright (C) 2020-2021 AlanCui*/
 .section .text
+_do_irq16:
+    cld
+    pushl %eax
+    pushl %ebx
+    pushl %ecx
+    pushl %edx
+    pushl %esi
+    pushl %edi
+
+    pushl %eax
+    pushl %ebx
+    pushl %ecx
+    pushl %edx
+    
+    call do_irq16
+    popl %edi
+    popl %esi
+    popl %edx
+    popl %ecx
+    popl %ebx
+    popl %eax
+    iret
+.globl _do_irq16
 _do_irq3:
     cld
     pushl %eax

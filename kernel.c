@@ -47,6 +47,7 @@ int kmain()
     klog("kernel","init ebp&esp -> 0xa000000(160M)");
     klog("kernel","init vga -> 1024x768@?hz");
     klog("kernel","start to init");
+    init_pit();
     init_interrupt();
     //out_port8(0x21,0xff);//BACU
     init_mem();
