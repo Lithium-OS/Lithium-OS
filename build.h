@@ -1,1 +1,1 @@
-#define BUILD_TIME " 2021年 02月 07日 星期日 08:04:17 UTC "
+#define BUILD_TIME " Thu 04 Feb 2021 01:31:59 PM UTC "
