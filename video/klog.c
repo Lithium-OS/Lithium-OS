@@ -20,6 +20,8 @@
 #include <sys/sysop.h>
 #include <stdarg.h>
 #include <time.h>
+#include <io/port.h>
+void klog_flsh();
 char klog_buf[4096][128] = {0};
 uint32_t buf_ptr = 0;
 static void rklog(char* mod,char* info){
@@ -29,23 +31,31 @@ static void rklog(char* mod,char* info){
     strcat(bufn,"]");
     strcat(strcat(strcat(bufn,mod),":"),info);
     strncpy(klog_buf[buf_ptr++],bufn,128);
+    out_port16(0x3f8,'\n');
+    for(size_t i = 0;i < 128;i++)
+        out_port16(0x3f8,(uint16_t)klog_buf[buf_ptr-1][i]);
     klog_flsh();
 }
 void panic(char* mod,char* info,...)
 {
+    __asm__("cli");
     char bufn[128] = {'P',' ',' '};
     strcat(strcat(strcat(bufn,mod),":"),info);
     strncpy(klog_buf[buf_ptr++],bufn,128);
     klog_flsh();
     klog("panic","dumping system infomation");
     klog("panic","kernel halted");
-    __asm__("cli");
     hlt_cpu();
 }
 void klog(char* mod,char* info,...)
 {
+    char bufn[128] = {'['};
+    char tmp[12] = {"0x????????\0\0"};
     va_list vlst;
     size_t cnt = 0;
+    strcat(bufn,num2str32(tmp,g_kmaincnt));
+    strcat(bufn,"]");
+    strcat(strcat(bufn,mod),":");
     //kputnum(0,0,strlen(info),BLUE,BLACK);
     
    /* for (size_t i = 0; i < strlen(info); i++)
@@ -61,55 +71,81 @@ void klog(char* mod,char* info,...)
         //kputnum(0,i+1,*(info+i),GREEN,BLACK);
     }*/
     va_start(vlst,info);
-    for (size_t i = 0; i < SIZE_T_MAX; i++)
+    size_t f=strlen(bufn);
+    for (size_t i = 0; i < 128;)
     {
         if(info[i] == '%')
         {
+            out_port16(0x3f8,'@');
           //  kputnum(0,i+1,*(info+i),BLUE,BLACK);
-            i++;
-            char tmp[12] = {"0x????????\0\0"};
-            switch (info[i])
+            char tmpd[12] = {"0x????????\0"};
+            char tmpw[12] = {"0x????\0"};
+            switch (info[i+1])
             {
             case 'h':
-                strdel(info,i,1);
-                strins(info,num2str32(tmp,va_arg(vlst,size_t)),i);
+                strcpy(&(bufn[f]),num2str32(tmpd,va_arg(vlst,size_t)));
+                f += 11;
+                i +=3;
+                break;
+            case 'w':
+                strcpy(&(bufn[f]),num2str16(tmpw,va_arg(vlst,uint16_t)));
+                f += 6;
+                i +=3;
+                break;
+            case 'm':
+                strcpy(&(bufn[f]),num2str16(tmpw,va_arg(vlst,uint16_t)));
+                strcat(&(bufn[f]),":");
+                strcat(&(bufn[f]),num2str16(tmpw,va_arg(vlst,uint16_t)));
+                f += 12;
+                i +=3;
+                break;
+            default:
                 break;
             }
         }
-        if (info[i]==0)
+        else if (info[i]==0)
         {
             break;
         }
-        
+        bufn[f] = info[i];
+        i++;
+        f++;
     }
         /*else if(info[i] == '\\')
         {
             strdel(info,i,1);
             i++;
         }*/
-    rklog(mod,info);
+        out_port16(0x3f8,'\n');
+        for(size_t i = 0;i < 128;i++)
+            if((uint16_t)klog_buf[buf_ptr-1][i]!=0)
+                out_port16(0x3f8,(uint16_t)klog_buf[buf_ptr-1][i]);
+    //strncpy(klog_buf[buf_ptr++],bufn,128);
+    //out_port16(0x3f8,'\n');
+    strncpy(klog_buf[buf_ptr++],bufn,128);
+    klog_flsh();
     
     //va_end(vlst);
 }
 void klog_flsh(){
     if(buf_ptr > 35)
     {
-        for (size_t i = buf_ptr-35; i < buf_ptr; i++)
+        for (size_t i = buf_ptr-40; i < buf_ptr; i++)
         {
             if(klog_buf[i][0] == '[')
-                kputstrc(11,i-(buf_ptr-35),klog_buf[i],WHITE,BLACK,80);
+                kputstrc(11,i-(buf_ptr-40),klog_buf[i],WHITE,BLACK,100);
             if(klog_buf[i][0] == 'P')
-                kputstrc(11,i-(buf_ptr-35),klog_buf[i],RED,BLACK,80);
+                kputstrc(11,i-(buf_ptr-40),klog_buf[i],RED,BLACK,100);
         }
     }
     else
     {
-        for (size_t i = 0; i < 35; i++)
+        for (size_t i = 0; i < 40; i++)
         {
             if(klog_buf[i][0] == '[')
-                kputstrc(11,i,klog_buf[i],WHITE,BLACK,80);
+                kputstrc(11,i,klog_buf[i],WHITE,BLACK,100);
             if(klog_buf[i][0] == 'P')
-                kputstrc(11,i,klog_buf[i],RED,BLACK,80);
+                kputstrc(11,i,klog_buf[i],RED,BLACK,100);
         }
     }
     

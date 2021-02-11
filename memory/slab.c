@@ -179,5 +179,4 @@ void init_slab()
         now->header->page_cnt = slab_sizec[i] < 4096 ? 4096 / slab_sizec[i] : slab_sizec[i] /4096 ;
         now->slab_cnt = 1;
     }
-        klog("slab", "get page %h", (uint32_t)slab_malloc(8192));
 }

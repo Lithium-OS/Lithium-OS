@@ -81,20 +81,20 @@ install:system
 	sudo cp $(MKDIR)/lithium.elf /lithium.elf
 d8g:install
 	sudo mount $(MKDEV) $(MKDIR)
-	sudo cp /lithium.elf $(MKDIR)/lithium.elf
+	sudo cp /lithium.elf $(MKDIR)/lithium.elf > /dev/null
 	sync
 	sync
 	sync
 	sudo umount $(MKDEV)
-	sudo qemu-system-i386 -s -S -m 256 -hda $(MKDEVROOT) -monitor stdio
+	sudo qemu-system-i386 -s -S -m 256  -drive id=disk,file=$(MKDEVROOT),if=none -device ahci,id=ahci -device ide-drive,drive=disk,bus=ahci.0 -usbdevice disk:COM0 -monitor stdio
 run:install
 	sudo mount $(MKDEV) $(MKDIR)
-	sudo cp /lithium.elf $(MKDIR)/lithium.elf
+	sudo cp /lithium.elf $(MKDIR)/lithium.elf -f
 	sync
 	sync
 	sync
 	sudo umount $(MKDEV)
-	sudo qemu-system-i386 -s -m 256 -hda $(MKDEVROOT) -monitor stdio
+	sudo qemu-system-i386 -s -m 256 -drive id=disk,file=$(MKDEVROOT),if=none -device ahci,id=ahci -device ide-drive,drive=disk,bus=ahci.0 -usbdevice disk:COM0  -monitor stdio -serial file:COM0
 LIBSO = lib-da lib-sys lib-video lib-dsk lib-mem lib-std lib-fs lib-dev
 libs:$(LIBSO)
 	@echo "\033[34m[II] All Libs Ok\033[0m"

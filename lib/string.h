@@ -41,6 +41,8 @@ extern char *strins(char *restrict s1, const char *restrict s2,size_t n);
 extern void *memset(void *s, int c, size_t n);
 extern char *strdel(char *restrict s, int p, size_t n);
 extern char *num2str32(char *tmp,  uint32_t n);
+extern char *num2str16(char *tmp,  uint16_t n);
+
 #ifdef __cplusplus
 }
 #endif

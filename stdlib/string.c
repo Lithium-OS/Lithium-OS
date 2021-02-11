@@ -18,6 +18,7 @@
 #include <bits/btypes.h>
 #include <console/video.h>
 #include <mm/mem.h>
+char tmp[8192] = {0};
 size_t strlen(const char *s)
 {
     for (size_t i = 0; i < SIZE_T_MAX; i++)
@@ -100,9 +101,10 @@ char *strrchr(const char *s, int c){
 
 char *strins(char *restrict s1, const char *restrict s2,size_t n)
 {
-    strncpy(s1+n+strlen(s2),s1+n,strlen(s2));
+    char _s_t[8192] = {0};
+    strcpy(_s_t,s1);
+    strncpy(s1+n+strlen(s2),_s_t+n,strlen(s2));
     strcpy(s1+n,s2);
-  //  strdel(s1,n+strlen(s2),1);
     return s1;
 }
 
@@ -118,6 +120,68 @@ char *num2str32(char* tmp,uint32_t num)
     for (size_t i = 2; i < 10; i++)
     {
         switch (((num >> ((9 - i)) * 4)) & 0xfUL)
+        {
+        case 0:
+            tmp[i] = '0';
+            break;
+        case 1:
+            tmp[i] = '1';
+            break;
+        case 2:
+            tmp[i] = '2';
+            break;
+        case 3:
+            tmp[i] = '3';
+            break;
+        case 4:
+            tmp[i] = '4';
+            break;
+        case 5:
+            tmp[i] = '5';
+            break;
+        case 6:
+            tmp[i] = '6';
+            break;
+        case 7:
+            tmp[i] = '7';
+            break;
+        case 8:
+            tmp[i] = '8';
+            break;
+        case 9:
+            tmp[i] = '9';
+            break;
+        case 10:
+            tmp[i] = 'A';
+            break;
+        case 11:
+            tmp[i] = 'B';
+            break;
+        case 12:
+            tmp[i] = 'C';
+            break;
+        case 13:
+            tmp[i] = 'D';
+            break;
+        case 14:
+            tmp[i] = 'E';
+            break;
+        case 15:
+            tmp[i] = 'F';
+            break;
+        default:
+            tmp[i] = '*';
+            break;
+        }
+    }
+    kputstr(0,2,tmp,YELLOW,BLACK);
+    return tmp;
+}
+char *num2str16(char* tmp,uint16_t num)
+{
+    for (size_t i = 2; i < 6; i++)
+    {
+        switch (((num >> ((5 - i)) * 4)) & 0xfUL)
         {
         case 0:
             tmp[i] = '0';

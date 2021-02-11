@@ -14,11 +14,15 @@
 #    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 #*/
 
-lib-dev:$(MKDIR)/rtc.o $(MKDIR)/udev.o $(MKDIR)/pit.o
-$(MKDIR)/rtc.o:rtc.c
+lib-dev:$(MKDIR)/rtc.o $(MKDIR)/udev.o $(MKDIR)/pit.o $(MKDIR)/pci.o $(MKDIR)/sata.o
+$(MKDIR)/rtc.o:rtc.c 
 	$(CC) $(CMKFLGS) rtc.c -o $(MKDIR)/rtc.o $(CMKLG)
 $(MKDIR)/udev.o:udev.c
 	$(CC) $(CMKFLGS) udev.c -o $(MKDIR)/udev.o $(CMKLG)
 $(MKDIR)/pit.o:pit.c
 	$(CC) $(CMKFLGS) pit.c -o $(MKDIR)/pit.o $(CMKLG)
+$(MKDIR)/pci.o:pci/pci.c
+	$(CC) $(CMKFLGS) pci/pci.c -O2 -o $(MKDIR)/pci.o $(CMKLG)
+$(MKDIR)/sata.o:sata.c
+	$(CC) $(CMKFLGS) sata.c -O2 -o $(MKDIR)/sata.o $(CMKLG)
 

@@ -1,0 +1,43 @@
+
+ªª€>ˆ(9ˆD>E€á‚Á€ Á€UUªª€>ˆ(9ˆD>E€á€€€€€UUUU€€€…©D)…©D™€€ªª
+[0x00000000]kernel:this version of kernel is built at
+[0x00000000]kernel: 2021å¹´ 02æœˆ 10æ—¥ æ˜ŸæœŸä¸‰ 12:15:48 UTC 
+[0x00000000]kernel:init ebp&esp -> 0xa000000(160M)
+[0x00000000]kernel:init vga -> 1024x768@?hz
+[0x00000000]kernel:start to init
+[0x00000000]imgr:init idt
+[0x00000000]imgr:init intr_gate 80 -> _do_irq_80(Syscall)
+[0x00000000]imgr:init kb_master_contorller
+[0x00000000]imgr:init kb_slave_contorller@
+[0x00000000]mmc:init kernel base 4-Kib aera
+[0x00000000]mmc:total available: 0x07200000bytes@
+[0x00000000]mmc:             
+[0x00000000]mmc:total available : 0x00007200page(s)
+[0x00000000]mmc:             @
+[0x00000000]mmc:4-kib aera ok
+[0x00000000]vfs:set g_vfsfs -> 0x08E21000         
+[0x00000000]vfs:insert a NULL node to vfs@
+[0x00000000]udev:init base dev list & major 65535_0@
+[0x00000000]udev:registed device major 0x0000FFFF              
+[0x00000000]udev:\__minjor: 0x00000000             @@@@@
+[0x00000000]pci:scanning device...
+[0x00000000]pci:found device at Bus.0x0000Dev.0x0000Func.0x0000ID:0x12378086Type:0x06000002----------Storage Bus(SATA)--------@@@@@
+[0x00000000]pci:Bridge Device-Host Bridge
+[0x00000000]pci:found device at Bus.0x0000Dev.0x0001Func.0x0000ID:0x70008086Type:0x06010000----------Storage Bus(SATA)--------@@@@@
+[0x00000000]pci:----------ISA Bridge----------
+[0x00000000]pci:found device at Bus.0x0000Dev.0x0001Func.0x0001ID:0x70108086Type:0x01018000----------Storage Bus(SATA)--------@@@@@
+[0x00000000]pci:Mass Storage Controller-IDE Controller
+[0x00000000]pci:found device at Bus.0x0000Dev.0x0001Func.0x0002ID:0x70208086Type:0x0C030001----------Storage Bus(SATA)--------@@@@@
+[0x00000000]pci:Serial Bus Controller-USB Controller-UHCI Controller
+[0x00000000]pci:found device at Bus.0x0000Dev.0x0001Func.0x0003ID:0x71138086Type:0x06800003----------Storage Bus(SATA)--------@@@@@
+[0x00000000]pci:Bridge Device-Other
+[0x00000000]pci:found device at Bus.0x0000Dev.0x0001Func.0x0010ID:0x100E8086Type:0x02000003----------Storage Bus(SATA)--------
+[0x00000000]pci:Network Controller-Ethernet Controller
+[0x00000000]pci:----------++++++++++----------@@@@@
+[0x00000000]pci:Bridge Device-ISA Bridge
+[0x00000000]pci:found device at Bus.0x0000Dev.0x0002Func.0x0000ID:0x11111234Type:0x03000002----------Storage Bus(SATA)--------@@@@@
+[0x00000000]pci:Display Controller-VGA Compatible Controller
+[0x00000000]pci:found device at Bus.0x0000Dev.0x0004Func.0x0000ID:0x29228086Type:0x01060102----------Storage Bus(SATA)--------
+[0x00000000]pci:Mass Storage Controller-Serial ATA-AHCI
+[0x00000000]pci:OK@
+[0x00000000]rtc:get real time from RTC

@@ -43,7 +43,7 @@ void init_mem(void)
     klog("mmc", "total available : %h page(s)", (&sys_fp_end - &sys_fp_start) / 4096);
     klog("mmc", "             ");
     klog("mmc", "4-kib aera ok");
-    
+    /*
     for (size_t i = 0; i < INIT_PAGE_MIB * 1024 * 1024 / 4096 / 1024 ; i++)
     {
         set_pdt((char *)&sys_pdt_start+i,(char *)&sys_pt_start+i*1024,3);
@@ -69,6 +69,7 @@ void init_mem(void)
     out_port16(0x3f8,'M');  
     out_port16(0x3f8,'S');
     out_port16(0x3f8,'L');
+    */
 
 }
 void *kpmalloc(size_t n)
